@@ -144,41 +144,43 @@ const Index = () => {
     <div className="flex h-screen overflow-hidden bg-craft-pink-100/30">
       <Sidebar activePage={activePage} onNavigate={handleNavigate} />
       
-      <main className="flex-1 overflow-y-auto p-6">
-        <div className="max-w-6xl mx-auto">
-          <SearchBar onSearch={handleSearch} onCreateProject={handleCreateProject} />
-          
-          <div className="mt-8">
-            <CategorySelector 
-              categories={categories} 
-              selectedCategory={selectedCategory}
-              onSelectCategory={handleSelectCategory}
-            />
-          </div>
-          
-          <div className="mt-8 p-6 rounded-2xl bg-gradient-to-r from-craft-pink-200 to-craft-lavender-200 flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-serif font-medium">欢迎回来，默默小花！</h1>
-              <p className="mt-2 text-foreground/80">发现今日灵感，开始你的DIY创作之旅</p>
-            </div>
-            <div className="hidden md:block animate-float">
-              <img 
-                src="https://cdn-icons-png.flaticon.com/512/1533/1533913.png" 
-                alt="Crafting illustration" 
-                className="w-24 h-24"
+      <main className="flex-1 overflow-y-auto">
+        <div className="max-w-[1800px] mx-auto px-4 sm:px-6">
+          <div className="py-4 sm:py-6">
+            <SearchBar onSearch={handleSearch} onCreateProject={handleCreateProject} />
+            
+            <div className="mt-6 sm:mt-8">
+              <CategorySelector 
+                categories={categories} 
+                selectedCategory={selectedCategory}
+                onSelectCategory={handleSelectCategory}
               />
             </div>
+            
+            <div className="mt-6 sm:mt-8 p-4 sm:p-6 rounded-2xl bg-gradient-to-r from-craft-pink-200 to-craft-lavender-200 flex items-center justify-between">
+              <div className="flex-1">
+                <h1 className="text-xl sm:text-2xl font-serif font-medium">欢迎回来，默默小花！</h1>
+                <p className="mt-2 text-foreground/80 text-sm sm:text-base">发现今日灵感，开始你的DIY创作之旅</p>
+              </div>
+              <div className="hidden md:block animate-float ml-4">
+                <img 
+                  src="https://cdn-icons-png.flaticon.com/512/1533/1533913.png" 
+                  alt="Crafting illustration" 
+                  className="w-16 sm:w-24 h-16 sm:h-24"
+                />
+              </div>
+            </div>
+            
+            <RecommendationSection 
+              title="热门内容" 
+              projects={trendingProjects} 
+            />
+            
+            <RecommendationSection 
+              title="为你推荐" 
+              projects={personalizedProjects} 
+            />
           </div>
-          
-          <RecommendationSection 
-            title="热门内容" 
-            projects={trendingProjects} 
-          />
-          
-          <RecommendationSection 
-            title="为你推荐" 
-            projects={personalizedProjects} 
-          />
         </div>
       </main>
     </div>

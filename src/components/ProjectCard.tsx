@@ -10,18 +10,22 @@ type ProjectCardProps = {
   height?: string;
 }
 
-const ProjectCard = ({ image, title, author, likes, height = 'auto' }: ProjectCardProps) => {
+const ProjectCard = ({ image, title, author, likes, height = '250px' }: ProjectCardProps) => {
   return (
     <div 
-      className="craft-card group relative"
-      style={{ height }}
+      className="craft-card group relative w-full transition-transform duration-200 hover:-translate-y-1"
+      style={{ 
+        height: height,
+        minHeight: '200px',
+        maxHeight: '350px'
+      }}
     >
-      <div className="overflow-hidden">
+      <div className="h-full overflow-hidden">
         <img 
           src={image} 
           alt={title} 
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-          style={{ minHeight: '200px' }}
+          loading="lazy"
         />
       </div>
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
