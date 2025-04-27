@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,6 +62,37 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				// Custom feminine colors
+				"craft": {
+					"pink": {
+						100: "#FFFAFB",
+						200: "#FFDEE2",
+						300: "#FEC6D0",
+						400: "#FF9CAF",
+						500: "#FF7291"
+					},
+					"lavender": {
+						100: "#F8F5FF",
+						200: "#F0EBFF", 
+						300: "#E5DEFF",
+						400: "#D2C4FF",
+						500: "#B69FFF"
+					},
+					"mint": {
+						100: "#F9FEFA",
+						200: "#F2FCE2",
+						300: "#E6F7C8",
+						400: "#D4F2A5",
+						500: "#BBEA76"
+					},
+					"peach": {
+						100: "#FFF8F5",
+						200: "#FDE1D3",
+						300: "#FEC6A1",
+						400: "#FFA978",
+						500: "#FF8F55"
+					}
 				}
 			},
 			borderRadius: {
@@ -84,11 +116,25 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'float': {
+					'0%, 100%': { transform: 'translateY(0)' },
+					'50%': { transform: 'translateY(-5px)' }
+				},
+				'pulse-soft': {
+					'0%, 100%': { opacity: '1' },
+					'50%': { opacity: '0.85' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'float': 'float 3s ease-in-out infinite',
+				'pulse-soft': 'pulse-soft 3s ease-in-out infinite'
+			},
+			fontFamily: {
+				'serif': ['Playfair Display', 'serif'],
+				'sans': ['Quicksand', 'sans-serif']
 			}
 		}
 	},
