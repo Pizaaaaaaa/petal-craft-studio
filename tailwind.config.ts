@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -63,21 +62,20 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Custom feminine colors
 				"craft": {
 					"pink": {
-						100: "#FFFAFB",
-						200: "#FFDEE2",
-						300: "#FEC6D0",
-						400: "#FF9CAF",
-						500: "#FF7291"
+						100: "#FFFFFF",
+						200: "#E6F2FF",
+						300: "#B3D9FF",
+						400: "#80C1FF",
+						500: "#4DA6FF"
 					},
 					"lavender": {
-						100: "#F8F5FF",
-						200: "#F0EBFF", 
-						300: "#E5DEFF",
-						400: "#D2C4FF",
-						500: "#B69FFF"
+						100: "#F0F8FF",
+						200: "#E1F0FF",
+						300: "#C6E0FF",
+						400: "#A3CFFF",
+						500: "#7AB8FF"
 					},
 					"mint": {
 						100: "#F9FEFA",
