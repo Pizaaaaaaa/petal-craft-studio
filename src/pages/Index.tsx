@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Sidebar from '@/components/Sidebar';
 import SearchBar from '@/components/SearchBar';
@@ -13,17 +12,15 @@ const Index = () => {
 
   const categories = [
     { id: 'all', name: '全部' },
-    { id: 'paper', name: '纸艺' },
-    { id: 'knitting', name: '编织' },
-    { id: 'clay', name: '粘土' },
-    { id: 'embroidery', name: '刺绣' },
-    { id: 'resin', name: '树脂' },
-    { id: 'jewelry', name: '饰品' },
-    { id: 'painting', name: '绘画' },
-    { id: 'sewing', name: '缝纫' },
+    { id: 'clothes', name: '衣服' },
+    { id: 'scarf', name: '围巾' },
+    { id: 'hat', name: '帽子' },
+    { id: 'socks', name: '袜子' },
+    { id: 'gloves', name: '手套' },
+    { id: 'bag', name: '包包' },
+    { id: 'doll', name: '玩偶' },
   ];
 
-  // Sample project data
   const trendingProjects = [
     {
       id: '1',
@@ -145,16 +142,12 @@ const Index = () => {
 
   return (
     <div className="flex h-screen overflow-hidden bg-craft-pink-100/30">
-      {/* Sidebar */}
       <Sidebar activePage={activePage} onNavigate={handleNavigate} />
       
-      {/* Main Content */}
       <main className="flex-1 overflow-y-auto p-6">
         <div className="max-w-6xl mx-auto">
-          {/* Top section with search and create button */}
           <SearchBar onSearch={handleSearch} onCreateProject={handleCreateProject} />
           
-          {/* Category selector */}
           <div className="mt-8">
             <CategorySelector 
               categories={categories} 
@@ -163,7 +156,6 @@ const Index = () => {
             />
           </div>
           
-          {/* Welcome banner */}
           <div className="mt-8 p-6 rounded-2xl bg-gradient-to-r from-craft-pink-200 to-craft-lavender-200 flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-serif font-medium">欢迎回来，默默小花！</h1>
@@ -178,13 +170,11 @@ const Index = () => {
             </div>
           </div>
           
-          {/* Trending projects */}
           <RecommendationSection 
             title="热门内容" 
             projects={trendingProjects} 
           />
           
-          {/* Personalized recommendations */}
           <RecommendationSection 
             title="为你推荐" 
             projects={personalizedProjects} 

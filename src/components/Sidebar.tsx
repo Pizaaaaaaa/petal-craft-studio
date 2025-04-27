@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Home, BookOpen, ShoppingBag, HelpCircle, Settings, User } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -46,9 +45,9 @@ const Sidebar = ({ activePage, onNavigate }: SidebarProps) => {
       {/* Logo */}
       <div className="p-4 flex items-center justify-center md:justify-start gap-2 border-b border-craft-pink-100">
         <div className="w-10 h-10 rounded-full bg-gradient-to-r from-craft-pink-300 to-craft-lavender-400 flex items-center justify-center">
-          <span className="text-white font-serif font-bold text-xl">P</span>
+          <span className="text-white font-serif font-bold text-xl">C</span>
         </div>
-        <h1 className="hidden md:block font-serif text-xl font-medium">花瓣工坊</h1>
+        <h1 className="hidden md:block font-serif text-xl font-medium">Clawlab</h1>
       </div>
       
       {/* Menu */}
