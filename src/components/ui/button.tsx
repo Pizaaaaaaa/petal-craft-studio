@@ -54,7 +54,12 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         className={cn(buttonVariants({ variant, size, isAnimating, className }))}
         ref={ref}
         {...props}
-      />
+      >
+        {props.children}
+        {isAnimating && (
+          <span className="absolute inset-0 bg-white/20 animate-ping rounded-md"></span>
+        )}
+      </Comp>
     )
   }
 )

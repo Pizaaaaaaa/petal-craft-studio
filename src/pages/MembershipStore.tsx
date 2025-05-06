@@ -1,3 +1,4 @@
+
 import React, { useState, useRef } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useCart } from '../contexts/CartContext';
@@ -543,35 +544,34 @@ const MembershipStore: React.FC = () => {
                 ))}
               </div>
 
-              {selectedTier.id !== 'basic' && (
-                <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-                  <h4 className="font-medium mb-2">Compare with other plans</h4>
-                  <div className="flex overflow-x-auto gap-4 pb-2">
-                    {membershipTiers.map(tier => (
-                      <div 
-                        key={tier.id}
-                        className={`flex-shrink-0 w-40 p-3 border rounded-lg ${
-                          tier.id === selectedTier.id ? 'bg-claw-blue-50 border-claw-blue-200' : 'bg-white'
-                        }`}
+              {/* Compare with other plans - now shown for all tiers including 'basic' */}
+              <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+                <h4 className="font-medium mb-2">Compare with other plans</h4>
+                <div className="flex overflow-x-auto gap-4 pb-2">
+                  {membershipTiers.map(tier => (
+                    <div 
+                      key={tier.id}
+                      className={`flex-shrink-0 w-40 p-3 border rounded-lg ${
+                        tier.id === selectedTier.id ? 'bg-claw-blue-50 border-claw-blue-200' : 'bg-white'
+                      }`}
+                    >
+                      <div className="font-medium">{tier.name}</div>
+                      <div className="text-sm">${tier.price} {tier.billing}</div>
+                      <Button 
+                        variant="link" 
+                        className="px-0 text-sm h-6" 
+                        onClick={() => {
+                          setBenefitsDialogOpen(false);
+                          setSelectedTier(tier);
+                          setTimeout(() => setBenefitsDialogOpen(true), 100);
+                        }}
                       >
-                        <div className="font-medium">{tier.name}</div>
-                        <div className="text-sm">${tier.price} {tier.billing}</div>
-                        <Button 
-                          variant="link" 
-                          className="px-0 text-sm h-6" 
-                          onClick={() => {
-                            setBenefitsDialogOpen(false);
-                            setSelectedTier(tier);
-                            setTimeout(() => setBenefitsDialogOpen(true), 100);
-                          }}
-                        >
-                          {tier.id === selectedTier.id ? 'Current view' : 'View benefits'}
-                        </Button>
-                      </div>
-                    ))}
-                  </div>
+                        {tier.id === selectedTier.id ? 'Current view' : 'View benefits'}
+                      </Button>
+                    </div>
+                  ))}
                 </div>
-              )}
+              </div>
             </div>
           )}
         </DialogContent>
