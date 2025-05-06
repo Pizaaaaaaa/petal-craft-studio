@@ -1,9 +1,23 @@
-
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { Check, ChevronRight, ShoppingCart, X } from 'lucide-react';
+import { Check, ChevronRight, ShoppingCart, X, Star, Badge } from 'lucide-react';
 import { toast } from 'sonner';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { 
+  Card, 
+  CardContent, 
+  CardDescription, 
+  CardFooter, 
+  CardHeader, 
+  CardTitle 
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { 
+  Collapsible, 
+  CollapsibleContent, 
+  CollapsibleTrigger 
+} from "@/components/ui/collapsible";
+import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 
 // Membership tiers
 const membershipTiers = [
@@ -18,6 +32,23 @@ const membershipTiers = [
       'Create up to 5 projects',
       'Use basic yarn brushes',
       'Standard support'
+    ],
+    detailedBenefits: [
+      {
+        title: 'Basic Patterns',
+        description: 'Access our library of beginner-friendly patterns to start your knitting journey.',
+        icon: 'star'
+      },
+      {
+        title: 'Community Access',
+        description: 'Join our community forums to share your projects and get advice from fellow knitters.',
+        icon: 'users'
+      },
+      {
+        title: '5 Project Limit',
+        description: 'Create and save up to 5 projects in your personal workspace.',
+        icon: 'bookmark'
+      }
     ],
     recommended: false
   },
@@ -34,6 +65,28 @@ const membershipTiers = [
       'Priority support',
       'Ad-free experience'
     ],
+    detailedBenefits: [
+      {
+        title: 'Unlimited Patterns',
+        description: 'Access our entire library of patterns, including premium and seasonal designs.',
+        icon: 'star'
+      },
+      {
+        title: 'Unlimited Projects',
+        description: 'Create and save as many projects as you want with no restrictions.',
+        icon: 'bookmark'
+      },
+      {
+        title: 'Premium Tools',
+        description: 'Use all available yarn brushes and advanced editing tools to perfect your designs.',
+        icon: 'badge'
+      },
+      {
+        title: 'Priority Support',
+        description: 'Get faster responses from our support team when you need assistance.',
+        icon: 'user'
+      }
+    ],
     recommended: true
   },
   {
@@ -48,6 +101,33 @@ const membershipTiers = [
       'Priority hardware connection',
       'Early access to new features',
       '24/7 dedicated support'
+    ],
+    detailedBenefits: [
+      {
+        title: 'Commercial License',
+        description: 'Use our patterns and designs for commercial purposes and sell your creations.',
+        icon: 'badge-dollar-sign'
+      },
+      {
+        title: 'Advanced Tools',
+        description: 'Access professional-grade editing tools designed for complex pattern creation.',
+        icon: 'star'
+      },
+      {
+        title: 'Hardware Priority',
+        description: 'Your hardware connections take priority, ensuring minimal wait times.',
+        icon: 'badge-check'
+      },
+      {
+        title: 'Early Access',
+        description: 'Be the first to try new features and tools before they're released to the public.',
+        icon: 'gift'
+      },
+      {
+        title: 'Dedicated Support',
+        description: 'Get 24/7 dedicated support from our expert team for any issues or questions.',
+        icon: 'user-plus'
+      }
     ],
     recommended: false
   }
@@ -117,6 +197,7 @@ const MembershipStore: React.FC = () => {
   const { user, isAuthenticated, updateProfile } = useAuth();
   const [cart, setCart] = useState<{id: string, quantity: number}[]>([]);
   const [membershipDialogOpen, setMembershipDialogOpen] = useState(false);
+  const [benefitsDialogOpen, setBenefitsDialogOpen] = useState(false);
   const [paymentDialogOpen, setPaymentDialogOpen] = useState(false);
   const [selectedTier, setSelectedTier] = useState<typeof membershipTiers[0] | null>(null);
   const [selectedPayment, setSelectedPayment] = useState<string | null>(null);
@@ -152,6 +233,12 @@ const MembershipStore: React.FC = () => {
       return;
     }
     setMembershipDialogOpen(true);
+  };
+  
+  // Open benefits dialog for a specific tier
+  const openBenefitsDialog = (tier: typeof membershipTiers[0]) => {
+    setSelectedTier(tier);
+    setBenefitsDialogOpen(true);
   };
   
   // Select tier and open payment dialog
@@ -210,6 +297,32 @@ const MembershipStore: React.FC = () => {
       description: `You have ${cart.reduce((sum, item) => sum + item.quantity, 0)} items in your cart. Checkout coming soon!`,
       duration: 3000,
     });
+  };
+  
+  // Get icon component based on icon name
+  const getIconComponent = (iconName: string) => {
+    switch (iconName) {
+      case 'star':
+        return <Star size={20} />;
+      case 'badge':
+        return <Badge size={20} />;
+      case 'badge-check':
+        return <Check size={20} />;
+      case 'users':
+        return <Check size={20} />;
+      case 'bookmark':
+        return <Check size={20} />;
+      case 'gift':
+        return <Check size={20} />;
+      case 'user':
+        return <Check size={20} />;
+      case 'user-plus':
+        return <Check size={20} />;
+      case 'badge-dollar-sign':
+        return <Check size={20} />;
+      default:
+        return <Check size={20} />;
+    }
   };
   
   return (
@@ -308,7 +421,7 @@ const MembershipStore: React.FC = () => {
       
       {/* Membership Dialog */}
       <Dialog open={membershipDialogOpen} onOpenChange={setMembershipDialogOpen}>
-        <DialogContent className="sm:max-w-md">
+        <DialogContent className="sm:max-w-lg">
           <DialogHeader>
             <DialogTitle>Choose a Membership Plan</DialogTitle>
             <DialogDescription>
@@ -316,27 +429,165 @@ const MembershipStore: React.FC = () => {
             </DialogDescription>
           </DialogHeader>
           
-          <div className="space-y-4 my-4">
+          <div className="grid grid-cols-1 gap-4 my-4">
             {membershipTiers.map(tier => (
-              <div 
+              <Card 
                 key={tier.id}
-                onClick={() => selectTier(tier)}
-                className={`p-4 border rounded-lg cursor-pointer transition-all ${
-                  tier.recommended ? 'border-claw-blue-300 ring-2 ring-claw-blue-200' : 'border-gray-200 hover:border-claw-blue-200'
+                className={`cursor-pointer transition-all ${
+                  tier.recommended ? 'border-claw-blue-300 ring-2 ring-claw-blue-200' : 'hover:border-claw-blue-200'
                 }`}
               >
-                <div className="flex justify-between items-center">
-                  <div>
-                    <h3 className="font-medium">{tier.name}</h3>
-                    <div className="text-sm text-gray-500">{tier.price === 0 ? 'Free forever' : `$${tier.price} ${tier.billing}`}</div>
+                {tier.recommended && (
+                  <div className="bg-claw-blue-500 text-white py-1 text-xs font-medium text-center">
+                    RECOMMENDED
                   </div>
-                  {user?.membershipTier === tier.id && (
-                    <span className="text-xs bg-claw-blue-100 text-claw-blue-700 px-2 py-1 rounded">Current</span>
-                  )}
-                </div>
-              </div>
+                )}
+                
+                <CardHeader>
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <CardTitle>{tier.name}</CardTitle>
+                      <CardDescription className="mt-1">${tier.price} {tier.billing}</CardDescription>
+                    </div>
+                    {user?.membershipTier === tier.id && (
+                      <span className="text-xs bg-claw-blue-100 text-claw-blue-700 px-2 py-1 rounded">Current</span>
+                    )}
+                  </div>
+                </CardHeader>
+                
+                <CardContent>
+                  <ul className="space-y-2">
+                    {tier.features.slice(0, 3).map((feature, idx) => (
+                      <li key={idx} className="flex items-start gap-2">
+                        <Check size={16} className="text-claw-blue-500 mt-0.5" />
+                        <span className="text-sm">{feature}</span>
+                      </li>
+                    ))}
+                    {tier.features.length > 3 && (
+                      <Collapsible>
+                        <CollapsibleTrigger className="text-sm text-claw-blue-500 hover:underline cursor-pointer flex items-center">
+                          Show more features
+                          <ChevronRight size={14} className="ml-1 transform rotate-90" />
+                        </CollapsibleTrigger>
+                        <CollapsibleContent>
+                          <ul className="space-y-2 mt-2">
+                            {tier.features.slice(3).map((feature, idx) => (
+                              <li key={idx} className="flex items-start gap-2">
+                                <Check size={16} className="text-claw-blue-500 mt-0.5" />
+                                <span className="text-sm">{feature}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </CollapsibleContent>
+                      </Collapsible>
+                    )}
+                  </ul>
+                </CardContent>
+                
+                <CardFooter className="flex justify-between items-center">
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => openBenefitsDialog(tier)}
+                  >
+                    Learn More
+                  </Button>
+                  
+                  <Button 
+                    variant={tier.id !== user?.membershipTier ? "default" : "secondary"}
+                    onClick={() => selectTier(tier)}
+                    disabled={tier.id === user?.membershipTier}
+                  >
+                    {tier.id === user?.membershipTier ? 'Current Plan' : `Get ${tier.name}`}
+                  </Button>
+                </CardFooter>
+              </Card>
             ))}
           </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Benefits Detail Dialog */}
+      <Dialog open={benefitsDialogOpen} onOpenChange={setBenefitsDialogOpen}>
+        <DialogContent className="sm:max-w-3xl">
+          <DialogHeader>
+            <DialogTitle>{selectedTier?.name} Plan Benefits</DialogTitle>
+            <DialogDescription>
+              Detailed overview of what's included in the {selectedTier?.name} membership
+            </DialogDescription>
+          </DialogHeader>
+          
+          {selectedTier && (
+            <div className="my-6">
+              <div className="mb-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-semibold">${selectedTier.price} {selectedTier.billing}</h3>
+                  <Button 
+                    onClick={() => {
+                      setBenefitsDialogOpen(false);
+                      selectTier(selectedTier);
+                    }}
+                  >
+                    Subscribe Now
+                  </Button>
+                </div>
+                <p className="text-gray-600 mt-2">
+                  {selectedTier.id === 'basic' 
+                    ? 'Start with our free tier to explore basic knitting capabilities.' 
+                    : selectedTier.id === 'premium'
+                      ? 'Perfect for hobbyists and enthusiastic knitters looking for more features.'
+                      : 'Designed for professional knitters and small businesses.'
+                  }
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                {selectedTier.detailedBenefits.map((benefit, idx) => (
+                  <div key={idx} className="border rounded-lg p-4 hover:bg-gray-50 transition-colors">
+                    <div className="flex gap-3">
+                      <div className="flex-shrink-0 h-10 w-10 bg-claw-blue-100 rounded-full flex items-center justify-center text-claw-blue-600">
+                        {getIconComponent(benefit.icon)}
+                      </div>
+                      <div>
+                        <h4 className="font-medium">{benefit.title}</h4>
+                        <p className="text-sm text-gray-600 mt-1">{benefit.description}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {selectedTier.id !== 'basic' && (
+                <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+                  <h4 className="font-medium mb-2">Compare with other plans</h4>
+                  <div className="flex overflow-x-auto gap-4 pb-2">
+                    {membershipTiers.map(tier => (
+                      <div 
+                        key={tier.id}
+                        className={`flex-shrink-0 w-40 p-3 border rounded-lg ${
+                          tier.id === selectedTier.id ? 'bg-claw-blue-50 border-claw-blue-200' : 'bg-white'
+                        }`}
+                      >
+                        <div className="font-medium">{tier.name}</div>
+                        <div className="text-sm">${tier.price} {tier.billing}</div>
+                        <Button 
+                          variant="link" 
+                          className="px-0 text-sm h-6" 
+                          onClick={() => {
+                            setBenefitsDialogOpen(false);
+                            setSelectedTier(tier);
+                            setTimeout(() => setBenefitsDialogOpen(true), 100);
+                          }}
+                        >
+                          {tier.id === selectedTier.id ? 'Current view' : 'View benefits'}
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
         </DialogContent>
       </Dialog>
       
