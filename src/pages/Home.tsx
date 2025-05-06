@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
-import { Search, Plus } from 'lucide-react';
 import { toast } from 'sonner';
+import SearchBar from '../components/SearchBar';
 import RecommendationSection from '../components/RecommendationSection';
 import CategorySelector from '../components/CategorySelector';
 import TemplateSelectionModal from '../components/modals/TemplateSelectionModal';
@@ -50,54 +50,92 @@ const trendingProjects = [
     image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=800',
     likes: 118,
   },
+  {
+    id: '7',
+    title: 'Knitted Beanie',
+    author: 'Emma Davis',
+    image: 'https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?auto=format&fit=crop&q=80&w=800',
+    likes: 104,
+  },
+  {
+    id: '8',
+    title: 'Wool Socks',
+    author: 'Daniel Garcia',
+    image: 'https://images.unsplash.com/photo-1543398470-71ece679e400?auto=format&fit=crop&q=80&w=800',
+    likes: 75,
+  },
+  {
+    id: '9',
+    title: 'Hand-knitted Scarf',
+    author: 'Lily Johnson',
+    image: 'https://images.unsplash.com/photo-1516728778615-2d590ea1855e?auto=format&fit=crop&q=80&w=800',
+    likes: 113,
+  },
 ];
 
 const personalizedProjects = [
   {
-    id: '7',
+    id: '10',
     title: 'Cute Bear Plushie',
     author: 'Emma Davis',
     image: 'https://images.unsplash.com/photo-1556012018-50c5c0da73bf?auto=format&fit=crop&q=80&w=800',
     likes: 201,
   },
   {
-    id: '8',
+    id: '11',
     title: 'Knitted Home Decor',
     author: 'Daniel Garcia',
     image: 'https://images.unsplash.com/photo-1578898887932-7769494df893?auto=format&fit=crop&q=80&w=800',
     likes: 75,
   },
   {
-    id: '9',
+    id: '12',
     title: 'Colorful Mittens',
     author: 'Emma Davis',
     image: 'https://images.unsplash.com/photo-1607529129242-5b759eb7b268?auto=format&fit=crop&q=80&w=800',
     likes: 87,
-    date: '2023-10-25'
   },
   {
-    id: '10',
+    id: '13',
     title: 'Cable Knit Hat',
     author: 'David Wong',
     image: 'https://images.unsplash.com/photo-1510481296702-5090337e808e?auto=format&fit=crop&q=80&w=800',
     likes: 143,
-    date: '2023-10-12'
   },
   {
-    id: '11',
+    id: '14',
     title: 'Knitted Wall Hanging',
     author: 'Sophie Turner',
     image: 'https://images.unsplash.com/photo-1602079282086-3880b138a2c1?auto=format&fit=crop&q=80&w=800',
     likes: 65,
-    date: '2023-09-20'
   },
   {
-    id: '12',
+    id: '15',
     title: 'Vintage Style Socks',
     author: 'Michael Brown',
     image: 'https://images.unsplash.com/photo-1589903308904-1010c2294adc?auto=format&fit=crop&q=80&w=800',
     likes: 92,
-    date: '2023-09-15'
+  },
+  {
+    id: '16',
+    title: 'Cozy Blanket',
+    author: 'Jane Smith',
+    image: 'https://images.unsplash.com/photo-1580301762339-0a78caff1927?auto=format&fit=crop&q=80&w=800',
+    likes: 157,
+  },
+  {
+    id: '17',
+    title: 'Baby Booties',
+    author: 'Sarah Johnson',
+    image: 'https://images.unsplash.com/photo-1556906105-58e0397867f3?auto=format&fit=crop&q=80&w=800',
+    likes: 108,
+  },
+  {
+    id: '18',
+    title: 'Summer Tote Bag',
+    author: 'Rachel Green',
+    image: 'https://images.unsplash.com/photo-1544816155-f9c22a3246c6?auto=format&fit=crop&q=80&w=800',
+    likes: 133,
   },
 ];
 
@@ -106,12 +144,10 @@ const categories = ['All', 'Clothes', 'Scarves', 'Hats', 'Socks', 'Gloves', 'Bag
 
 const HomePage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [searchQuery, setSearchQuery] = useState('');
   const [showTemplateModal, setShowTemplateModal] = useState(false);
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    toast.info(`Search: ${searchQuery}`);
+  const handleSearch = (query: string) => {
+    toast.info(`Search: ${query}`);
   };
 
   return (
@@ -122,26 +158,10 @@ const HomePage: React.FC = () => {
           <p className="text-gray-600 mt-1">Discover yarn DIY inspiration and start your creative journey</p>
         </div>
         
-        <div className="flex gap-3 w-full md:w-auto">
-          <form onSubmit={handleSearch} className="relative flex-1 md:w-64">
-            <input
-              type="text"
-              placeholder="Search projects..."
-              className="w-full pl-10 pr-4 py-2 border border-claw-blue-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-claw-blue-300"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
-          </form>
-          
-          <button 
-            onClick={() => setShowTemplateModal(true)} 
-            className="claw-button whitespace-nowrap flex items-center gap-2"
-          >
-            <Plus size={18} />
-            <span>Create New Project</span>
-          </button>
-        </div>
+        <SearchBar 
+          onSearch={handleSearch} 
+          onCreateProject={() => setShowTemplateModal(true)} 
+        />
       </div>
       
       <CategorySelector 
