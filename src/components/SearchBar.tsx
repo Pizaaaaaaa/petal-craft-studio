@@ -23,7 +23,7 @@ const SearchBar = ({ onSearch, onCreateProject }: SearchBarProps) => {
         </div>
         <input
           type="text"
-          placeholder="搜索创意灵感、DIY教程..."
+          placeholder="Search for ideas, DIY tutorials..."
           className="w-full pl-10 pr-4 py-3 rounded-full border border-craft-pink-200 focus:border-craft-pink-300 focus:outline-none focus:ring-2 focus:ring-craft-pink-200/50 transition"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
@@ -34,7 +34,7 @@ const SearchBar = ({ onSearch, onCreateProject }: SearchBarProps) => {
         className="craft-button flex items-center gap-2"
       >
         <Plus size={18} />
-        <span>创建项目</span>
+        <span>Create Project</span>
       </button>
     </div>
   );

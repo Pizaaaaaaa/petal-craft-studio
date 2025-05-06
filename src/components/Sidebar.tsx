@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Home, BookOpen, ShoppingBag, HelpCircle, Settings, User } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -33,11 +34,11 @@ type SidebarProps = {
 
 const Sidebar = ({ activePage, onNavigate }: SidebarProps) => {
   const menuItems = [
-    { id: 'home', label: '首页', icon: Home },
-    { id: 'works', label: '我的作品', icon: BookOpen },
-    { id: 'store', label: '会员商城', icon: ShoppingBag },
-    { id: 'help', label: '帮助', icon: HelpCircle },
-    { id: 'settings', label: '设置', icon: Settings },
+    { id: 'home', label: 'Home', icon: Home },
+    { id: 'works', label: 'My Works', icon: BookOpen },
+    { id: 'store', label: 'Store', icon: ShoppingBag },
+    { id: 'help', label: 'Help', icon: HelpCircle },
+    { id: 'settings', label: 'Settings', icon: Settings },
   ];
 
   return (
@@ -75,8 +76,8 @@ const Sidebar = ({ activePage, onNavigate }: SidebarProps) => {
           </div>
         </div>
         <div className="hidden md:block">
-          <p className="font-medium text-sm">默默小花</p>
-          <p className="text-xs text-muted-foreground">高级会员</p>
+          <p className="font-medium text-sm">Flora Smith</p>
+          <p className="text-xs text-muted-foreground">Premium Member</p>
         </div>
       </div>
     </aside>

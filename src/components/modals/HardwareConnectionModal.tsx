@@ -20,9 +20,9 @@ const HardwareConnectionModal: React.FC = () => {
   useEffect(() => {
     if (showConnectionModal) {
       const mockDevices = [
-        'ClawLab 毛线纺织机',
-        'ClawLab 智能编织机',
-        'ClawLab 图案打印机'
+        'ClawLab Yarn Spinning Machine',
+        'ClawLab Smart Knitting Machine',
+        'ClawLab Pattern Printer'
       ];
       
       setTimeout(() => {
@@ -67,8 +67,8 @@ const HardwareConnectionModal: React.FC = () => {
             </svg>
           </div>
           
-          <h3 className="text-xl font-semibold text-gray-800">连接硬件设备</h3>
-          <p className="text-gray-600 mt-1">连接到您的 ClawLab 纺织设备</p>
+          <h3 className="text-xl font-semibold text-gray-800">Connect Hardware Device</h3>
+          <p className="text-gray-600 mt-1">Connect to your ClawLab textile device</p>
         </div>
         
         {connectionError && (
@@ -79,7 +79,7 @@ const HardwareConnectionModal: React.FC = () => {
         
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">选择设备</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Select Device</label>
             <select
               className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-claw-blue-300"
               value={selectedDevice}
@@ -87,7 +87,7 @@ const HardwareConnectionModal: React.FC = () => {
               disabled={isConnecting || deviceList.length === 0}
             >
               {deviceList.length === 0 ? (
-                <option>正在扫描设备...</option>
+                <option>Scanning for devices...</option>
               ) : (
                 deviceList.map(device => (
                   <option key={device} value={device}>{device}</option>
@@ -101,7 +101,7 @@ const HardwareConnectionModal: React.FC = () => {
               className="claw-secondary-button flex-1"
               onClick={handleSkip}
             >
-              暂时跳过
+              Skip for Now
             </button>
             
             <button
@@ -109,12 +109,12 @@ const HardwareConnectionModal: React.FC = () => {
               onClick={handleConnect}
               disabled={isConnecting || !selectedDevice}
             >
-              {isConnecting ? '连接中...' : isConnected ? '已连接' : '连接'}
+              {isConnecting ? 'Connecting...' : isConnected ? 'Connected' : 'Connect'}
             </button>
           </div>
           
           <p className="text-center text-xs text-gray-500 mt-4">
-            您可以随时在硬件设置菜单中连接您的设备
+            You can connect your device anytime in the Hardware Settings menu
           </p>
         </div>
       </div>

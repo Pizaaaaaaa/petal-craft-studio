@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Search, Plus } from 'lucide-react';
 import { toast } from 'sonner';
@@ -101,31 +102,31 @@ const personalizedProjects = [
 ];
 
 // Categories for filtering
-const categories = ['全部', '衣服', '围巾', '帽子', '袜子', '手套', '包包', '玩偶'];
+const categories = ['All', 'Clothes', 'Scarves', 'Hats', 'Socks', 'Gloves', 'Bags', 'Dolls'];
 
 const HomePage: React.FC = () => {
-  const [selectedCategory, setSelectedCategory] = useState('全部');
+  const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [showTemplateModal, setShowTemplateModal] = useState(false);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    toast.info(`搜索: ${searchQuery}`);
+    toast.info(`Search: ${searchQuery}`);
   };
 
   return (
     <div>
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-800">创意社区</h1>
-          <p className="text-gray-600 mt-1">发现毛线DIY创作灵感，开启您的创作之旅</p>
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-800">Creative Community</h1>
+          <p className="text-gray-600 mt-1">Discover yarn DIY inspiration and start your creative journey</p>
         </div>
         
         <div className="flex gap-3 w-full md:w-auto">
           <form onSubmit={handleSearch} className="relative flex-1 md:w-64">
             <input
               type="text"
-              placeholder="搜索作品..."
+              placeholder="Search projects..."
               className="w-full pl-10 pr-4 py-2 border border-claw-blue-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-claw-blue-300"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -138,7 +139,7 @@ const HomePage: React.FC = () => {
             className="claw-button whitespace-nowrap flex items-center gap-2"
           >
             <Plus size={18} />
-            <span>创建新作品</span>
+            <span>Create New Project</span>
           </button>
         </div>
       </div>
@@ -151,8 +152,8 @@ const HomePage: React.FC = () => {
       
       <div className="mt-6 sm:mt-8 p-4 sm:p-6 rounded-2xl bg-gradient-to-r from-claw-blue-100 to-claw-blue-50 flex items-center justify-between">
         <div className="flex-1">
-          <h1 className="text-xl sm:text-2xl font-serif font-medium">欢迎来到 ClawLab!</h1>
-          <p className="mt-2 text-foreground/80 text-sm sm:text-base">发现毛线DIY创作灵感，通过智能硬件实现您的创意</p>
+          <h1 className="text-xl sm:text-2xl font-serif font-medium">Welcome to ClawLab!</h1>
+          <p className="mt-2 text-foreground/80 text-sm sm:text-base">Discover yarn DIY inspiration and bring your ideas to life with smart hardware</p>
         </div>
         <div className="hidden md:block animate-float ml-4">
           <img 
@@ -164,12 +165,12 @@ const HomePage: React.FC = () => {
       </div>
       
       <RecommendationSection 
-        title="热门内容" 
+        title="Trending Content" 
         projects={trendingProjects} 
       />
       
       <RecommendationSection 
-        title="为你推荐" 
+        title="Recommended For You" 
         projects={personalizedProjects} 
       />
 

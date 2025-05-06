@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import Sidebar from '@/components/Sidebar';
 import SearchBar from '@/components/SearchBar';
@@ -11,57 +12,57 @@ const Index = () => {
   const { toast } = useToast();
 
   const categories = [
-    { id: 'all', name: '全部' },
-    { id: 'clothes', name: '衣服' },
-    { id: 'scarf', name: '围巾' },
-    { id: 'hat', name: '帽子' },
-    { id: 'socks', name: '袜子' },
-    { id: 'gloves', name: '手套' },
-    { id: 'bag', name: '包包' },
-    { id: 'doll', name: '玩偶' },
+    'All',
+    'Clothes',
+    'Scarves',
+    'Hats',
+    'Socks',
+    'Gloves',
+    'Bags',
+    'Dolls'
   ];
 
   const trendingProjects = [
     {
       id: '1',
       image: 'https://images.unsplash.com/photo-1596496181871-9681eacf9764?q=80&w=1000',
-      title: '清新花环手账装饰',
-      author: '小花花',
+      title: 'Fresh Floral Notebook Design',
+      author: 'Flora Smith',
       likes: 256
     },
     {
       id: '2',
       image: 'https://images.unsplash.com/photo-1629976002373-8c901c9d954d?q=80&w=1000',
-      title: '复古风刺绣小挂件',
-      author: '针线活',
+      title: 'Vintage Embroidery Pendant',
+      author: 'Stitch Master',
       likes: 189
     },
     {
       id: '3',
       image: 'https://images.unsplash.com/photo-1602409339188-95d178a611a3?q=80&w=1000',
-      title: '夏日贝壳饰品DIY',
-      author: '海边姑娘',
+      title: 'Summer Shell Jewelry DIY',
+      author: 'Beach Girl',
       likes: 345
     },
     {
       id: '4',
       image: 'https://images.unsplash.com/photo-1606722590583-6951b5ea95b3?q=80&w=1000',
-      title: '迷你多肉花盆创意',
-      author: '植物控',
+      title: 'Mini Succulent Planter Ideas',
+      author: 'Plant Lover',
       likes: 217
     },
     {
       id: '5',
       image: 'https://images.unsplash.com/photo-1464699908537-0954e50791ee?q=80&w=1000',
-      title: '温馨纸艺灯罩',
-      author: '光影师',
+      title: 'Cozy Paper Lampshade',
+      author: 'Light Master',
       likes: 129
     },
     {
       id: '6',
       image: 'https://images.unsplash.com/photo-1490312278390-ab64016e0aa9?q=80&w=1000',
-      title: '春日花环装饰',
-      author: '花艺师小白',
+      title: 'Spring Wreath Decoration',
+      author: 'Flower Artist',
       likes: 156
     }
   ];
@@ -70,59 +71,59 @@ const Index = () => {
     {
       id: '7',
       image: 'https://images.unsplash.com/photo-1613338761627-82828a8024c1?q=80&w=1000',
-      title: '创意布艺收纳盒',
-      author: '家居达人',
+      title: 'Creative Fabric Storage Box',
+      author: 'Home Expert',
       likes: 178
     },
     {
       id: '8',
       image: 'https://images.unsplash.com/photo-1558959806-42daff5aa0b4?q=80&w=1000',
-      title: '水晶树脂首饰教程',
-      author: '饰品匠人',
+      title: 'Crystal Resin Jewelry Tutorial',
+      author: 'Jewelry Artisan',
       likes: 203
     },
     {
       id: '9',
       image: 'https://images.unsplash.com/photo-1528826007177-f38517ce0a76?q=80&w=1000',
-      title: '治愈系刺绣图案',
-      author: '小绣娘',
+      title: 'Therapeutic Embroidery Patterns',
+      author: 'Stitch Artist',
       likes: 143
     },
     {
       id: '10',
       image: 'https://images.unsplash.com/photo-1579275530126-af715aa21c6c?q=80&w=1000',
-      title: '轻粘土小动物公仔',
-      author: '粘土师',
+      title: 'Clay Animal Figurines',
+      author: 'Clay Crafter',
       likes: 289
     },
     {
       id: '11',
       image: 'https://images.unsplash.com/photo-1505262933600-27c2b248607c?q=80&w=1000',
-      title: '牛皮纸包装礼盒',
-      author: '礼物包装师',
+      title: 'Kraft Paper Gift Boxes',
+      author: 'Gift Wrapper',
       likes: 165
     },
     {
       id: '12',
       image: 'https://images.unsplash.com/photo-1501436513145-30f24e19fcc8?q=80&w=1000',
-      title: '棉线编织小装饰',
-      author: '编织艺术',
+      title: 'Cotton String Decorations',
+      author: 'Weaving Artist',
       likes: 132
     }
   ];
 
   const handleSearch = (query: string) => {
     toast({
-      title: "搜索",
-      description: `正在搜索: ${query}`,
+      title: "Search",
+      description: `Searching for: ${query}`,
       duration: 2000,
     });
   };
 
   const handleCreateProject = () => {
     toast({
-      title: "新项目",
-      description: "创建新项目功能即将上线！",
+      title: "New Project",
+      description: "Create new project feature coming soon!",
       duration: 2000,
     });
   };
@@ -130,14 +131,14 @@ const Index = () => {
   const handleNavigate = (page: string) => {
     setActivePage(page);
     toast({
-      title: "导航",
-      description: `您选择了: ${page}`,
+      title: "Navigation",
+      description: `You selected: ${page}`,
       duration: 1500,
     });
   };
 
-  const handleSelectCategory = (id: string) => {
-    setSelectedCategory(id);
+  const handleSelectCategory = (category: string) => {
+    setSelectedCategory(category);
   };
 
   return (
@@ -159,8 +160,8 @@ const Index = () => {
             
             <div className="mt-6 sm:mt-8 p-4 sm:p-6 rounded-2xl bg-gradient-to-r from-craft-pink-200 to-craft-lavender-200 flex items-center justify-between">
               <div className="flex-1">
-                <h1 className="text-xl sm:text-2xl font-serif font-medium">欢迎回来，默默小花！</h1>
-                <p className="mt-2 text-foreground/80 text-sm sm:text-base">发现今日灵感，开始你的DIY创作之旅</p>
+                <h1 className="text-xl sm:text-2xl font-serif font-medium">Welcome back, Flora!</h1>
+                <p className="mt-2 text-foreground/80 text-sm sm:text-base">Discover today's inspiration and start your DIY journey</p>
               </div>
               <div className="hidden md:block animate-float ml-4">
                 <img 
@@ -172,12 +173,12 @@ const Index = () => {
             </div>
             
             <RecommendationSection 
-              title="热门内容" 
+              title="Trending Content" 
               projects={trendingProjects} 
             />
             
             <RecommendationSection 
-              title="为你推荐" 
+              title="Recommended For You" 
               projects={personalizedProjects} 
             />
           </div>

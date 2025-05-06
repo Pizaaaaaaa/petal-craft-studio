@@ -39,7 +39,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
               <path d="M12 5v14"></path>
             </svg>
           </div>
-          <h3 className="text-claw-blue-500 font-medium">创建新作品</h3>
+          <h3 className="text-claw-blue-500 font-medium">Create New Project</h3>
         </div>
         
         <TemplateSelectionModal
