@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -62,34 +63,34 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				"craft": {
-					"pink": {
-						100: "#FFFFFF",
-						200: "#E6F2FF",
-						300: "#B3D9FF",
-						400: "#80C1FF",
-						500: "#4DA6FF"
+				"claw": {
+					"blue": {
+						100: "#E6F2FF",
+						200: "#B3D9FF",
+						300: "#80C1FF",
+						400: "#4DA6FF",
+						500: "#1A8CFF"
 					},
-					"lavender": {
-						100: "#F0F8FF",
-						200: "#E1F0FF",
-						300: "#C6E0FF",
-						400: "#A3CFFF",
-						500: "#7AB8FF"
+					"teal": {
+						100: "#E6F7FB",
+						200: "#B3E6F2",
+						300: "#80D6E9",
+						400: "#4DC4DF",
+						500: "#1AB4D6"
 					},
-					"mint": {
-						100: "#F9FEFA",
-						200: "#F2FCE2",
-						300: "#E6F7C8",
-						400: "#D4F2A5",
-						500: "#BBEA76"
+					"gray": {
+						100: "#F7F9FA",
+						200: "#EDF0F2",
+						300: "#E1E5E9",
+						400: "#CDD3DA",
+						500: "#B1BAC5"
 					},
-					"peach": {
-						100: "#FFF8F5",
-						200: "#FDE1D3",
-						300: "#FEC6A1",
-						400: "#FFA978",
-						500: "#FF8F55"
+					"navy": {
+						100: "#EFF1F8",
+						200: "#D5DBF0",
+						300: "#BAC5E7",
+						400: "#98A8DC",
+						500: "#7E8FCD"
 					}
 				}
 			},

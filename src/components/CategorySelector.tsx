@@ -1,31 +1,26 @@
 
 import React from 'react';
 
-type Category = {
-  id: string;
-  name: string;
-}
-
-type CategorySelectorProps = {
-  categories: Category[];
+interface CategorySelectorProps {
+  categories: string[];
   selectedCategory: string;
-  onSelectCategory: (id: string) => void;
+  onSelectCategory: (category: string) => void;
 }
 
-const CategorySelector = ({ categories, selectedCategory, onSelectCategory }: CategorySelectorProps) => {
+const CategorySelector: React.FC<CategorySelectorProps> = ({
+  categories,
+  selectedCategory,
+  onSelectCategory
+}) => {
   return (
-    <div className="flex items-center gap-3 overflow-x-auto pb-2 no-scrollbar">
-      {categories.map((category) => (
+    <div className="flex flex-wrap gap-2 mb-6">
+      {categories.map(category => (
         <button
-          key={category.id}
-          onClick={() => onSelectCategory(category.id)}
-          className={`whitespace-nowrap px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-            selectedCategory === category.id 
-              ? 'bg-craft-pink-300 text-white' 
-              : 'bg-craft-pink-100 text-foreground hover:bg-craft-pink-200/70'
-          }`}
+          key={category}
+          className={`category-tag ${selectedCategory === category ? 'active' : ''}`}
+          onClick={() => onSelectCategory(category)}
         >
-          {category.name}
+          {category}
         </button>
       ))}
     </div>
