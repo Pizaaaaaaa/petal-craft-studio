@@ -39,10 +39,10 @@ const DownloadConfirmDialog: React.FC<DownloadConfirmDialogProps> = ({
         <AlertDialogHeader>
           <AlertDialogTitle className="flex items-center gap-2">
             <FileCheck className="h-5 w-5 text-claw-blue-500" />
-            Confirm Download to Device
+            Send to Hardware
           </AlertDialogTitle>
           <AlertDialogDescription>
-            You are about to download <span className="font-medium text-foreground">{projectTitle}</span> to your knitting device.
+            You are about to send <span className="font-medium text-foreground">{projectTitle}</span> to your knitting device.
           </AlertDialogDescription>
         </AlertDialogHeader>
 
@@ -106,7 +106,7 @@ const DownloadConfirmDialog: React.FC<DownloadConfirmDialogProps> = ({
             className="bg-claw-blue-500 hover:bg-claw-blue-600"
             disabled={!isConnected}
           >
-            Download Now
+            Send to Hardware
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Heart, Share, Download, Edit, ChevronLeft, MessageSquare } from 'lucide-react';
@@ -211,10 +210,11 @@ const ProjectDetailsPage: React.FC = () => {
             </button>
             
             <button 
-              className="claw-secondary-button"
+              className="claw-secondary-button flex items-center gap-2"
               onClick={handleDownloadClick}
             >
               <Download size={18} />
+              <span>Send to Hardware</span>
             </button>
             
             <button 

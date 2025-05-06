@@ -1,9 +1,10 @@
-
 import React, { useState } from 'react';
 import { X, ChevronRight, Edit, Download } from 'lucide-react';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import DownloadConfirmDialog from '../DownloadConfirmDialog';
+import { useHardwareConnection } from '../../contexts/HardwareConnectionContext';
 
 interface TemplateCategory {
   id: string;
@@ -99,6 +100,8 @@ const TemplateSelectionModal: React.FC<TemplateSelectionModalProps> = ({ isOpen,
   const [selectedCategory, setSelectedCategory] = useState<TemplateCategory | null>(null);
   const [isTransferring, setIsTransferring] = useState(false);
   const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
+  const [downloadDialogOpen, setDownloadDialogOpen] = useState(false);
+  const { isConnected, showConnectionModal, setShowConnectionModal, selectedModel } = useHardwareConnection();
   const navigate = useNavigate();
   
   const handleSelectTemplate = (templateId: string) => {
@@ -108,12 +111,24 @@ const TemplateSelectionModal: React.FC<TemplateSelectionModalProps> = ({ isOpen,
   const handleSendToHardware = () => {
     if (!selectedTemplate) return;
     
+    if (!isConnected) {
+      toast.error("No device connected");
+      setShowConnectionModal(true);
+      return;
+    }
+    
+    setDownloadDialogOpen(true);
+  };
+  
+  const handleDownloadConfirm = () => {
+    if (!selectedTemplate || !selectedModel) return;
+    
     // Simulate sending template to hardware
     setIsTransferring(true);
     
     setTimeout(() => {
       setIsTransferring(false);
-      toast.success('Template successfully sent to smart hardware', {
+      toast.success(`Successfully sent template to ${selectedModel}`, {
         description: 'You can check the execution status on your hardware device'
       });
       onClose();
@@ -129,6 +144,14 @@ const TemplateSelectionModal: React.FC<TemplateSelectionModalProps> = ({ isOpen,
     // Navigate to editor with the template ID
     navigate(`/editor/new/${categoryId}`);
     onClose();
+  };
+
+  // Find template name based on selected template id
+  const getSelectedTemplateName = () => {
+    if (!selectedTemplate || !selectedCategory) return "Template";
+    
+    const template = selectedCategory.templates.find(t => t.id === selectedTemplate);
+    return template ? `${selectedCategory.name} - ${template.name}` : "Template";
   };
   
   if (!isOpen) return null;
@@ -256,6 +279,15 @@ const TemplateSelectionModal: React.FC<TemplateSelectionModalProps> = ({ isOpen,
           )}
         </div>
       </div>
+      
+      {/* Add Download Confirm Dialog */}
+      <DownloadConfirmDialog
+        isOpen={downloadDialogOpen}
+        onClose={() => setDownloadDialogOpen(false)}
+        onConfirm={handleDownloadConfirm}
+        projectTitle={getSelectedTemplateName()}
+        requiredMaterials={[]}  // Templates don't have specific materials listed
+      />
     </div>
   );
 };

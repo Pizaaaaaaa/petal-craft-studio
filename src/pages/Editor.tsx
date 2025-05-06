@@ -116,8 +116,9 @@ const EditorPage: React.FC = () => {
             <span>Save</span>
           </button>
           
-          <button className="claw-secondary-button" onClick={handleDownloadClick}>
+          <button className="claw-secondary-button gap-2 flex items-center" onClick={handleDownloadClick}>
             <Download size={18} />
+            <span>Send to Hardware</span>
           </button>
         </div>
       </header>
