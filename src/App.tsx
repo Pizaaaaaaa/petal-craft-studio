@@ -15,33 +15,42 @@ import ProfilePage from './pages/Profile';
 import EditorPage from './pages/Editor';
 import ProjectDetailsPage from './pages/ProjectDetails';
 import MembershipStore from './pages/MembershipStore';
+import CartPage from './pages/Cart';
+import CheckoutPage from './pages/Checkout';
+import OrderConfirmation from './pages/OrderConfirmation';
 import NotFound from './pages/NotFound';
 
 // Providers
 import { HardwareConnectionProvider } from './contexts/HardwareConnectionContext';
 import { AuthProvider } from './contexts/AuthContext';
+import { CartProvider } from './contexts/CartContext';
 
 function App() {
   return (
     <HashRouter>
       <AuthProvider>
-        <HardwareConnectionProvider>
-          <Routes>
-            <Route path="/" element={<MainLayout />}>
-              <Route index element={<HomePage />} />
-              <Route path="my-works" element={<MyWorksPage />} />
-              <Route path="membership-store" element={<MembershipStore />} />
-              <Route path="help" element={<HelpPage />} />
-              <Route path="hardware-settings" element={<HardwareSettingsPage />} />
-              <Route path="profile" element={<ProfilePage />} />
-              <Route path="project/:id" element={<ProjectDetailsPage />} />
-            </Route>
-            <Route path="/editor/:id" element={<EditorPage />} />
-            <Route path="/editor/new/:templateId" element={<EditorPage />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-          <Toaster position="top-right" />
-        </HardwareConnectionProvider>
+        <CartProvider>
+          <HardwareConnectionProvider>
+            <Routes>
+              <Route path="/" element={<MainLayout />}>
+                <Route index element={<HomePage />} />
+                <Route path="my-works" element={<MyWorksPage />} />
+                <Route path="membership-store" element={<MembershipStore />} />
+                <Route path="cart" element={<CartPage />} />
+                <Route path="checkout" element={<CheckoutPage />} />
+                <Route path="order-confirmation" element={<OrderConfirmation />} />
+                <Route path="help" element={<HelpPage />} />
+                <Route path="hardware-settings" element={<HardwareSettingsPage />} />
+                <Route path="profile" element={<ProfilePage />} />
+                <Route path="project/:id" element={<ProjectDetailsPage />} />
+              </Route>
+              <Route path="/editor/:id" element={<EditorPage />} />
+              <Route path="/editor/new/:templateId" element={<EditorPage />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+            <Toaster position="top-right" />
+          </HardwareConnectionProvider>
+        </CartProvider>
       </AuthProvider>
     </HashRouter>
   );

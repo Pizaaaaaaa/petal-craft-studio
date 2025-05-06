@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import { useCart } from '../contexts/CartContext';
+import { Link } from 'react-router-dom';
 import { Check, ChevronRight, ShoppingCart, X, Star, Badge } from 'lucide-react';
 import { toast } from 'sonner';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -17,7 +19,6 @@ import {
   CollapsibleContent, 
   CollapsibleTrigger 
 } from "@/components/ui/collapsible";
-import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 
 // Membership tiers
 const membershipTiers = [
@@ -195,7 +196,7 @@ const paymentMethods = [
 
 const MembershipStore: React.FC = () => {
   const { user, isAuthenticated, updateProfile } = useAuth();
-  const [cart, setCart] = useState<{id: string, quantity: number}[]>([]);
+  const { addItem, totalItems } = useCart();
   const [membershipDialogOpen, setMembershipDialogOpen] = useState(false);
   const [benefitsDialogOpen, setBenefitsDialogOpen] = useState(false);
   const [paymentDialogOpen, setPaymentDialogOpen] = useState(false);
@@ -204,22 +205,12 @@ const MembershipStore: React.FC = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   
   // Add item to cart
-  const addToCart = (itemId: string) => {
-    const existingItem = cart.find(item => item.id === itemId);
-    
-    if (existingItem) {
-      setCart(cart.map(item => 
-        item.id === itemId 
-          ? { ...item, quantity: item.quantity + 1 } 
-          : item
-      ));
-    } else {
-      setCart([...cart, { id: itemId, quantity: 1 }]);
-    }
-    
-    toast("Added to cart", {
-      description: "Item has been added to your cart",
-      duration: 2000,
+  const handleAddToCart = (item: typeof shopItems[0]) => {
+    addItem({
+      id: item.id,
+      name: item.name,
+      price: item.price,
+      image: item.image
     });
   };
   
@@ -289,14 +280,6 @@ const MembershipStore: React.FC = () => {
     } finally {
       setIsProcessing(false);
     }
-  };
-  
-  // View cart items
-  const viewCart = () => {
-    toast("Shopping Cart", {
-      description: `You have ${cart.reduce((sum, item) => sum + item.quantity, 0)} items in your cart. Checkout coming soon!`,
-      duration: 3000,
-    });
   };
   
   // Get icon component based on icon name
@@ -371,13 +354,14 @@ const MembershipStore: React.FC = () => {
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-semibold">Yarn Supplies</h2>
           
-          <button 
-            className="flex items-center gap-2 px-3 py-2 rounded-lg bg-claw-blue-50 hover:bg-claw-blue-100 text-claw-blue-500"
-            onClick={viewCart}
-          >
-            <ShoppingCart size={18} />
-            <span>{cart.reduce((sum, item) => sum + item.quantity, 0)}</span>
-          </button>
+          <Link to="/cart">
+            <button 
+              className="flex items-center gap-2 px-3 py-2 rounded-lg bg-claw-blue-50 hover:bg-claw-blue-100 text-claw-blue-500"
+            >
+              <ShoppingCart size={18} />
+              <span>{totalItems}</span>
+            </button>
+          </Link>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -408,7 +392,7 @@ const MembershipStore: React.FC = () => {
                       ? 'bg-claw-blue-500 hover:bg-claw-blue-600 text-white' 
                       : 'bg-gray-200 text-gray-500 cursor-not-allowed'
                   }`}
-                  onClick={() => item.inStock && addToCart(item.id)}
+                  onClick={() => item.inStock && handleAddToCart(item)}
                   disabled={!item.inStock}
                 >
                   {item.inStock ? 'Add to Cart' : 'Out of Stock'}
