@@ -38,26 +38,17 @@ const RecommendationSection: React.FC<RecommendationSectionProps> = ({ title, pr
         )}
       </div>
       
-      <div className="masonry-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
-        {displayedProjects.map((project, index) => (
-          <div 
-            key={project.id} 
-            className="masonry-item mb-4"
-            style={{ 
-              height: `${Math.max(240, Math.random() * 60 + 220)}px`,
-              gridRow: `span ${Math.ceil(Math.random() * 1) + 1}`
-            }}
-          >
-            <ProjectCard
-              id={project.id}
-              image={project.image}
-              title={project.title}
-              author={project.author}
-              likes={project.likes}
-              comments={project.comments || 0}
-              height="100%"
-            />
-          </div>
+      <div className="masonry-grid">
+        {displayedProjects.map((project) => (
+          <ProjectCard 
+            key={project.id}
+            id={project.id}
+            title={project.title}
+            author={project.author}
+            image={project.image}
+            likes={project.likes}
+            comments={project.comments || 0}
+          />
         ))}
       </div>
     </div>
