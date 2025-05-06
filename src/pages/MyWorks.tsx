@@ -154,6 +154,15 @@ const MyWorksPage: React.FC = () => {
         
         <TabsContent value="materials">
           <div className="masonry-grid">
+            <ProjectCard 
+              id="new-material"
+              title="Create New"
+              author=""
+              image=""
+              likes={0}
+              isCreateCard={true}
+            />
+            
             {filterItems(myMaterials).map((material) => (
               <ProjectCard 
                 key={material.id}

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Heart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import TemplateSelectionModal from './modals/TemplateSelectionModal';
+import MaterialUploadModal from './modals/MaterialUploadModal';
 
 export interface ProjectCardProps {
   id: string;
@@ -24,12 +25,15 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   isCreateCard = false
 }) => {
   const [showTemplateModal, setShowTemplateModal] = useState(false);
+  const [showMaterialModal, setShowMaterialModal] = useState(false);
 
   if (isCreateCard) {
+    const isMaterialUpload = id === 'new-material';
+    
     return (
       <>
         <div
-          onClick={() => setShowTemplateModal(true)}
+          onClick={() => isMaterialUpload ? setShowMaterialModal(true) : setShowTemplateModal(true)}
           className="claw-card group relative w-full flex flex-col items-center justify-center transition-transform duration-200 hover:-translate-y-1 bg-claw-blue-50 border-2 border-dashed border-claw-blue-200 cursor-pointer"
           style={{ minHeight: '250px', height }}
         >
@@ -39,13 +43,24 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
               <path d="M12 5v14"></path>
             </svg>
           </div>
-          <h3 className="text-claw-blue-500 font-medium">Create New Project</h3>
+          <h3 className="text-claw-blue-500 font-medium">
+            {isMaterialUpload ? "Upload New Material" : "Create New Project"}
+          </h3>
         </div>
         
-        <TemplateSelectionModal
-          isOpen={showTemplateModal}
-          onClose={() => setShowTemplateModal(false)}
-        />
+        {!isMaterialUpload && (
+          <TemplateSelectionModal
+            isOpen={showTemplateModal}
+            onClose={() => setShowTemplateModal(false)}
+          />
+        )}
+        
+        {isMaterialUpload && (
+          <MaterialUploadModal
+            isOpen={showMaterialModal}
+            onClose={() => setShowMaterialModal(false)}
+          />
+        )}
       </>
     );
   }
