@@ -3,6 +3,8 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Heart, Share, Download, Edit, ChevronLeft, MessageSquare } from 'lucide-react';
 import CommentSection from '../components/CommentSection';
 import ShareDialog from '../components/ShareDialog';
+import { useHardwareConnection } from '../contexts/HardwareConnectionContext';
+import { toast } from 'sonner';
 
 // Mock project data
 const mockProject = {
@@ -91,6 +93,7 @@ const ProjectDetailsPage: React.FC = () => {
   const [likesCount, setLikesCount] = useState(project.likes);
   const [showComments, setShowComments] = useState(false);
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
+  const { isConnected, showConnectionModal, setShowConnectionModal, selectedModel } = useHardwareConnection();
   
   // Fetch project data (mock)
   useEffect(() => {
@@ -110,6 +113,21 @@ const ProjectDetailsPage: React.FC = () => {
   
   const handleShare = () => {
     setShareDialogOpen(true);
+  };
+
+  const handleSendToHardware = () => {
+    if (!isConnected) {
+      toast.error("No device connected");
+      setShowConnectionModal(true);
+      return;
+    }
+    
+    if (selectedModel) {
+      toast.success(`Sending "${project.title}" to ${selectedModel}...`);
+    } else {
+      toast.error("No hardware model selected");
+      setShowConnectionModal(true);
+    }
   };
 
   // Get the current URL for sharing
@@ -180,7 +198,10 @@ const ProjectDetailsPage: React.FC = () => {
               <span>Share</span>
             </button>
             
-            <button className="claw-secondary-button">
+            <button 
+              className="claw-secondary-button"
+              onClick={handleSendToHardware}
+            >
               <Download size={18} />
             </button>
             
