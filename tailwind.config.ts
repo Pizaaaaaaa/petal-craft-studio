@@ -131,8 +131,8 @@ export default {
 				'pulse-soft': 'pulse-soft 3s ease-in-out infinite'
 			},
 			fontFamily: {
-				'serif': ['Playfair Display', 'serif'],
-				'sans': ['Quicksand', 'sans-serif']
+				'serif': ['Playfair Display', 'Noto Serif SC', 'serif'],
+				'sans': ['Quicksand', 'Noto Sans SC', 'sans-serif']
 			}
 		}
 	},

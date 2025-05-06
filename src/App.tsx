@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'sonner';
 
 // Layouts
@@ -16,7 +16,7 @@ import EditorPage from './pages/Editor';
 import ProjectDetailsPage from './pages/ProjectDetails';
 import NotFound from './pages/NotFound';
 
-// Modals
+// Providers
 import { HardwareConnectionProvider } from './contexts/HardwareConnectionContext';
 import { AuthProvider } from './contexts/AuthContext';
 

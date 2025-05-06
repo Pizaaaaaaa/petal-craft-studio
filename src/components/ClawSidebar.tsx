@@ -24,28 +24,28 @@ const ClawSidebar: React.FC = () => {
           `menu-item ${isActive ? 'active' : ''}`
         }>
           <Home size={20} />
-          <span>Home</span>
+          <span>首页</span>
         </NavLink>
         
         <NavLink to="/my-works" className={({ isActive }) => 
           `menu-item ${isActive ? 'active' : ''}`
         }>
           <BookOpen size={20} />
-          <span>My Works</span>
+          <span>我的作品</span>
         </NavLink>
         
         <NavLink to="/help" className={({ isActive }) => 
           `menu-item ${isActive ? 'active' : ''}`
         }>
           <HelpCircle size={20} />
-          <span>Help</span>
+          <span>用户帮助</span>
         </NavLink>
         
         <NavLink to="/hardware-settings" className={({ isActive }) => 
           `menu-item ${isActive ? 'active' : ''}`
         }>
           <Settings size={20} />
-          <span>Hardware Settings</span>
+          <span>硬件设置</span>
         </NavLink>
       </nav>
       
@@ -63,7 +63,7 @@ const ClawSidebar: React.FC = () => {
               )}
             </div>
             <div>
-              <h3 className="font-medium text-sm">{user?.name || 'User'}</h3>
+              <h3 className="font-medium text-sm">{user?.name || '用户'}</h3>
               <p className="text-xs text-gray-500">{user?.email || 'user@example.com'}</p>
             </div>
           </div>
@@ -72,7 +72,7 @@ const ClawSidebar: React.FC = () => {
             className="claw-button w-full"
             onClick={() => navigate('/profile')}
           >
-            Sign In
+            登录
           </button>
         )}
       </div>
