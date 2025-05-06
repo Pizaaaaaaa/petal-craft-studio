@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useCart } from '../contexts/CartContext';
@@ -357,13 +356,15 @@ const MembershipStore: React.FC = () => {
           <h2 className="text-xl font-semibold">Yarn Supplies</h2>
           
           <Link to="/cart">
-            <button 
-              className="flex items-center gap-2 px-3 py-2 rounded-lg bg-claw-blue-50 hover:bg-claw-blue-100 text-claw-blue-500"
+            <Button 
+              className="flex items-center gap-3 py-6 px-5 text-white bg-claw-blue-500 hover:bg-claw-blue-600 rounded-lg shadow-md transition-all hover:shadow-lg"
+              variant="default"
+              size="lg"
               data-cart-icon
             >
-              <ShoppingCart size={18} />
-              <span>{totalItems}</span>
-            </button>
+              <ShoppingCart size={24} strokeWidth={2} />
+              <span className="text-base font-medium">{totalItems}</span>
+            </Button>
           </Link>
         </div>
         
