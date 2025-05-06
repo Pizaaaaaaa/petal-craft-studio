@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { X, Upload, FileUp } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -21,6 +22,8 @@ const MaterialUploadModal: React.FC<MaterialUploadModalProps> = ({ isOpen, onClo
   const [dragActive, setDragActive] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [materialName, setMaterialName] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
 
   const handleDrag = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -79,15 +82,51 @@ const MaterialUploadModal: React.FC<MaterialUploadModalProps> = ({ isOpen, onClo
       return;
     }
     
-    // Here we would typically upload the file to a server
-    // For now, we'll just simulate success
-    toast.success(`Material "${materialName}" uploaded successfully!`);
-    onClose();
-    // In a real app, you might navigate to the material detail page or editor
+    // Simulate upload process
+    setIsLoading(true);
+    
+    // Simulate progress updates
+    let progress = 0;
+    const interval = setInterval(() => {
+      progress += 10;
+      setUploadProgress(progress);
+      
+      if (progress >= 100) {
+        clearInterval(interval);
+        setIsLoading(false);
+        toast.success(`Material "${materialName}" uploaded successfully!`);
+        onClose();
+        // In a real app, you might navigate to the material detail page
+        // navigate('/my-works');
+        
+        // Reset state for next upload
+        setSelectedFile(null);
+        setMaterialName('');
+        setUploadProgress(0);
+      }
+    }, 300);
+  };
+  
+  const handleCancel = () => {
+    if (isLoading) {
+      toast.info("Upload in progress, please wait");
+      return;
+    }
+    
+    // Confirm if there's a file selected
+    if (selectedFile && !isLoading) {
+      if (window.confirm("Are you sure you want to cancel this upload?")) {
+        onClose();
+        setSelectedFile(null);
+        setMaterialName('');
+      }
+    } else {
+      onClose();
+    }
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
+    <Dialog open={isOpen} onOpenChange={(open) => !open && handleCancel()}>
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
           <DialogTitle>Upload New Material</DialogTitle>
@@ -105,7 +144,7 @@ const MaterialUploadModal: React.FC<MaterialUploadModalProps> = ({ isOpen, onClo
             onDragLeave={handleDrag}
             onDragOver={handleDrag}
             onDrop={handleDrop}
-            onClick={() => document.getElementById('fileInput')?.click()}
+            onClick={() => !isLoading && document.getElementById('fileInput')?.click()}
           >
             {selectedFile ? (
               <div className="space-y-2">
@@ -119,16 +158,18 @@ const MaterialUploadModal: React.FC<MaterialUploadModalProps> = ({ isOpen, onClo
                   )}
                 </div>
                 <p className="text-sm text-gray-600">{selectedFile.name}</p>
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setSelectedFile(null);
-                  }}
-                  className="text-xs text-red-500 hover:text-red-700"
-                >
-                  Remove
-                </button>
+                {!isLoading && (
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedFile(null);
+                    }}
+                    className="text-xs text-red-500 hover:text-red-700"
+                  >
+                    Remove
+                  </button>
+                )}
               </div>
             ) : (
               <div className="space-y-2">
@@ -145,6 +186,7 @@ const MaterialUploadModal: React.FC<MaterialUploadModalProps> = ({ isOpen, onClo
               className="hidden"
               accept="image/jpeg,image/png,image/svg+xml"
               onChange={handleFileChange}
+              disabled={isLoading}
             />
           </div>
 
@@ -160,29 +202,39 @@ const MaterialUploadModal: React.FC<MaterialUploadModalProps> = ({ isOpen, onClo
                 onChange={(e) => setMaterialName(e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-claw-blue-300"
                 placeholder="Enter material name"
+                disabled={isLoading}
               />
             </div>
           )}
 
+          {isLoading && (
+            <div className="mt-4">
+              <div className="h-2 w-full bg-gray-200 rounded-full overflow-hidden">
+                <div 
+                  className="h-full bg-claw-blue-500 transition-all duration-300 ease-in-out"
+                  style={{ width: `${uploadProgress}%` }}
+                ></div>
+              </div>
+              <p className="text-xs text-center text-gray-500 mt-1">Uploading... {uploadProgress}%</p>
+            </div>
+          )}
+
           <div className="flex justify-end gap-2 mt-6">
-            <button
-              onClick={onClose}
-              className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+            <Button
+              variant="outline"
+              onClick={handleCancel}
+              disabled={isLoading}
             >
               Cancel
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={handleUpload}
-              disabled={!selectedFile || !materialName.trim()}
-              className={`px-4 py-2 rounded-md flex items-center gap-2 ${
-                selectedFile && materialName.trim()
-                  ? 'bg-claw-blue-500 text-white hover:bg-claw-blue-600'
-                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-              }`}
+              disabled={!selectedFile || !materialName.trim() || isLoading}
+              className="flex items-center gap-2"
             >
               <Upload size={16} />
-              Upload Material
-            </button>
+              {isLoading ? "Uploading..." : "Upload Material"}
+            </Button>
           </div>
         </div>
       </DialogContent>

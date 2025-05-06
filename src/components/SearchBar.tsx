@@ -1,6 +1,8 @@
 
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Search, Plus } from 'lucide-react';
+import { toast } from 'sonner';
 
 type SearchBarProps = {
   onSearch: (query: string) => void;
@@ -8,11 +10,22 @@ type SearchBarProps = {
 }
 
 const SearchBar = ({ onSearch, onCreateProject }: SearchBarProps) => {
-  const [query, setQuery] = React.useState('');
+  const [query, setQuery] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSearch(query);
+    if (query.trim()) {
+      onSearch(query);
+      toast(`Searching for "${query}"`, {
+        duration: 2000,
+      });
+    }
+  };
+
+  const handleCreateProject = () => {
+    onCreateProject();
+    navigate('/editor/new');
   };
 
   return (
@@ -30,7 +43,7 @@ const SearchBar = ({ onSearch, onCreateProject }: SearchBarProps) => {
         />
       </form>
       <button 
-        onClick={onCreateProject}
+        onClick={handleCreateProject}
         className="craft-button flex items-center gap-2"
       >
         <Plus size={18} />

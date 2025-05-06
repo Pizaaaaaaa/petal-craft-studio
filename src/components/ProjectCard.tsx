@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Heart } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { toast } from 'sonner';
 import TemplateSelectionModal from './modals/TemplateSelectionModal';
 import MaterialUploadModal from './modals/MaterialUploadModal';
 
@@ -20,12 +21,30 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   image, 
   title, 
   author, 
-  likes, 
+  likes: initialLikes, 
   height = 'auto',
   isCreateCard = false
 }) => {
   const [showTemplateModal, setShowTemplateModal] = useState(false);
   const [showMaterialModal, setShowMaterialModal] = useState(false);
+  const [likes, setLikes] = useState(initialLikes);
+  const [isLiked, setIsLiked] = useState(false);
+
+  const handleLike = (e: React.MouseEvent) => {
+    e.preventDefault(); // Prevent navigation to project details
+    e.stopPropagation(); // Stop event propagation
+    
+    setIsLiked(!isLiked);
+    setLikes(isLiked ? likes - 1 : likes + 1);
+    
+    toast(isLiked ? "Removed from favorites" : "Added to favorites", {
+      description: isLiked ? 
+        `${title} has been removed from your favorites` : 
+        `${title} has been added to your favorites`,
+      position: "bottom-right",
+      duration: 2000
+    });
+  };
 
   if (isCreateCard) {
     const isMaterialUpload = id === 'new-material';
@@ -87,7 +106,16 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         <h3 className="text-white font-medium text-lg truncate">{title}</h3>
         <p className="text-white/80 text-sm">by {author}</p>
         <div className="flex items-center gap-1 mt-2">
-          <Heart size={16} className="text-claw-blue-300 fill-claw-blue-300" />
+          <button 
+            onClick={handleLike}
+            className="p-1 rounded-full hover:bg-white/10 transition-colors"
+            aria-label={isLiked ? "Unlike" : "Like"}
+          >
+            <Heart 
+              size={16} 
+              className={isLiked ? "text-claw-blue-300 fill-claw-blue-300" : "text-white"} 
+            />
+          </button>
           <span className="text-white/80 text-xs">{likes}</span>
         </div>
       </div>
