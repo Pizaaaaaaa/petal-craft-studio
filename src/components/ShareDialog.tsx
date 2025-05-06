@@ -9,7 +9,7 @@ import {
   DialogFooter
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Facebook, Twitter, Linkedin, Instagram, Link, Copy, X } from 'lucide-react';
+import { Facebook, Twitter, Linkedin, Instagram, Copy } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface ShareDialogProps {
@@ -76,15 +76,15 @@ const ShareDialog: React.FC<ShareDialogProps> = ({
           </DialogDescription>
         </DialogHeader>
         
-        <div className="grid grid-cols-2 gap-4 py-4">
+        <div className="grid grid-cols-2 gap-2 py-4">
           {socialPlatforms.map((platform) => (
             <Button
               key={platform.name}
               variant="outline"
-              className={`flex items-center justify-center gap-2 text-white ${platform.color}`}
+              className={`flex items-center gap-1 text-white text-xs sm:text-sm ${platform.color}`}
               onClick={() => handleShare(platform.name, platform.shareUrl)}
             >
-              <platform.icon className="h-5 w-5" />
+              <platform.icon className="h-4 w-4" />
               {platform.name}
             </Button>
           ))}
@@ -92,7 +92,7 @@ const ShareDialog: React.FC<ShareDialogProps> = ({
         
         <div className="flex items-center space-x-2 mt-2">
           <div className="bg-gray-100 flex items-center rounded-md w-full overflow-hidden">
-            <div className="px-3 py-2 text-sm text-gray-600 truncate flex-1">
+            <div className="px-3 py-2 text-xs sm:text-sm text-gray-600 truncate flex-1">
               {url}
             </div>
             <Button 
