@@ -52,8 +52,12 @@ const HardwareConnectionModal: React.FC = () => {
     setShowConnectionModal(false);
   };
   
+  if (!showConnectionModal) {
+    return null;
+  }
+  
   return (
-    <div className={`fixed inset-0 z-50 flex items-center justify-center ${showConnectionModal ? 'opacity-100' : 'opacity-0 pointer-events-none'} transition-opacity bg-black/50`}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
       <div className="relative w-full max-w-md p-6 bg-white rounded-2xl shadow-lg">
         <button 
           className="absolute top-4 right-4 p-1 rounded-full hover:bg-gray-100"
