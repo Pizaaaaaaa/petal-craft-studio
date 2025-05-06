@@ -30,6 +30,18 @@ const HardwareConnectionModal: React.FC = () => {
     }
   }, [showConnectionModal, availableModels, selectedModel, setSelectedModel]);
   
+  // Auto-close modal when connection is successful
+  useEffect(() => {
+    if (isConnected && showConnectionModal) {
+      // Add a small delay before closing for better UX
+      const timeout = setTimeout(() => {
+        setShowConnectionModal(false);
+      }, 800); // 800ms delay to show the success state before closing
+      
+      return () => clearTimeout(timeout);
+    }
+  }, [isConnected, showConnectionModal, setShowConnectionModal]);
+  
   const handleConnect = () => {
     if (selectedModel) {
       connectToHardware();
