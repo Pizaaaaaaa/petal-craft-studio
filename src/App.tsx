@@ -29,9 +29,9 @@ import { CartProvider } from './contexts/CartContext';
 function App() {
   return (
     <HashRouter>
-      <HardwareConnectionProvider>
-        <AuthProvider>
-          <CartProvider>
+      <AuthProvider>
+        <CartProvider>
+          <HardwareConnectionProvider>
             <Routes>
               <Route path="/" element={<MainLayout />}>
                 <Route index element={<HomePage />} />
@@ -51,9 +51,9 @@ function App() {
               <Route path="*" element={<NotFound />} />
             </Routes>
             <Toaster position="top-right" />
-          </CartProvider>
-        </AuthProvider>
-      </HardwareConnectionProvider>
+          </HardwareConnectionProvider>
+        </CartProvider>
+      </AuthProvider>
     </HashRouter>
   );
 }

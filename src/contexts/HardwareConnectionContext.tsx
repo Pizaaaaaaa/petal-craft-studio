@@ -102,7 +102,6 @@ export const HardwareConnectionProvider: React.FC<HardwareConnectionProviderProp
           lastUpdated: new Date()
         });
         toast.success(`Successfully connected to ${selectedModel}!`);
-        // The modal will be automatically closed by the useEffect in HardwareConnectionModal
       } else {
         throw new Error(`Could not establish a connection with ${selectedModel}.`);
       }

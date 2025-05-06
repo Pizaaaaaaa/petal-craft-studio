@@ -48,7 +48,7 @@ const MainLayout: React.FC = () => {
         </div>
       </main>
       
-      <HardwareConnectionModal />
+      {showConnectionModal && <HardwareConnectionModal />}
     </div>
   );
 };
