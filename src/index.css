@@ -87,21 +87,11 @@
   }
 
   .claw-button {
-    @apply px-4 py-2 rounded-full bg-gradient-to-r from-claw-blue-400 to-claw-blue-500 text-white font-medium shadow-sm hover:shadow-md transition-all duration-200 hover:scale-[1.02] active:scale-[0.98];
+    @apply px-4 py-2 rounded-lg bg-gradient-to-r from-claw-blue-400 to-claw-blue-500 text-white font-medium shadow-sm hover:shadow-md transition-all duration-200 hover:scale-[1.02] active:scale-[0.98];
   }
 
   .claw-secondary-button {
-    @apply px-4 py-2.5 rounded-full bg-white border border-claw-blue-300 text-claw-blue-500 font-medium shadow-sm hover:shadow-md transition-all duration-200 hover:bg-claw-blue-50;
-  }
-
-  /* Fix for membership banner buttons - ensure text stays white on hover */
-  .membership-banner .claw-button {
-    @apply hover:text-white;
-  }
-  
-  /* Specifically fix for transparent button in membership banner */
-  .membership-banner .claw-button.bg-transparent {
-    @apply hover:bg-white/10 hover:text-white;
+    @apply px-4 py-2.5 rounded-lg bg-white border border-claw-blue-300 text-claw-blue-500 font-medium shadow-sm hover:shadow-md transition-all duration-200 hover:bg-claw-blue-50;
   }
 
   .menu-item {
