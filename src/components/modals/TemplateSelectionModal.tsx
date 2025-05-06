@@ -154,6 +154,26 @@ const TemplateSelectionModal: React.FC<TemplateSelectionModalProps> = ({ isOpen,
     return template ? `${selectedCategory.name} - ${template.name}` : "Template";
   };
   
+  // Get required materials based on selected template
+  const getRequiredMaterials = () => {
+    if (!selectedTemplate || !selectedCategory) return [];
+    
+    // Define some sample materials based on category type
+    const categoryId = selectedTemplate.split('-')[0];
+    
+    const materialsMap: Record<string, string[]> = {
+      'clothes': ['Wool yarn - 800g', 'Cotton yarn - 200g', 'Knitting needles - size 5mm', 'Stitch markers'],
+      'scarves': ['Medium weight yarn - 400g', 'Knitting needles - size 6mm', 'Yarn needle'],
+      'hats': ['Medium weight yarn - 200g', 'Double pointed needles - size 4mm', 'Stitch markers', 'Yarn needle'],
+      'socks': ['Sock weight yarn - 100g', 'Double pointed needles - size 2.5mm', 'Stitch markers', 'Yarn needle'],
+      'gloves': ['Fine weight yarn - 150g', 'Double pointed needles - size 3mm', 'Stitch markers', 'Yarn needle'],
+      'bags': ['Heavy weight yarn - 300g', 'Knitting needles - size 8mm', 'Lining fabric - 50x50cm'],
+      'toys': ['Medium weight yarn - 200g', 'Stuffing material - 100g', 'Safety eyes - 2pcs', 'Yarn needle']
+    };
+    
+    return materialsMap[categoryId] || [];
+  };
+  
   if (!isOpen) return null;
   
   return (
@@ -286,7 +306,7 @@ const TemplateSelectionModal: React.FC<TemplateSelectionModalProps> = ({ isOpen,
         onClose={() => setDownloadDialogOpen(false)}
         onConfirm={handleDownloadConfirm}
         projectTitle={getSelectedTemplateName()}
-        requiredMaterials={[]}  // Templates don't have specific materials listed
+        requiredMaterials={getRequiredMaterials()}
       />
     </div>
   );
