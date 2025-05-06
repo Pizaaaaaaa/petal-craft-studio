@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { X, ChevronRight } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 interface TemplateCategory {
   id: string;
@@ -18,7 +18,7 @@ interface Template {
 const templateCategories: TemplateCategory[] = [
   {
     id: 'clothes',
-    name: 'Clothes',
+    name: '衣服',
     templates: [
       { id: 'clothes-a', name: 'Template A', image: 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&q=80&w=800' },
       { id: 'clothes-b', name: 'Template B', image: 'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&q=80&w=800' },
@@ -28,7 +28,7 @@ const templateCategories: TemplateCategory[] = [
   },
   {
     id: 'scarves',
-    name: 'Scarves',
+    name: '围巾',
     templates: [
       { id: 'scarves-a', name: 'Template A', image: 'https://images.unsplash.com/photo-1611676279444-5577698aa13c?auto=format&fit=crop&q=80&w=800' },
       { id: 'scarves-b', name: 'Template B', image: 'https://images.unsplash.com/photo-1512089425728-b12f1321ca5c?auto=format&fit=crop&q=80&w=800' },
@@ -38,7 +38,7 @@ const templateCategories: TemplateCategory[] = [
   },
   {
     id: 'hats',
-    name: 'Hats',
+    name: '帽子',
     templates: [
       { id: 'hats-a', name: 'Template A', image: 'https://images.unsplash.com/photo-1576871337622-98d48d1cf531?auto=format&fit=crop&q=80&w=800' },
       { id: 'hats-b', name: 'Template B', image: 'https://images.unsplash.com/photo-1576871337632-b9aef4c17ab9?auto=format&fit=crop&q=80&w=800' },
@@ -48,7 +48,7 @@ const templateCategories: TemplateCategory[] = [
   },
   {
     id: 'socks',
-    name: 'Socks',
+    name: '袜子',
     templates: [
       { id: 'socks-a', name: 'Template A', image: 'https://images.unsplash.com/photo-1586350977771-2dbe4fae8d39?auto=format&fit=crop&q=80&w=800' },
       { id: 'socks-b', name: 'Template B', image: 'https://images.unsplash.com/photo-1582966772680-860e372bb558?auto=format&fit=crop&q=80&w=800' },
@@ -58,17 +58,17 @@ const templateCategories: TemplateCategory[] = [
   },
   {
     id: 'gloves',
-    name: 'Gloves',
+    name: '手套',
     templates: [
       { id: 'gloves-a', name: 'Template A', image: 'https://images.unsplash.com/photo-1512604151067-557a4eba21c9?auto=format&fit=crop&q=80&w=800' },
-      { id: 'gloves-b', name: 'Template B', image: 'https://images.unsplash.com/photo-1565677913671-ce5a5c0e9b7f?auto=format&fit=crop&q=80&w=800' },
+      { id: 'gloves-b', name: 'Template B', image: 'https://images.unsplash.com/photo-1565677913671-ce5c0e9b7f?auto=format&fit=crop&q=80&w=800' },
       { id: 'gloves-c', name: 'Template C', image: 'https://images.unsplash.com/photo-1499952748986-01abb469a8d5?auto=format&fit=crop&q=80&w=800' },
       { id: 'gloves-d', name: 'Template D', image: 'https://images.unsplash.com/photo-1574314810775-a27e5ee6d178?auto=format&fit=crop&q=80&w=800' },
     ]
   },
   {
     id: 'bags',
-    name: 'Bags',
+    name: '包包',
     templates: [
       { id: 'bags-a', name: 'Template A', image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=800' },
       { id: 'bags-b', name: 'Template B', image: 'https://images.unsplash.com/photo-1604176354204-9268737828e4?auto=format&fit=crop&q=80&w=800' },
@@ -78,7 +78,7 @@ const templateCategories: TemplateCategory[] = [
   },
   {
     id: 'toys',
-    name: 'Toys',
+    name: '玩偶',
     templates: [
       { id: 'toys-a', name: 'Template A', image: 'https://images.unsplash.com/photo-1556012018-50c5c0da73bf?auto=format&fit=crop&q=80&w=800' },
       { id: 'toys-b', name: 'Template B', image: 'https://images.unsplash.com/photo-1589254065878-42c9da997008?auto=format&fit=crop&q=80&w=800' },
@@ -95,12 +95,19 @@ interface TemplateSelectionModalProps {
 
 const TemplateSelectionModal: React.FC<TemplateSelectionModalProps> = ({ isOpen, onClose }) => {
   const [selectedCategory, setSelectedCategory] = useState<TemplateCategory | null>(null);
-  const navigate = useNavigate();
+  const [isTransferring, setIsTransferring] = useState(false);
   
   const handleSelectTemplate = (templateId: string) => {
-    // Here would be logic to prepare the template for the hardware
-    navigate(`/editor/new/${templateId}`);
-    onClose();
+    // Simulate sending template to hardware
+    setIsTransferring(true);
+    
+    setTimeout(() => {
+      setIsTransferring(false);
+      toast.success('模版已成功下发至智能硬件', {
+        description: '您可以在硬件设备上查看执行状态'
+      });
+      onClose();
+    }, 1500);
   };
   
   if (!isOpen) return null;
@@ -110,7 +117,7 @@ const TemplateSelectionModal: React.FC<TemplateSelectionModalProps> = ({ isOpen,
       <div className="relative bg-white rounded-xl shadow-lg max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
         <div className="flex items-center justify-between p-4 border-b">
           <h2 className="text-xl font-medium">
-            {selectedCategory ? `Select ${selectedCategory.name} Template` : 'Select Template Category'}
+            {selectedCategory ? `选择${selectedCategory.name}模版` : '选择模版类别'}
           </h2>
           <button 
             className="p-1 rounded-full hover:bg-gray-100"
@@ -152,7 +159,7 @@ const TemplateSelectionModal: React.FC<TemplateSelectionModalProps> = ({ isOpen,
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1">
                   <path d="M19 12H5M12 19l-7-7 7-7"/>
                 </svg>
-                Back to Categories
+                返回类别
               </button>
               
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
@@ -184,15 +191,19 @@ const TemplateSelectionModal: React.FC<TemplateSelectionModalProps> = ({ isOpen,
             className="claw-secondary-button mr-2"
             onClick={onClose}
           >
-            Cancel
+            取消
           </button>
           
-          {selectedCategory && (
+          {isTransferring && (
             <button 
-              className="claw-button"
-              onClick={() => handleSelectTemplate(selectedCategory.templates[0].id)}
+              className="claw-button flex items-center"
+              disabled
             >
-              Start with Blank
+              <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              正在传输...
             </button>
           )}
         </div>

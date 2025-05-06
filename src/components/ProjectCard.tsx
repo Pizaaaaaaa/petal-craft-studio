@@ -1,7 +1,8 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Heart } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import TemplateSelectionModal from './modals/TemplateSelectionModal';
 
 export interface ProjectCardProps {
   id: string;
@@ -22,21 +23,30 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   height = 'auto',
   isCreateCard = false
 }) => {
+  const [showTemplateModal, setShowTemplateModal] = useState(false);
+
   if (isCreateCard) {
     return (
-      <Link 
-        to="/editor/new/blank"
-        className="claw-card group relative w-full flex flex-col items-center justify-center transition-transform duration-200 hover:-translate-y-1 bg-claw-blue-50 border-2 border-dashed border-claw-blue-200"
-        style={{ minHeight: '250px', height }}
-      >
-        <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center shadow-sm mb-4">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-claw-blue-500">
-            <path d="M5 12h14"></path>
-            <path d="M12 5v14"></path>
-          </svg>
+      <>
+        <div
+          onClick={() => setShowTemplateModal(true)}
+          className="claw-card group relative w-full flex flex-col items-center justify-center transition-transform duration-200 hover:-translate-y-1 bg-claw-blue-50 border-2 border-dashed border-claw-blue-200 cursor-pointer"
+          style={{ minHeight: '250px', height }}
+        >
+          <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center shadow-sm mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-claw-blue-500">
+              <path d="M5 12h14"></path>
+              <path d="M12 5v14"></path>
+            </svg>
+          </div>
+          <h3 className="text-claw-blue-500 font-medium">创建新作品</h3>
         </div>
-        <h3 className="text-claw-blue-500 font-medium">Create New Project</h3>
-      </Link>
+        
+        <TemplateSelectionModal
+          isOpen={showTemplateModal}
+          onClose={() => setShowTemplateModal(false)}
+        />
+      </>
     );
   }
 

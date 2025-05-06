@@ -1,7 +1,5 @@
-
 import React, { useState } from 'react';
 import { Search, Plus } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 import RecommendationSection from '../components/RecommendationSection';
 import CategorySelector from '../components/CategorySelector';

@@ -13,16 +13,22 @@ const CategorySelector: React.FC<CategorySelectorProps> = ({
   onSelectCategory
 }) => {
   return (
-    <div className="flex flex-wrap gap-2 mb-6">
-      {categories.map(category => (
-        <button
-          key={category}
-          className={`category-tag ${selectedCategory === category ? 'active' : ''}`}
-          onClick={() => onSelectCategory(category)}
-        >
-          {category}
-        </button>
-      ))}
+    <div className="flex items-center overflow-x-auto pb-2 hide-scrollbar">
+      <div className="flex gap-2">
+        {categories.map((category) => (
+          <button
+            key={category}
+            onClick={() => onSelectCategory(category)}
+            className={`px-4 py-2 rounded-full text-sm whitespace-nowrap transition-colors ${
+              selectedCategory === category
+                ? 'bg-claw-blue-500 text-white'
+                : 'bg-white border border-claw-blue-200 text-gray-700 hover:bg-claw-blue-50'
+            }`}
+          >
+            {category}
+          </button>
+        ))}
+      </div>
     </div>
   );
 };
