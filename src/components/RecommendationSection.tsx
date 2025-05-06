@@ -9,6 +9,7 @@ interface Project {
   title: string;
   author: string;
   likes: number;
+  comments?: number;
 }
 
 interface RecommendationSectionProps {
@@ -53,6 +54,7 @@ const RecommendationSection: React.FC<RecommendationSectionProps> = ({ title, pr
               title={project.title}
               author={project.author}
               likes={project.likes}
+              comments={project.comments || 0}
               height="100%"
             />
           </div>

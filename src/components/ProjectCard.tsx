@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Heart } from 'lucide-react';
+import { Heart, MessageSquare } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 import TemplateSelectionModal from './modals/TemplateSelectionModal';
@@ -14,6 +14,7 @@ export interface ProjectCardProps {
   likes: number;
   height?: string;
   isCreateCard?: boolean;
+  comments?: number;
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ 
@@ -23,7 +24,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   author, 
   likes: initialLikes, 
   height = 'auto',
-  isCreateCard = false
+  isCreateCard = false,
+  comments = 0
 }) => {
   const [showTemplateModal, setShowTemplateModal] = useState(false);
   const [showMaterialModal, setShowMaterialModal] = useState(false);
@@ -102,21 +104,29 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           loading="lazy"
         />
       </div>
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+      
+      {/* Always visible overlay with title and stats */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-4">
         <h3 className="text-white font-medium text-lg truncate">{title}</h3>
-        <p className="text-white/80 text-sm">by {author}</p>
-        <div className="flex items-center gap-1 mt-2">
-          <button 
-            onClick={handleLike}
-            className="p-1 rounded-full hover:bg-white/10 transition-colors"
-            aria-label={isLiked ? "Unlike" : "Like"}
-          >
-            <Heart 
-              size={16} 
-              className={isLiked ? "text-claw-blue-300 fill-claw-blue-300" : "text-white"} 
-            />
-          </button>
-          <span className="text-white/80 text-xs">{likes}</span>
+        <div className="flex items-center gap-3 mt-2">
+          <div className="flex items-center gap-1">
+            <button 
+              onClick={handleLike}
+              className="p-1 rounded-full hover:bg-white/10 transition-colors"
+              aria-label={isLiked ? "Unlike" : "Like"}
+            >
+              <Heart 
+                size={16} 
+                className={isLiked ? "text-claw-blue-300 fill-claw-blue-300" : "text-white"} 
+              />
+            </button>
+            <span className="text-white/80 text-xs">{likes}</span>
+          </div>
+          
+          <div className="flex items-center gap-1">
+            <MessageSquare size={16} className="text-white" />
+            <span className="text-white/80 text-xs">{comments}</span>
+          </div>
         </div>
       </div>
     </Link>

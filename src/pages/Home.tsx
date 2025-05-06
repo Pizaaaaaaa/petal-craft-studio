@@ -12,6 +12,7 @@ const trendingProjects = [
     author: 'Emily Chen',
     image: 'https://images.unsplash.com/photo-1584736328868-fbc30f5efe78?auto=format&fit=crop&q=80&w=800',
     likes: 124,
+    comments: 18,
   },
   {
     id: '2',
@@ -19,6 +20,7 @@ const trendingProjects = [
     author: 'David Wong',
     image: 'https://images.unsplash.com/photo-1610288311735-39b7facbd095?auto=format&fit=crop&q=80&w=800',
     likes: 87,
+    comments: 12,
   },
   {
     id: '3',
@@ -26,6 +28,7 @@ const trendingProjects = [
     author: 'Sophie Turner',
     image: 'https://images.unsplash.com/photo-1576871337622-98d48d1cf531?auto=format&fit=crop&q=80&w=800',
     likes: 156,
+    comments: 25,
   },
   {
     id: '4',
@@ -33,6 +36,7 @@ const trendingProjects = [
     author: 'Michael Brown',
     image: 'https://images.unsplash.com/photo-1586350977771-2dbe4fae8d39?auto=format&fit=crop&q=80&w=800',
     likes: 63,
+    comments: 7,
   },
   {
     id: '5',
@@ -40,6 +44,7 @@ const trendingProjects = [
     author: 'Olivia Smith',
     image: 'https://images.unsplash.com/photo-1510757902970-e236dc20b948?auto=format&fit=crop&q=80&w=800',
     likes: 92,
+    comments: 14,
   },
   {
     id: '6',
@@ -47,6 +52,7 @@ const trendingProjects = [
     author: 'James Wilson',
     image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=800',
     likes: 118,
+    comments: 21,
   },
   {
     id: '7',
@@ -54,6 +60,7 @@ const trendingProjects = [
     author: 'Emma Davis',
     image: 'https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?auto=format&fit=crop&q=80&w=800',
     likes: 104,
+    comments: 16,
   },
   {
     id: '8',
@@ -61,6 +68,7 @@ const trendingProjects = [
     author: 'Daniel Garcia',
     image: 'https://images.unsplash.com/photo-1543398470-71ece679e400?auto=format&fit=crop&q=80&w=800',
     likes: 75,
+    comments: 9,
   },
   {
     id: '9',
@@ -68,6 +76,7 @@ const trendingProjects = [
     author: 'Lily Johnson',
     image: 'https://images.unsplash.com/photo-1516728778615-2d590ea1855e?auto=format&fit=crop&q=80&w=800',
     likes: 113,
+    comments: 19,
   },
 ];
 
@@ -78,6 +87,7 @@ const personalizedProjects = [
     author: 'Emma Davis',
     image: 'https://images.unsplash.com/photo-1556012018-50c5c0da73bf?auto=format&fit=crop&q=80&w=800',
     likes: 201,
+    comments: 32,
   },
   {
     id: '11',
@@ -85,6 +95,7 @@ const personalizedProjects = [
     author: 'Daniel Garcia',
     image: 'https://images.unsplash.com/photo-1578898887932-7769494df893?auto=format&fit=crop&q=80&w=800',
     likes: 75,
+    comments: 11,
   },
   {
     id: '12',
@@ -92,6 +103,7 @@ const personalizedProjects = [
     author: 'Emma Davis',
     image: 'https://images.unsplash.com/photo-1607529129242-5b759eb7b268?auto=format&fit=crop&q=80&w=800',
     likes: 87,
+    comments: 8,
   },
   {
     id: '13',
@@ -99,6 +111,7 @@ const personalizedProjects = [
     author: 'David Wong',
     image: 'https://images.unsplash.com/photo-1510481296702-5090337e808e?auto=format&fit=crop&q=80&w=800',
     likes: 143,
+    comments: 15,
   },
   {
     id: '14',
@@ -106,6 +119,7 @@ const personalizedProjects = [
     author: 'Sophie Turner',
     image: 'https://images.unsplash.com/photo-1602079282086-3880b138a2c1?auto=format&fit=crop&q=80&w=800',
     likes: 65,
+    comments: 10,
   },
   {
     id: '15',
@@ -113,6 +127,7 @@ const personalizedProjects = [
     author: 'Michael Brown',
     image: 'https://images.unsplash.com/photo-1589903308904-1010c2294adc?auto=format&fit=crop&q=80&w=800',
     likes: 92,
+    comments: 12,
   },
   {
     id: '16',
@@ -120,6 +135,7 @@ const personalizedProjects = [
     author: 'Jane Smith',
     image: 'https://images.unsplash.com/photo-1580301762339-0a78caff1927?auto=format&fit=crop&q=80&w=800',
     likes: 157,
+    comments: 18,
   },
   {
     id: '17',
@@ -127,6 +143,7 @@ const personalizedProjects = [
     author: 'Sarah Johnson',
     image: 'https://images.unsplash.com/photo-1556906105-58e0397867f3?auto=format&fit=crop&q=80&w=800',
     likes: 108,
+    comments: 13,
   },
   {
     id: '18',
@@ -134,6 +151,7 @@ const personalizedProjects = [
     author: 'Rachel Green',
     image: 'https://images.unsplash.com/photo-1544816155-f9c22a3246c6?auto=format&fit=crop&q=80&w=800',
     likes: 133,
+    comments: 17,
   },
 ];
 
