@@ -120,7 +120,7 @@ const membershipTiers = [
       },
       {
         title: 'Early Access',
-        description: 'Be the first to try new features and tools before they're released to the public.',
+        description: "Be the first to try new features and tools before they're released to the public.",
         icon: 'gift'
       },
       {
