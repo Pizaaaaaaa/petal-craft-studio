@@ -1,7 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { Heart, Share, Download, Edit, ChevronLeft } from 'lucide-react';
+import { Heart, Share, Download, Edit, ChevronLeft, MessageSquare } from 'lucide-react';
+import CommentSection from '../components/CommentSection';
 
 // Mock project data
 const mockProject = {
@@ -9,9 +10,9 @@ const mockProject = {
   title: 'Cozy Winter Sweater',
   description: 'A warm and stylish sweater perfect for cold winter days. Made with premium merino wool for comfort and durability.',
   author: {
+    id: 'user123',
     name: 'Emily Chen',
     avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200',
-    id: 'user123'
   },
   images: [
     'https://images.unsplash.com/photo-1584736328868-fbc30f5efe78?auto=format&fit=crop&q=80&w=800',
@@ -40,7 +41,45 @@ const mockProject = {
   difficulty: 'Intermediate',
   timeToMake: '20 hours',
   patternType: 'Sweater',
-  tags: ['winter', 'wool', 'sweater', 'cozy']
+  tags: ['winter', 'wool', 'sweater', 'cozy'],
+  comments: [
+    {
+      id: 'comment1',
+      author: {
+        id: 'user456',
+        name: 'Alex Johnson',
+        avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=200'
+      },
+      content: 'I love the design! Has anyone tried this with cotton yarn instead of wool?',
+      createdAt: '2023-10-20T14:30:00Z',
+      likes: 8,
+      isLiked: false
+    },
+    {
+      id: 'comment2',
+      author: {
+        id: 'user789',
+        name: 'Sarah Miller',
+        avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=200'
+      },
+      content: 'Made this last week and it turned out great! The instructions were super clear.',
+      createdAt: '2023-10-18T09:45:00Z',
+      likes: 12,
+      isLiked: true
+    },
+    {
+      id: 'comment3',
+      author: {
+        id: 'user234',
+        name: 'David Wilson',
+        avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=200'
+      },
+      content: 'What level of experience would you recommend for this project? I'm still a beginner.',
+      createdAt: '2023-10-17T16:20:00Z',
+      likes: 3,
+      isLiked: false
+    }
+  ]
 };
 
 const ProjectDetailsPage: React.FC = () => {
@@ -50,6 +89,7 @@ const ProjectDetailsPage: React.FC = () => {
   const [activeImage, setActiveImage] = useState(0);
   const [isLiked, setIsLiked] = useState(project.isLiked);
   const [likesCount, setLikesCount] = useState(project.likes);
+  const [showComments, setShowComments] = useState(false);
   
   // Fetch project data (mock)
   useEffect(() => {
@@ -84,12 +124,16 @@ const ProjectDetailsPage: React.FC = () => {
             
             <div className="flex items-center gap-3 mt-2">
               <div className="flex items-center gap-2">
-                <img 
-                  src={project.author.avatar} 
-                  alt={project.author.name} 
-                  className="w-6 h-6 rounded-full"
-                />
-                <span className="text-gray-600">by {project.author.name}</span>
+                <Link to={`/user/${project.author.id}`}>
+                  <img 
+                    src={project.author.avatar} 
+                    alt={project.author.name} 
+                    className="w-6 h-6 rounded-full"
+                  />
+                </Link>
+                <span className="text-gray-600">
+                  by <Link to={`/user/${project.author.id}`} className="hover:underline">{project.author.name}</Link>
+                </span>
               </div>
               
               <span className="text-gray-400">•</span>
@@ -98,6 +142,16 @@ const ProjectDetailsPage: React.FC = () => {
                 <Heart size={16} className={isLiked ? 'fill-claw-blue-500 text-claw-blue-500' : ''} />
                 <span>{likesCount}</span>
               </div>
+              
+              <span className="text-gray-400">•</span>
+              
+              <button 
+                className="flex items-center gap-1 text-gray-600 hover:text-gray-800"
+                onClick={() => setShowComments(!showComments)}
+              >
+                <MessageSquare size={16} />
+                <span>{project.comments.length}</span>
+              </button>
             </div>
           </div>
           
@@ -173,13 +227,21 @@ const ProjectDetailsPage: React.FC = () => {
             </ul>
           </div>
           
-          <div className="claw-card p-6">
+          <div className="claw-card p-6 mb-6">
             <h2 className="text-xl font-semibold mb-3">Instructions</h2>
             <ol className="list-decimal pl-5 space-y-2">
               {project.instructions.map((step, index) => (
                 <li key={index} className="text-gray-700">{step}</li>
               ))}
             </ol>
+          </div>
+          
+          {/* Comment Section */}
+          <div className="claw-card p-6">
+            <CommentSection 
+              projectId={project.id}
+              initialComments={project.comments}
+            />
           </div>
         </div>
         
