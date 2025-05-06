@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ProjectCard from '../components/ProjectCard';
@@ -9,7 +10,7 @@ const myProjects = [
     id: '101',
     title: 'My Striped Sweater',
     author: 'You',
-    image: 'https://images.unsplash.com/photo-1611915387288-fd8d2f5f928b?auto=format&fit=crop&q=80&w=800',
+    image: 'https://images.unsplash.com/photo-1434389677669-e08b4cac3105?auto=format&fit=crop&q=80&w=800',
     likes: 32,
     date: '2023-10-20'
   },
@@ -28,7 +29,7 @@ const myMaterials = [
     id: 'm1',
     title: 'Flower Pattern',
     author: 'You',
-    image: 'https://images.unsplash.com/photo-1591289009723-faf5732f4218?auto=format&fit=crop&q=80&w=800',
+    image: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&q=80&w=800',
     likes: 5,
     date: '2023-10-10'
   },
@@ -36,7 +37,7 @@ const myMaterials = [
     id: 'm2',
     title: 'Geometric Pattern',
     author: 'You',
-    image: 'https://images.unsplash.com/photo-1558244402-286dd748c593?auto=format&fit=crop&q=80&w=800',
+    image: 'https://images.unsplash.com/photo-1608501078713-8e445a709b39?auto=format&fit=crop&q=80&w=800',
     likes: 7,
     date: '2023-09-05'
   },
@@ -47,7 +48,7 @@ const mySavedProjects = [
     id: '201',
     title: 'Colorful Mittens',
     author: 'Emma Davis',
-    image: 'https://images.unsplash.com/photo-1607344645866-009c320c5ab8?auto=format&fit=crop&q=80&w=800',
+    image: 'https://images.unsplash.com/photo-1607529129242-5b759eb7b268?auto=format&fit=crop&q=80&w=800',
     likes: 87,
     date: '2023-10-25'
   },
@@ -55,7 +56,7 @@ const mySavedProjects = [
     id: '202',
     title: 'Cable Knit Hat',
     author: 'David Wong',
-    image: 'https://images.unsplash.com/photo-1599107671646-c483b128d8a9?auto=format&fit=crop&q=80&w=800',
+    image: 'https://images.unsplash.com/photo-1510481296702-5090337e808e?auto=format&fit=crop&q=80&w=800',
     likes: 143,
     date: '2023-10-12'
   },
@@ -63,7 +64,7 @@ const mySavedProjects = [
     id: '203',
     title: 'Knitted Wall Hanging',
     author: 'Sophie Turner',
-    image: 'https://images.unsplash.com/photo-1582977343701-4ff3da7c2e32?auto=format&fit=crop&q=80&w=800',
+    image: 'https://images.unsplash.com/photo-1602079282086-3880b138a2c1?auto=format&fit=crop&q=80&w=800',
     likes: 65,
     date: '2023-09-20'
   },
