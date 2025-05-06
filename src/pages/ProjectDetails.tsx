@@ -130,6 +130,11 @@ const ProjectDetailsPage: React.FC = () => {
     }
   };
 
+  // Handle tag click to navigate to tag page
+  const handleTagClick = (tag: string) => {
+    navigate(`/tags/${tag}`);
+  };
+
   // Get the current URL for sharing
   const shareUrl = window.location.href;
   
@@ -317,12 +322,13 @@ const ProjectDetailsPage: React.FC = () => {
                 <h3 className="text-sm text-gray-500">Tags</h3>
                 <div className="flex flex-wrap gap-2 mt-1">
                   {project.tags.map(tag => (
-                    <span 
+                    <button 
                       key={tag} 
-                      className="px-2 py-1 bg-claw-blue-50 text-claw-blue-600 text-xs rounded-full"
+                      className="px-2 py-1 bg-claw-blue-50 text-claw-blue-600 text-xs rounded-full hover:bg-claw-blue-100 transition-colors cursor-pointer"
+                      onClick={() => handleTagClick(tag)}
                     >
                       {tag}
-                    </span>
+                    </button>
                   ))}
                 </div>
               </div>

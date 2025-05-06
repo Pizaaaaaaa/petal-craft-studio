@@ -20,6 +20,7 @@ import CartPage from './pages/Cart';
 import CheckoutPage from './pages/Checkout';
 import OrderConfirmation from './pages/OrderConfirmation';
 import NotFound from './pages/NotFound';
+import TagsPage from './pages/Tags';
 
 // Providers
 import { HardwareConnectionProvider } from './contexts/HardwareConnectionContext';
@@ -45,6 +46,7 @@ function App() {
                 <Route path="profile" element={<ProfilePage />} />
                 <Route path="project/:id" element={<ProjectDetailsPage />} />
                 <Route path="user/:userId" element={<UserProfile />} />
+                <Route path="tags/:tagName" element={<TagsPage />} />
               </Route>
               <Route path="/editor/:id" element={<EditorPage />} />
               <Route path="/editor/new/:templateId" element={<EditorPage />} />
