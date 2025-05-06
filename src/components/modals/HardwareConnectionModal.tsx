@@ -10,32 +10,28 @@ const HardwareConnectionModal: React.FC = () => {
     connectionError, 
     showConnectionModal, 
     setShowConnectionModal,
-    connectToHardware
+    connectToHardware,
+    availableModels,
+    selectedModel,
+    setSelectedModel
   } = useHardwareConnection();
   
   const [deviceList, setDeviceList] = useState<string[]>([]);
-  const [selectedDevice, setSelectedDevice] = useState<string>('');
   
   // Mock device scan
   useEffect(() => {
     if (showConnectionModal) {
-      const mockDevices = [
-        'ClawLab Yarn Spinning Machine',
-        'ClawLab Smart Knitting Machine',
-        'ClawLab Pattern Printer'
-      ];
-      
       setTimeout(() => {
-        setDeviceList(mockDevices);
-        if (mockDevices.length > 0) {
-          setSelectedDevice(mockDevices[0]);
+        setDeviceList(availableModels);
+        if (availableModels.length > 0 && !selectedModel) {
+          setSelectedModel(availableModels[0]);
         }
       }, 1500);
     }
-  }, [showConnectionModal]);
+  }, [showConnectionModal, availableModels, selectedModel, setSelectedModel]);
   
   const handleConnect = () => {
-    if (selectedDevice) {
+    if (selectedModel) {
       connectToHardware();
     }
   };
@@ -82,8 +78,8 @@ const HardwareConnectionModal: React.FC = () => {
             <label className="block text-sm font-medium text-gray-700 mb-1">Select Device</label>
             <select
               className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-claw-blue-300"
-              value={selectedDevice}
-              onChange={(e) => setSelectedDevice(e.target.value)}
+              value={selectedModel || ""}
+              onChange={(e) => setSelectedModel(e.target.value as any)}
               disabled={isConnecting || deviceList.length === 0}
             >
               {deviceList.length === 0 ? (
@@ -107,7 +103,7 @@ const HardwareConnectionModal: React.FC = () => {
             <button
               className="claw-button flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
               onClick={handleConnect}
-              disabled={isConnecting || !selectedDevice}
+              disabled={isConnecting || !selectedModel}
             >
               {isConnecting ? 'Connecting...' : isConnected ? 'Connected' : 'Connect'}
             </button>

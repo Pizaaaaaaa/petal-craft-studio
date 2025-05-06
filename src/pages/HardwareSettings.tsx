@@ -1,7 +1,31 @@
 
 import React, { useState } from 'react';
 import { useHardwareConnection } from '../contexts/HardwareConnectionContext';
-import { RefreshCw, Battery, Thermometer, FileCode, Info } from 'lucide-react';
+import { RefreshCw, Battery, Thermometer, FileCode, Info, Settings, WifiIcon, Sliders } from 'lucide-react';
+import { Slider } from "../components/ui/slider";
+import { 
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue 
+} from "../components/ui/select";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel
+} from "../components/ui/form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+
+const formSchema = z.object({
+  speed: z.number().min(0).max(100),
+  temperature: z.number().min(0).max(250),
+  tension: z.number().min(0).max(100),
+});
 
 const HardwareSettingsPage: React.FC = () => {
   const { 
@@ -9,10 +33,28 @@ const HardwareSettingsPage: React.FC = () => {
     isConnecting, 
     connectToHardware, 
     disconnectHardware, 
-    hardwareStatus 
+    hardwareStatus,
+    availableModels,
+    selectedModel,
+    setSelectedModel,
+    hardwareParameters,
+    updateHardwareParameter
   } = useHardwareConnection();
   
-  const [selectedTab, setSelectedTab] = useState<'connection' | 'status'>('connection');
+  const [selectedTab, setSelectedTab] = useState<'connection' | 'status' | 'parameters'>('connection');
+  
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      speed: hardwareParameters.speed,
+      temperature: hardwareParameters.temperature,
+      tension: hardwareParameters.tension,
+    },
+  });
+  
+  const handleParameterChange = (param: keyof typeof hardwareParameters, value: number) => {
+    updateHardwareParameter(param, value);
+  };
   
   return (
     <div>
@@ -34,6 +76,12 @@ const HardwareSettingsPage: React.FC = () => {
         >
           Device Status
         </button>
+        <button
+          className={`px-4 py-2 font-medium ${selectedTab === 'parameters' ? 'text-claw-blue-500 border-b-2 border-claw-blue-500' : 'text-gray-600 hover:text-gray-800'}`}
+          onClick={() => setSelectedTab('parameters')}
+        >
+          Parameters
+        </button>
       </div>
       
       {selectedTab === 'connection' && (
@@ -48,6 +96,29 @@ const HardwareSettingsPage: React.FC = () => {
                 <p className="text-gray-600">{isConnected ? 'Your device is connected' : 'No device connected'}</p>
               </div>
             </div>
+
+            <div className="mb-6">
+              <label className="block text-sm font-medium text-gray-700 mb-2">Hardware Model</label>
+              <Select 
+                value={selectedModel || ''} 
+                onValueChange={(value) => setSelectedModel(value as any)} 
+                disabled={isConnected}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select a hardware model" />
+                </SelectTrigger>
+                <SelectContent>
+                  {availableModels.map((model) => (
+                    <SelectItem key={model} value={model}>
+                      {model}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              {isConnected && (
+                <p className="mt-2 text-xs text-gray-500">Disconnect to change hardware model</p>
+              )}
+            </div>
             
             {isConnected ? (
               <button
@@ -60,7 +131,7 @@ const HardwareSettingsPage: React.FC = () => {
               <button
                 className="claw-button w-full"
                 onClick={connectToHardware}
-                disabled={isConnecting}
+                disabled={isConnecting || !selectedModel}
               >
                 {isConnecting ? 'Connecting...' : 'Connect to Device'}
               </button>
@@ -73,11 +144,16 @@ const HardwareSettingsPage: React.FC = () => {
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Connection Method</label>
-                <select className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-claw-blue-300">
-                  <option>Bluetooth</option>
-                  <option>USB</option>
-                  <option>Wi-Fi</option>
-                </select>
+                <Select defaultValue="bluetooth">
+                  <SelectTrigger className="w-full">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="bluetooth">Bluetooth</SelectItem>
+                    <SelectItem value="usb">USB</SelectItem>
+                    <SelectItem value="wifi">Wi-Fi</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
               
               <div>
@@ -100,6 +176,81 @@ const HardwareSettingsPage: React.FC = () => {
                   Reset Connection Settings
                 </button>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {selectedTab === 'parameters' && (
+        <div className={`max-w-2xl ${!isConnected ? 'opacity-50 pointer-events-none' : ''}`}>
+          <div className="mb-4 flex items-center justify-between">
+            <h3 className="text-lg font-medium">Hardware Parameters</h3>
+            
+            {!isConnected && (
+              <div className="text-amber-500 text-sm flex items-center">
+                <WifiIcon size={16} className="mr-1" />
+                Connect to device to modify parameters
+              </div>
+            )}
+          </div>
+          
+          <div className="claw-card p-6 space-y-8">
+            <div>
+              <div className="flex justify-between mb-2">
+                <label htmlFor="speed" className="text-sm font-medium text-gray-700">Speed</label>
+                <span className="text-sm text-gray-500">{hardwareParameters.speed}%</span>
+              </div>
+              <Slider 
+                defaultValue={[hardwareParameters.speed]} 
+                max={100} 
+                step={1}
+                onValueChange={([value]) => handleParameterChange('speed', value)}
+                disabled={!isConnected}
+                className="mb-6"
+              />
+              
+              <div className="flex justify-between mb-2">
+                <label htmlFor="temperature" className="text-sm font-medium text-gray-700">Temperature</label>
+                <span className="text-sm text-gray-500">{hardwareParameters.temperature}°C</span>
+              </div>
+              <Slider 
+                defaultValue={[hardwareParameters.temperature]} 
+                max={250} 
+                step={1}
+                onValueChange={([value]) => handleParameterChange('temperature', value)}
+                disabled={!isConnected}
+                className="mb-6"
+              />
+              
+              <div className="flex justify-between mb-2">
+                <label htmlFor="tension" className="text-sm font-medium text-gray-700">Tension</label>
+                <span className="text-sm text-gray-500">{hardwareParameters.tension}%</span>
+              </div>
+              <Slider 
+                defaultValue={[hardwareParameters.tension]} 
+                max={100} 
+                step={1}
+                onValueChange={([value]) => handleParameterChange('tension', value)}
+                disabled={!isConnected}
+              />
+            </div>
+            
+            {isConnected && (
+              <div className="pt-4 flex justify-end">
+                <button className="claw-secondary-button mr-2">
+                  Reset to Defaults
+                </button>
+                <button className="claw-button">
+                  Save Settings
+                </button>
+              </div>
+            )}
+          </div>
+          
+          <div className="mt-6 text-sm text-gray-500">
+            <div className="flex items-center">
+              <Info size={16} className="mr-2" />
+              <p>Parameter changes are applied in real-time to the connected device</p>
             </div>
           </div>
         </div>

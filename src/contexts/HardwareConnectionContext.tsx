@@ -2,6 +2,16 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { toast } from 'sonner';
 
+// Define available hardware models
+export type HardwareModel = 'ClawLab Yarn Spinner' | 'ClawLab Smart Knitter' | 'ClawLab Pattern Printer';
+
+// Define hardware parameters
+export interface HardwareParameters {
+  speed: number;
+  temperature: number;
+  tension: number;
+}
+
 interface HardwareConnectionContextType {
   isConnected: boolean;
   isConnecting: boolean;
@@ -16,6 +26,11 @@ interface HardwareConnectionContextType {
     firmwareVersion: string;
     lastUpdated: Date | null;
   };
+  availableModels: HardwareModel[];
+  selectedModel: HardwareModel | null;
+  setSelectedModel: (model: HardwareModel) => void;
+  hardwareParameters: HardwareParameters;
+  updateHardwareParameter: (param: keyof HardwareParameters, value: number) => void;
 }
 
 const HardwareConnectionContext = createContext<HardwareConnectionContextType | undefined>(undefined);
@@ -43,9 +58,35 @@ export const HardwareConnectionProvider: React.FC<HardwareConnectionProviderProp
     firmwareVersion: '1.2.3',
     lastUpdated: null as Date | null
   });
+  
+  // Hardware models and parameters
+  const availableModels: HardwareModel[] = ['ClawLab Yarn Spinner', 'ClawLab Smart Knitter', 'ClawLab Pattern Printer'];
+  const [selectedModel, setSelectedModel] = useState<HardwareModel | null>(null);
+  const [hardwareParameters, setHardwareParameters] = useState<HardwareParameters>({
+    speed: 50,
+    temperature: 120,
+    tension: 30
+  });
+
+  const updateHardwareParameter = (param: keyof HardwareParameters, value: number): void => {
+    setHardwareParameters(prev => ({
+      ...prev,
+      [param]: value
+    }));
+    
+    if (isConnected) {
+      // Simulate sending parameter to hardware
+      toast.success(`Updated ${param} to ${value}`);
+    }
+  };
 
   // Mock connection function
   const connectToHardware = async (): Promise<void> => {
+    if (!selectedModel) {
+      toast.error('Please select a hardware model');
+      return;
+    }
+    
     setIsConnecting(true);
     setConnectionError(null);
     
@@ -60,9 +101,9 @@ export const HardwareConnectionProvider: React.FC<HardwareConnectionProviderProp
           ...hardwareStatus,
           lastUpdated: new Date()
         });
-        toast.success('Successfully connected to hardware!');
+        toast.success(`Successfully connected to ${selectedModel}!`);
       } else {
-        throw new Error('Could not establish a connection with the hardware device.');
+        throw new Error(`Could not establish a connection with ${selectedModel}.`);
       }
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
@@ -87,6 +128,11 @@ export const HardwareConnectionProvider: React.FC<HardwareConnectionProviderProp
     connectToHardware,
     disconnectHardware,
     hardwareStatus,
+    availableModels,
+    selectedModel,
+    setSelectedModel,
+    hardwareParameters,
+    updateHardwareParameter
   };
 
   return (
