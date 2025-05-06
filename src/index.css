@@ -96,7 +96,10 @@
 
   /* Membership banner button - fix hover state */
   .membership-banner-button {
-    @apply bg-white/20 backdrop-blur-sm text-white px-6 py-2 rounded-full transition-all whitespace-nowrap;
+    @apply bg-white/20 backdrop-blur-sm text-white px-6 py-2 rounded-full transition-all whitespace-nowrap inline-flex items-center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   
   .membership-banner-button:hover {
