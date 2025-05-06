@@ -1,12 +1,21 @@
-
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Save, Undo, Redo, Image, Type, Pencil, ChevronLeft, Share, Download } from 'lucide-react';
+import DownloadConfirmDialog from '../components/DownloadConfirmDialog';
+import { useHardwareConnection } from '../contexts/HardwareConnectionContext';
+import { toast } from 'sonner';
 
 const toolOptions = [
   { id: 'brush', name: 'Yarn Brush', icon: Pencil },
   { id: 'pattern', name: 'Pattern', icon: Image },
   { id: 'text', name: 'Text', icon: Type },
+];
+
+// Mock materials for the editor's current project
+const mockMaterials = [
+  'Worsted Weight Yarn - 200g',
+  'Fine Merino Wool - 150g',
+  'Size 4.5mm Knitting Needle Head'
 ];
 
 const EditorPage: React.FC = () => {
@@ -16,6 +25,8 @@ const EditorPage: React.FC = () => {
   const [canvasScale, setCanvasScale] = useState(100);
   const [unsavedChanges, setUnsavedChanges] = useState(false);
   const [projectTitle, setProjectTitle] = useState('Untitled Project');
+  const [downloadDialogOpen, setDownloadDialogOpen] = useState(false);
+  const { isConnected, showConnectionModal, setShowConnectionModal, selectedModel } = useHardwareConnection();
   
   // Initialize the canvas or template based on templateId
   useEffect(() => {
@@ -48,6 +59,25 @@ const EditorPage: React.FC = () => {
       }
     } else {
       navigate(-1);
+    }
+  };
+  
+  const handleDownloadClick = () => {
+    if (!isConnected) {
+      toast.error("No device connected");
+      setShowConnectionModal(true);
+      return;
+    }
+    
+    setDownloadDialogOpen(true);
+  };
+  
+  const handleDownloadConfirm = () => {
+    if (selectedModel) {
+      toast.success(`Sending "${projectTitle}" to ${selectedModel}...`);
+    } else {
+      toast.error("No hardware model selected");
+      setShowConnectionModal(true);
     }
   };
   
@@ -86,11 +116,20 @@ const EditorPage: React.FC = () => {
             <span>Save</span>
           </button>
           
-          <button className="claw-secondary-button">
+          <button className="claw-secondary-button" onClick={handleDownloadClick}>
             <Download size={18} />
           </button>
         </div>
       </header>
+      
+      {/* Download Confirm Dialog */}
+      <DownloadConfirmDialog
+        isOpen={downloadDialogOpen}
+        onClose={() => setDownloadDialogOpen(false)}
+        onConfirm={handleDownloadConfirm}
+        projectTitle={projectTitle}
+        requiredMaterials={mockMaterials}
+      />
       
       {/* Editor main area */}
       <div className="flex-1 flex">

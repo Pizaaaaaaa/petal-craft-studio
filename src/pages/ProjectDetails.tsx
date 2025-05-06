@@ -1,8 +1,10 @@
+
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Heart, Share, Download, Edit, ChevronLeft, MessageSquare } from 'lucide-react';
 import CommentSection from '../components/CommentSection';
 import ShareDialog from '../components/ShareDialog';
+import DownloadConfirmDialog from '../components/DownloadConfirmDialog';
 import { useHardwareConnection } from '../contexts/HardwareConnectionContext';
 import { toast } from 'sonner';
 
@@ -93,6 +95,7 @@ const ProjectDetailsPage: React.FC = () => {
   const [likesCount, setLikesCount] = useState(project.likes);
   const [showComments, setShowComments] = useState(false);
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
+  const [downloadDialogOpen, setDownloadDialogOpen] = useState(false);
   const { isConnected, showConnectionModal, setShowConnectionModal, selectedModel } = useHardwareConnection();
   
   // Fetch project data (mock)
@@ -115,13 +118,17 @@ const ProjectDetailsPage: React.FC = () => {
     setShareDialogOpen(true);
   };
 
-  const handleSendToHardware = () => {
+  const handleDownloadClick = () => {
     if (!isConnected) {
       toast.error("No device connected");
       setShowConnectionModal(true);
       return;
     }
     
+    setDownloadDialogOpen(true);
+  };
+  
+  const handleDownloadConfirm = () => {
     if (selectedModel) {
       toast.success(`Sending "${project.title}" to ${selectedModel}...`);
     } else {
@@ -205,7 +212,7 @@ const ProjectDetailsPage: React.FC = () => {
             
             <button 
               className="claw-secondary-button"
-              onClick={handleSendToHardware}
+              onClick={handleDownloadClick}
             >
               <Download size={18} />
             </button>
@@ -227,6 +234,15 @@ const ProjectDetailsPage: React.FC = () => {
         onClose={() => setShareDialogOpen(false)}
         title={project.title}
         url={shareUrl}
+      />
+      
+      {/* Download Confirm Dialog */}
+      <DownloadConfirmDialog
+        isOpen={downloadDialogOpen}
+        onClose={() => setDownloadDialogOpen(false)}
+        onConfirm={handleDownloadConfirm}
+        projectTitle={project.title}
+        requiredMaterials={project.materials}
       />
       
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
