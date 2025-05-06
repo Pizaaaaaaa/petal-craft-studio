@@ -1,7 +1,11 @@
 
 import React, { useEffect, useState } from 'react';
-import { X, Bluetooth } from 'lucide-react';
+import { X, Bluetooth, Wifi, Usb, Cable } from 'lucide-react';
 import { useHardwareConnection } from '../../contexts/HardwareConnectionContext';
+import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
+import { Label } from '../ui/label';
+
+type ConnectionMethod = 'bluetooth' | 'wifi' | 'usb' | 'cable';
 
 const HardwareConnectionModal: React.FC = () => {
   const { 
@@ -17,6 +21,7 @@ const HardwareConnectionModal: React.FC = () => {
   } = useHardwareConnection();
   
   const [deviceList, setDeviceList] = useState<string[]>([]);
+  const [connectionMethod, setConnectionMethod] = useState<ConnectionMethod>('bluetooth');
   
   // Mock device scan
   useEffect(() => {
@@ -32,12 +37,27 @@ const HardwareConnectionModal: React.FC = () => {
   
   const handleConnect = () => {
     if (selectedModel) {
-      connectToHardware();
+      connectToHardware(connectionMethod);
     }
   };
   
   const handleSkip = () => {
     setShowConnectionModal(false);
+  };
+
+  const renderConnectionIcon = () => {
+    switch (connectionMethod) {
+      case 'bluetooth':
+        return <Bluetooth size={32} className="text-claw-blue-500" />;
+      case 'wifi':
+        return <Wifi size={32} className="text-claw-blue-500" />;
+      case 'usb':
+        return <Usb size={32} className="text-claw-blue-500" />;
+      case 'cable':
+        return <Cable size={32} className="text-claw-blue-500" />;
+      default:
+        return <Bluetooth size={32} className="text-claw-blue-500" />;
+    }
   };
   
   return (
@@ -52,7 +72,7 @@ const HardwareConnectionModal: React.FC = () => {
         
         <div className="text-center mb-6">
           <div className="w-16 h-16 bg-claw-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Bluetooth size={32} className="text-claw-blue-500" />
+            {renderConnectionIcon()}
           </div>
           
           <h3 className="text-xl font-semibold text-gray-800">Connect Hardware Device</h3>
@@ -66,6 +86,44 @@ const HardwareConnectionModal: React.FC = () => {
         )}
         
         <div className="space-y-4">
+          <div className="mb-4">
+            <h4 className="text-sm font-medium text-gray-700 mb-3">Connection Method</h4>
+            <RadioGroup 
+              value={connectionMethod} 
+              onValueChange={(value) => setConnectionMethod(value as ConnectionMethod)}
+              className="grid grid-cols-2 gap-3"
+            >
+              <div className="flex items-center space-x-2 border rounded-lg p-3 hover:bg-gray-50">
+                <RadioGroupItem value="bluetooth" id="bluetooth" />
+                <Label htmlFor="bluetooth" className="flex items-center cursor-pointer">
+                  <Bluetooth size={18} className="mr-2" />
+                  <span>Bluetooth</span>
+                </Label>
+              </div>
+              <div className="flex items-center space-x-2 border rounded-lg p-3 hover:bg-gray-50">
+                <RadioGroupItem value="wifi" id="wifi" />
+                <Label htmlFor="wifi" className="flex items-center cursor-pointer">
+                  <Wifi size={18} className="mr-2" />
+                  <span>Wi-Fi</span>
+                </Label>
+              </div>
+              <div className="flex items-center space-x-2 border rounded-lg p-3 hover:bg-gray-50">
+                <RadioGroupItem value="usb" id="usb" />
+                <Label htmlFor="usb" className="flex items-center cursor-pointer">
+                  <Usb size={18} className="mr-2" />
+                  <span>USB</span>
+                </Label>
+              </div>
+              <div className="flex items-center space-x-2 border rounded-lg p-3 hover:bg-gray-50">
+                <RadioGroupItem value="cable" id="cable" />
+                <Label htmlFor="cable" className="flex items-center cursor-pointer">
+                  <Cable size={18} className="mr-2" />
+                  <span>Cable</span>
+                </Label>
+              </div>
+            </RadioGroup>
+          </div>
+          
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Select Device</label>
             <select

@@ -5,6 +5,9 @@ import { toast } from 'sonner';
 // Define available hardware models
 export type HardwareModel = 'ClawLab Yarn Spinner' | 'ClawLab Smart Knitter' | 'ClawLab Pattern Printer';
 
+// Define connection methods
+export type ConnectionMethod = 'bluetooth' | 'wifi' | 'usb' | 'cable';
+
 // Define hardware parameters
 export interface HardwareParameters {
   speed: number;
@@ -18,7 +21,7 @@ interface HardwareConnectionContextType {
   connectionError: string | null;
   showConnectionModal: boolean;
   setShowConnectionModal: (show: boolean) => void;
-  connectToHardware: () => Promise<void>;
+  connectToHardware: (method?: ConnectionMethod) => Promise<void>;
   disconnectHardware: () => void;
   hardwareStatus: {
     batteryLevel: number;
@@ -92,7 +95,7 @@ export const HardwareConnectionProvider: React.FC<HardwareConnectionProviderProp
   };
 
   // Mock connection function
-  const connectToHardware = async (): Promise<void> => {
+  const connectToHardware = async (method: ConnectionMethod = 'bluetooth'): Promise<void> => {
     if (!selectedModel) {
       toast.error('Please select a hardware model');
       return;
@@ -112,9 +115,9 @@ export const HardwareConnectionProvider: React.FC<HardwareConnectionProviderProp
           ...hardwareStatus,
           lastUpdated: new Date()
         });
-        toast.success(`Successfully connected to ${selectedModel}!`);
+        toast.success(`Successfully connected to ${selectedModel} via ${method}!`);
       } else {
-        throw new Error(`Could not establish a connection with ${selectedModel}.`);
+        throw new Error(`Could not establish a connection with ${selectedModel} using ${method}.`);
       }
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
