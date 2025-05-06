@@ -1,8 +1,8 @@
 
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Search, Plus } from 'lucide-react';
 import { toast } from 'sonner';
+import TemplateSelectionModal from './modals/TemplateSelectionModal';
 
 type SearchBarProps = {
   onSearch: (query: string) => void;
@@ -11,7 +11,7 @@ type SearchBarProps = {
 
 const SearchBar = ({ onSearch, onCreateProject }: SearchBarProps) => {
   const [query, setQuery] = useState('');
-  const navigate = useNavigate();
+  const [showTemplateModal, setShowTemplateModal] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,11 +21,6 @@ const SearchBar = ({ onSearch, onCreateProject }: SearchBarProps) => {
         duration: 2000,
       });
     }
-  };
-
-  const handleCreateProject = () => {
-    onCreateProject();
-    navigate('/editor/new');
   };
 
   return (
@@ -43,12 +38,17 @@ const SearchBar = ({ onSearch, onCreateProject }: SearchBarProps) => {
         />
       </form>
       <button 
-        onClick={handleCreateProject}
+        onClick={() => setShowTemplateModal(true)}
         className="craft-button flex items-center gap-2"
       >
         <Plus size={18} />
         <span>Create Project</span>
       </button>
+
+      <TemplateSelectionModal
+        isOpen={showTemplateModal}
+        onClose={() => setShowTemplateModal(false)}
+      />
     </div>
   );
 };

@@ -1,10 +1,8 @@
-
 import React, { useState } from 'react';
 import { toast } from 'sonner';
 import SearchBar from '../components/SearchBar';
 import RecommendationSection from '../components/RecommendationSection';
 import CategorySelector from '../components/CategorySelector';
-import TemplateSelectionModal from '../components/modals/TemplateSelectionModal';
 
 // Mock data for the community projects
 const trendingProjects = [
@@ -144,10 +142,14 @@ const categories = ['All', 'Clothes', 'Scarves', 'Hats', 'Socks', 'Gloves', 'Bag
 
 const HomePage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [showTemplateModal, setShowTemplateModal] = useState(false);
 
   const handleSearch = (query: string) => {
     toast.info(`Search: ${query}`);
+  };
+
+  const handleCreateProject = () => {
+    // This won't be directly used now as modal is handled in SearchBar
+    // But keeping it for compatibility
   };
 
   return (
@@ -160,7 +162,7 @@ const HomePage: React.FC = () => {
         
         <SearchBar 
           onSearch={handleSearch} 
-          onCreateProject={() => setShowTemplateModal(true)} 
+          onCreateProject={handleCreateProject} 
         />
       </div>
       
@@ -192,11 +194,6 @@ const HomePage: React.FC = () => {
       <RecommendationSection 
         title="Recommended For You" 
         projects={personalizedProjects} 
-      />
-
-      <TemplateSelectionModal
-        isOpen={showTemplateModal}
-        onClose={() => setShowTemplateModal(false)}
       />
     </div>
   );
