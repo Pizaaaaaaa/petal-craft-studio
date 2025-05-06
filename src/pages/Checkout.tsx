@@ -14,6 +14,14 @@ const STEPS = {
   REVIEW: 2
 };
 
+// Payment methods
+const paymentMethods = [
+  { id: 'card', name: 'Credit/Debit Card', icon: '💳' },
+  { id: 'paypal', name: 'PayPal', icon: '🅿️' },
+  { id: 'alipay', name: 'Alipay', icon: '💲' },
+  { id: 'wechat', name: 'WeChat Pay', icon: '📱' }
+];
+
 const CheckoutPage: React.FC = () => {
   const { user } = useAuth();
   const { items, clearCart, totalPrice } = useCart();
@@ -38,6 +46,7 @@ const CheckoutPage: React.FC = () => {
     cvv: ''
   });
   
+  const [selectedPayment, setSelectedPayment] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   
   if (items.length === 0) {
@@ -62,10 +71,19 @@ const CheckoutPage: React.FC = () => {
   
   const handlePaymentSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!selectedPayment) {
+      toast.error("Please select a payment method");
+      return;
+    }
     setCurrentStep(STEPS.REVIEW);
   };
   
   const handlePlaceOrder = async () => {
+    if (!selectedPayment) {
+      toast.error("Please select a payment method");
+      return;
+    }
+    
     setIsProcessing(true);
     
     try {
@@ -78,7 +96,8 @@ const CheckoutPage: React.FC = () => {
         state: {
           orderNumber: Math.floor(100000 + Math.random() * 900000).toString(),
           shippingInfo,
-          items
+          items,
+          paymentMethod: selectedPayment
         }
       });
       
@@ -235,86 +254,109 @@ const CheckoutPage: React.FC = () => {
             <div className="claw-card p-6">
               <h2 className="text-xl font-semibold mb-4 flex items-center">
                 <CreditCard size={20} className="mr-2" />
-                Payment Information
+                Payment Method
               </h2>
               
               <form onSubmit={handlePaymentSubmit}>
                 <div className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Name on Card</label>
-                    <input 
-                      type="text" 
-                      className="w-full border border-gray-300 rounded-md px-3 py-2"
-                      value={paymentInfo.cardName}
-                      onChange={(e) => setPaymentInfo({...paymentInfo, cardName: e.target.value})}
-                      required
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Card Number</label>
-                    <input 
-                      type="text" 
-                      className="w-full border border-gray-300 rounded-md px-3 py-2"
-                      value={paymentInfo.cardNumber}
-                      onChange={(e) => setPaymentInfo({...paymentInfo, cardNumber: e.target.value})}
-                      placeholder="XXXX XXXX XXXX XXXX"
-                      maxLength={19}
-                      required
-                    />
-                  </div>
-                  
-                  <div className="grid grid-cols-3 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Month</label>
-                      <select 
-                        className="w-full border border-gray-300 rounded-md px-3 py-2"
-                        value={paymentInfo.expMonth}
-                        onChange={(e) => setPaymentInfo({...paymentInfo, expMonth: e.target.value})}
-                        required
-                      >
-                        <option value="">Month</option>
-                        {[...Array(12)].map((_, i) => (
-                          <option key={i} value={String(i + 1).padStart(2, '0')}>
-                            {String(i + 1).padStart(2, '0')}
-                          </option>
-                        ))}
-                      </select>
+                  <h4 className="text-sm font-medium">Select Payment Method</h4>
+                  {paymentMethods.map(method => (
+                    <div 
+                      key={method.id}
+                      onClick={() => setSelectedPayment(method.id)}
+                      className={`p-3 border rounded-lg flex items-center justify-between cursor-pointer transition-all ${
+                        selectedPayment === method.id ? 'border-claw-blue-300 bg-claw-blue-50' : 'border-gray-200 hover:border-claw-blue-200'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className="text-xl">{method.icon}</span>
+                        <span>{method.name}</span>
+                      </div>
+                      {selectedPayment === method.id && <Check size={18} className="text-claw-blue-500" />}
                     </div>
-                    
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Year</label>
-                      <select 
-                        className="w-full border border-gray-300 rounded-md px-3 py-2"
-                        value={paymentInfo.expYear}
-                        onChange={(e) => setPaymentInfo({...paymentInfo, expYear: e.target.value})}
-                        required
-                      >
-                        <option value="">Year</option>
-                        {[...Array(10)].map((_, i) => {
-                          const year = new Date().getFullYear() + i;
-                          return (
-                            <option key={year} value={year}>
-                              {year}
-                            </option>
-                          );
-                        })}
-                      </select>
+                  ))}
+
+                  {selectedPayment === 'card' && (
+                    <div className="mt-4 pt-4 border-t">
+                      <div className="space-y-4">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">Name on Card</label>
+                          <input 
+                            type="text" 
+                            className="w-full border border-gray-300 rounded-md px-3 py-2"
+                            value={paymentInfo.cardName}
+                            onChange={(e) => setPaymentInfo({...paymentInfo, cardName: e.target.value})}
+                            required={selectedPayment === 'card'}
+                          />
+                        </div>
+                        
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">Card Number</label>
+                          <input 
+                            type="text" 
+                            className="w-full border border-gray-300 rounded-md px-3 py-2"
+                            value={paymentInfo.cardNumber}
+                            onChange={(e) => setPaymentInfo({...paymentInfo, cardNumber: e.target.value})}
+                            placeholder="XXXX XXXX XXXX XXXX"
+                            maxLength={19}
+                            required={selectedPayment === 'card'}
+                          />
+                        </div>
+                        
+                        <div className="grid grid-cols-3 gap-4">
+                          <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Month</label>
+                            <select 
+                              className="w-full border border-gray-300 rounded-md px-3 py-2"
+                              value={paymentInfo.expMonth}
+                              onChange={(e) => setPaymentInfo({...paymentInfo, expMonth: e.target.value})}
+                              required={selectedPayment === 'card'}
+                            >
+                              <option value="">Month</option>
+                              {[...Array(12)].map((_, i) => (
+                                <option key={i} value={String(i + 1).padStart(2, '0')}>
+                                  {String(i + 1).padStart(2, '0')}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                          
+                          <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Year</label>
+                            <select 
+                              className="w-full border border-gray-300 rounded-md px-3 py-2"
+                              value={paymentInfo.expYear}
+                              onChange={(e) => setPaymentInfo({...paymentInfo, expYear: e.target.value})}
+                              required={selectedPayment === 'card'}
+                            >
+                              <option value="">Year</option>
+                              {[...Array(10)].map((_, i) => {
+                                const year = new Date().getFullYear() + i;
+                                return (
+                                  <option key={year} value={year}>
+                                    {year}
+                                  </option>
+                                );
+                              })}
+                            </select>
+                          </div>
+                          
+                          <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">CVV</label>
+                            <input 
+                              type="text" 
+                              className="w-full border border-gray-300 rounded-md px-3 py-2"
+                              value={paymentInfo.cvv}
+                              onChange={(e) => setPaymentInfo({...paymentInfo, cvv: e.target.value})}
+                              placeholder="XXX"
+                              maxLength={4}
+                              required={selectedPayment === 'card'}
+                            />
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">CVV</label>
-                      <input 
-                        type="text" 
-                        className="w-full border border-gray-300 rounded-md px-3 py-2"
-                        value={paymentInfo.cvv}
-                        onChange={(e) => setPaymentInfo({...paymentInfo, cvv: e.target.value})}
-                        placeholder="XXX"
-                        maxLength={4}
-                        required
-                      />
-                    </div>
-                  </div>
+                  )}
                 </div>
                 
                 <div className="mt-6 flex justify-between">
@@ -329,6 +371,7 @@ const CheckoutPage: React.FC = () => {
                   <button 
                     type="submit"
                     className="claw-button"
+                    disabled={!selectedPayment}
                   >
                     Continue to Review
                   </button>
@@ -357,8 +400,14 @@ const CheckoutPage: React.FC = () => {
                 <div>
                   <h3 className="font-medium text-gray-800 mb-2">Payment Method</h3>
                   <div className="bg-gray-50 p-3 rounded flex items-center">
-                    <CreditCard size={18} className="mr-2 text-gray-500" />
-                    <span>Card ending in {paymentInfo.cardNumber.slice(-4)}</span>
+                    <span className="text-xl mr-2">
+                      {paymentMethods.find(m => m.id === selectedPayment)?.icon}
+                    </span>
+                    <span>
+                      {paymentMethods.find(m => m.id === selectedPayment)?.name}
+                      {selectedPayment === 'card' && paymentInfo.cardNumber && 
+                        ` - Card ending in ${paymentInfo.cardNumber.slice(-4)}`}
+                    </span>
                   </div>
                 </div>
                 
