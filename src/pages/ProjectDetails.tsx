@@ -74,7 +74,7 @@ const mockProject = {
         name: 'David Wilson',
         avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=200'
       },
-      content: 'What level of experience would you recommend for this project? I'm still a beginner.',
+      content: 'What level of experience would you recommend for this project? I\'m still a beginner.',
       createdAt: '2023-10-17T16:20:00Z',
       likes: 3,
       isLiked: false
