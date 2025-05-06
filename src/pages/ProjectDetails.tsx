@@ -1,8 +1,8 @@
-
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Heart, Share, Download, Edit, ChevronLeft, MessageSquare } from 'lucide-react';
 import CommentSection from '../components/CommentSection';
+import ShareDialog from '../components/ShareDialog';
 
 // Mock project data
 const mockProject = {
@@ -90,6 +90,7 @@ const ProjectDetailsPage: React.FC = () => {
   const [isLiked, setIsLiked] = useState(project.isLiked);
   const [likesCount, setLikesCount] = useState(project.likes);
   const [showComments, setShowComments] = useState(false);
+  const [shareDialogOpen, setShareDialogOpen] = useState(false);
   
   // Fetch project data (mock)
   useEffect(() => {
@@ -106,6 +107,13 @@ const ProjectDetailsPage: React.FC = () => {
   const handleEdit = () => {
     navigate(`/editor/${id}`);
   };
+  
+  const handleShare = () => {
+    setShareDialogOpen(true);
+  };
+
+  // Get the current URL for sharing
+  const shareUrl = window.location.href;
   
   return (
     <div>
@@ -164,8 +172,12 @@ const ProjectDetailsPage: React.FC = () => {
               <span>{isLiked ? 'Liked' : 'Like'}</span>
             </button>
             
-            <button className="claw-secondary-button">
+            <button 
+              className="claw-secondary-button flex items-center gap-2"
+              onClick={handleShare}
+            >
               <Share size={18} />
+              <span>Share</span>
             </button>
             
             <button className="claw-secondary-button">
@@ -182,6 +194,14 @@ const ProjectDetailsPage: React.FC = () => {
           </div>
         </div>
       </div>
+      
+      {/* Share Dialog */}
+      <ShareDialog
+        isOpen={shareDialogOpen}
+        onClose={() => setShareDialogOpen(false)}
+        title={project.title}
+        url={shareUrl}
+      />
       
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2">
