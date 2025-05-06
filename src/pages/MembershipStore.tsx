@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useCart } from '../contexts/CartContext';
 import { Link } from 'react-router-dom';
@@ -205,13 +205,14 @@ const MembershipStore: React.FC = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   
   // Add item to cart
-  const handleAddToCart = (item: typeof shopItems[0]) => {
+  const handleAddToCart = (item: typeof shopItems[0], event: React.MouseEvent<HTMLButtonElement>) => {
+    // Pass the button element to create animation from
     addItem({
       id: item.id,
       name: item.name,
       price: item.price,
       image: item.image
-    });
+    }, event.currentTarget);
   };
   
   // Open membership dialog
@@ -357,6 +358,7 @@ const MembershipStore: React.FC = () => {
           <Link to="/cart">
             <button 
               className="flex items-center gap-2 px-3 py-2 rounded-lg bg-claw-blue-50 hover:bg-claw-blue-100 text-claw-blue-500"
+              data-cart-icon
             >
               <ShoppingCart size={18} />
               <span>{totalItems}</span>
@@ -392,7 +394,7 @@ const MembershipStore: React.FC = () => {
                       ? 'bg-claw-blue-500 hover:bg-claw-blue-600 text-white' 
                       : 'bg-gray-200 text-gray-500 cursor-not-allowed'
                   }`}
-                  onClick={() => item.inStock && handleAddToCart(item)}
+                  onClick={(e) => item.inStock && handleAddToCart(item, e)}
                   disabled={!item.inStock}
                 >
                   {item.inStock ? 'Add to Cart' : 'Out of Stock'}

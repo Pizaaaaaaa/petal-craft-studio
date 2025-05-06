@@ -14,6 +14,29 @@ interface CartItemProps {
 const CartItem: React.FC<CartItemProps> = ({ id, name, price, image, quantity }) => {
   const { removeItem, updateQuantity } = useCart();
   
+  // Handle quantity change with animation
+  const handleQuantityChange = (newQuantity: number) => {
+    // Don't go below 1
+    if (newQuantity < 1) return;
+    
+    // Get the quantity element to animate
+    const quantityElement = document.getElementById(`quantity-${id}`);
+    if (quantityElement) {
+      // Add a brief scaling animation
+      quantityElement.classList.add('scale-125');
+      quantityElement.classList.add('text-claw-blue-500');
+      
+      // Remove animation class after animation completes
+      setTimeout(() => {
+        quantityElement.classList.remove('scale-125');
+        quantityElement.classList.remove('text-claw-blue-500');
+      }, 300);
+    }
+    
+    // Update the quantity
+    updateQuantity(id, newQuantity);
+  };
+  
   return (
     <div className="flex items-center py-4 border-b">
       <div className="w-16 h-16 bg-gray-100 rounded flex-shrink-0">
@@ -36,22 +59,27 @@ const CartItem: React.FC<CartItemProps> = ({ id, name, price, image, quantity })
       <div className="flex items-center ml-4">
         <button 
           className="w-7 h-7 flex items-center justify-center text-gray-500 hover:text-gray-700"
-          onClick={() => updateQuantity(id, quantity - 1)}
+          onClick={() => handleQuantityChange(quantity - 1)}
           disabled={quantity <= 1}
         >
           <Minus size={16} />
         </button>
-        <span className="mx-2 w-6 text-center">{quantity}</span>
+        <span 
+          id={`quantity-${id}`} 
+          className="mx-2 w-6 text-center transition-all duration-300"
+        >
+          {quantity}
+        </span>
         <button 
           className="w-7 h-7 flex items-center justify-center text-gray-500 hover:text-gray-700"
-          onClick={() => updateQuantity(id, quantity + 1)}
+          onClick={() => handleQuantityChange(quantity + 1)}
         >
           <Plus size={16} />
         </button>
       </div>
       
       <button 
-        className="ml-4 text-red-500 hover:text-red-700"
+        className="ml-4 text-red-500 hover:text-red-700 transition-colors duration-200"
         onClick={() => removeItem(id)}
       >
         <Trash size={16} />

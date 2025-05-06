@@ -14,7 +14,7 @@ export interface CartItem {
 // Define context type
 interface CartContextType {
   items: CartItem[];
-  addItem: (item: Omit<CartItem, 'quantity'>) => void;
+  addItem: (item: Omit<CartItem, 'quantity'>, sourceElement?: HTMLElement) => void;
   removeItem: (itemId: string) => void;
   updateQuantity: (itemId: string, quantity: number) => void;
   clearCart: () => void;
@@ -62,7 +62,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.setItem('cart', JSON.stringify(items));
   }, [items]);
 
-  const addItem = (item: Omit<CartItem, 'quantity'>) => {
+  const addItem = (item: Omit<CartItem, 'quantity'>, sourceElement?: HTMLElement) => {
     setItems(currentItems => {
       const existingItemIndex = currentItems.findIndex(i => i.id === item.id);
       
@@ -80,10 +80,68 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
     });
     
+    // Create animation effect if source element is provided
+    if (sourceElement) {
+      createCartAnimation(sourceElement, item.image);
+    }
+    
     toast("Added to cart", {
       description: `${item.name} has been added to your cart`,
       duration: 2000,
     });
+  };
+
+  // Function to create the flying image animation
+  const createCartAnimation = (sourceElement: HTMLElement, imageUrl: string) => {
+    // Get the source button's position
+    const sourceRect = sourceElement.getBoundingClientRect();
+    
+    // Find the cart icon in the DOM
+    const cartIcon = document.querySelector('[data-cart-icon]');
+    if (!cartIcon) return;
+    
+    const cartRect = cartIcon.getBoundingClientRect();
+    
+    // Create the flying image element
+    const flyingImage = document.createElement('img');
+    flyingImage.src = imageUrl;
+    flyingImage.className = 'fixed pointer-events-none rounded-md shadow-md z-50';
+    flyingImage.style.width = '50px';
+    flyingImage.style.height = '50px';
+    flyingImage.style.objectFit = 'cover';
+    flyingImage.style.left = `${sourceRect.left + sourceRect.width / 2 - 25}px`;
+    flyingImage.style.top = `${sourceRect.top + sourceRect.height / 2 - 25}px`;
+    flyingImage.style.transition = 'all 0.8s cubic-bezier(0.18, 0.89, 0.32, 1.28)';
+    flyingImage.style.opacity = '1';
+    
+    // Add the element to the body
+    document.body.appendChild(flyingImage);
+    
+    // Trigger the animation after a small delay
+    setTimeout(() => {
+      flyingImage.style.left = `${cartRect.left + cartRect.width / 2 - 15}px`;
+      flyingImage.style.top = `${cartRect.top + cartRect.height / 2 - 15}px`;
+      flyingImage.style.width = '30px';
+      flyingImage.style.height = '30px';
+      flyingImage.style.opacity = '0.5';
+      
+      // Add a ping effect to the cart icon
+      if (cartIcon instanceof HTMLElement) {
+        cartIcon.classList.add('relative');
+        const pingElement = document.createElement('span');
+        pingElement.className = 'absolute inline-flex h-full w-full rounded-full bg-claw-blue-400 opacity-75 animate-ping';
+        cartIcon.appendChild(pingElement);
+        
+        setTimeout(() => {
+          cartIcon.removeChild(pingElement);
+        }, 700);
+      }
+      
+      // Remove the flying image after animation
+      setTimeout(() => {
+        document.body.removeChild(flyingImage);
+      }, 800);
+    }, 50);
   };
 
   const removeItem = (itemId: string) => {
