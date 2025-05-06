@@ -1,63 +1,92 @@
 
 import React, { useState } from 'react';
-import { X } from 'lucide-react';
+import { X, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-// Template categories and templates
-const templateCategories = [
-  'Clothes', 
-  'Scarves', 
-  'Hats', 
-  'Socks', 
-  'Gloves', 
-  'Bags', 
-  'Toys'
-];
+interface TemplateCategory {
+  id: string;
+  name: string;
+  templates: Template[];
+}
 
-const templates = {
-  'Clothes': [
-    { id: 'c1', name: 'Basic Sweater', image: 'https://images.unsplash.com/photo-1584736328868-fbc30f5efe78?auto=format&fit=crop&q=80&w=400' },
-    { id: 'c2', name: 'Cardigan', image: 'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&q=80&w=400' },
-    { id: 'c3', name: 'Vest', image: 'https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?auto=format&fit=crop&q=80&w=400' },
-    { id: 'c4', name: 'Tank Top', image: 'https://images.unsplash.com/photo-1516762689871-2d99137621cb?auto=format&fit=crop&q=80&w=400' }
-  ],
-  'Scarves': [
-    { id: 's1', name: 'Basic Scarf', image: 'https://images.unsplash.com/photo-1610288311735-39b7facbd095?auto=format&fit=crop&q=80&w=400' },
-    { id: 's2', name: 'Infinity Scarf', image: 'https://images.unsplash.com/photo-1520903920243-00d872a2d1c9?auto=format&fit=crop&q=80&w=400' },
-    { id: 's3', name: 'Striped Scarf', image: 'https://images.unsplash.com/photo-1608438400077-59e382491e4f?auto=format&fit=crop&q=80&w=400' },
-    { id: 's4', name: 'Textured Scarf', image: 'https://images.unsplash.com/photo-1553814080-765dc87735af?auto=format&fit=crop&q=80&w=400' }
-  ],
-  'Hats': [
-    { id: 'h1', name: 'Beanie', image: 'https://images.unsplash.com/photo-1576871337622-98d48d1cf531?auto=format&fit=crop&q=80&w=400' },
-    { id: 'h2', name: 'Beret', image: 'https://images.unsplash.com/photo-1510481296702-5090337e808e?auto=format&fit=crop&q=80&w=400' },
-    { id: 'h3', name: 'Pompom Hat', image: 'https://images.unsplash.com/photo-1511500118080-275313ec90a1?auto=format&fit=crop&q=80&w=400' },
-    { id: 'h4', name: 'Cable Knit Hat', image: 'https://images.unsplash.com/photo-1485178575877-1a13bf489dfe?auto=format&fit=crop&q=80&w=400' }
-  ],
-  'Socks': [
-    { id: 'so1', name: 'Basic Socks', image: 'https://images.unsplash.com/photo-1586350977771-2dbe4fae8d39?auto=format&fit=crop&q=80&w=400' },
-    { id: 'so2', name: 'Ankle Socks', image: 'https://images.unsplash.com/photo-1582966772680-860e372bb558?auto=format&fit=crop&q=80&w=400' },
-    { id: 'so3', name: 'Knee Socks', image: 'https://images.unsplash.com/photo-1597843797221-e34b4a320b97?auto=format&fit=crop&q=80&w=400' },
-    { id: 'so4', name: 'Patterned Socks', image: 'https://images.unsplash.com/photo-1512748971662-995fa915dda9?auto=format&fit=crop&q=80&w=400' }
-  ],
-  'Gloves': [
-    { id: 'g1', name: 'Fingerless Gloves', image: 'https://images.unsplash.com/photo-1510757902970-e236dc20b948?auto=format&fit=crop&q=80&w=400' },
-    { id: 'g2', name: 'Mittens', image: 'https://images.unsplash.com/photo-1607529129242-5b759eb7b268?auto=format&fit=crop&q=80&w=400' },
-    { id: 'g3', name: 'Full Gloves', image: 'https://images.unsplash.com/photo-1545028873-f2a9a359a1ebHmId=4&Fmt=3' },
-    { id: 'g4', name: 'Wrist Warmers', image: 'https://images.unsplash.com/photo-1611375397414-cf9832dfdc9a?auto=format&fit=crop&q=80&w=400' }
-  ],
-  'Bags': [
-    { id: 'b1', name: 'Tote Bag', image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=400' },
-    { id: 'b2', name: 'Clutch', image: 'https://images.unsplash.com/photo-1584917865442-de89df41c136?auto=format&fit=crop&q=80&w=400' },
-    { id: 'b3', name: 'Backpack', image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&q=80&w=400' },
-    { id: 'b4', name: 'Purse', image: 'https://images.unsplash.com/photo-1584917865442-de89df41c136?auto=format&fit=crop&q=80&w=400' }
-  ],
-  'Toys': [
-    { id: 't1', name: 'Bear Plushie', image: 'https://images.unsplash.com/photo-1556012018-50c5c0da73bf?auto=format&fit=crop&q=80&w=400' },
-    { id: 't2', name: 'Bunny', image: 'https://images.unsplash.com/photo-1545822686-1dc5b381307a?auto=format&fit=crop&q=80&w=400' },
-    { id: 't3', name: 'Cat', image: 'https://images.unsplash.com/photo-1548366086-7f1b76106622?auto=format&fit=crop&q=80&w=400' },
-    { id: 't4', name: 'Dog', image: 'https://images.unsplash.com/photo-1543852786-1cf6624b9987?auto=format&fit=crop&q=80&w=400' }
-  ]
-};
+interface Template {
+  id: string;
+  name: string;
+  image: string;
+}
+
+const templateCategories: TemplateCategory[] = [
+  {
+    id: 'clothes',
+    name: 'Clothes',
+    templates: [
+      { id: 'clothes-a', name: 'Template A', image: 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&q=80&w=800' },
+      { id: 'clothes-b', name: 'Template B', image: 'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&q=80&w=800' },
+      { id: 'clothes-c', name: 'Template C', image: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=800' },
+      { id: 'clothes-d', name: 'Template D', image: 'https://images.unsplash.com/photo-1583744946564-b52ac1c389c8?auto=format&fit=crop&q=80&w=800' },
+    ]
+  },
+  {
+    id: 'scarves',
+    name: 'Scarves',
+    templates: [
+      { id: 'scarves-a', name: 'Template A', image: 'https://images.unsplash.com/photo-1611676279444-5577698aa13c?auto=format&fit=crop&q=80&w=800' },
+      { id: 'scarves-b', name: 'Template B', image: 'https://images.unsplash.com/photo-1512089425728-b12f1321ca5c?auto=format&fit=crop&q=80&w=800' },
+      { id: 'scarves-c', name: 'Template C', image: 'https://images.unsplash.com/photo-1566839670464-2b448e80667b?auto=format&fit=crop&q=80&w=800' },
+      { id: 'scarves-d', name: 'Template D', image: 'https://images.unsplash.com/photo-1584722155177-75ec0c2626f4?auto=format&fit=crop&q=80&w=800' },
+    ]
+  },
+  {
+    id: 'hats',
+    name: 'Hats',
+    templates: [
+      { id: 'hats-a', name: 'Template A', image: 'https://images.unsplash.com/photo-1576871337622-98d48d1cf531?auto=format&fit=crop&q=80&w=800' },
+      { id: 'hats-b', name: 'Template B', image: 'https://images.unsplash.com/photo-1576871337632-b9aef4c17ab9?auto=format&fit=crop&q=80&w=800' },
+      { id: 'hats-c', name: 'Template C', image: 'https://images.unsplash.com/photo-1618354691792-d1d42acfd860?auto=format&fit=crop&q=80&w=800' },
+      { id: 'hats-d', name: 'Template D', image: 'https://images.unsplash.com/photo-1521369909029-2afed882baee?auto=format&fit=crop&q=80&w=800' },
+    ]
+  },
+  {
+    id: 'socks',
+    name: 'Socks',
+    templates: [
+      { id: 'socks-a', name: 'Template A', image: 'https://images.unsplash.com/photo-1586350977771-2dbe4fae8d39?auto=format&fit=crop&q=80&w=800' },
+      { id: 'socks-b', name: 'Template B', image: 'https://images.unsplash.com/photo-1582966772680-860e372bb558?auto=format&fit=crop&q=80&w=800' },
+      { id: 'socks-c', name: 'Template C', image: 'https://images.unsplash.com/photo-1589903308904-1010c2294adc?auto=format&fit=crop&q=80&w=800' },
+      { id: 'socks-d', name: 'Template D', image: 'https://images.unsplash.com/photo-1580910951866-76f8db99acce?auto=format&fit=crop&q=80&w=800' },
+    ]
+  },
+  {
+    id: 'gloves',
+    name: 'Gloves',
+    templates: [
+      { id: 'gloves-a', name: 'Template A', image: 'https://images.unsplash.com/photo-1512604151067-557a4eba21c9?auto=format&fit=crop&q=80&w=800' },
+      { id: 'gloves-b', name: 'Template B', image: 'https://images.unsplash.com/photo-1565677913671-ce5a5c0e9b7f?auto=format&fit=crop&q=80&w=800' },
+      { id: 'gloves-c', name: 'Template C', image: 'https://images.unsplash.com/photo-1499952748986-01abb469a8d5?auto=format&fit=crop&q=80&w=800' },
+      { id: 'gloves-d', name: 'Template D', image: 'https://images.unsplash.com/photo-1574314810775-a27e5ee6d178?auto=format&fit=crop&q=80&w=800' },
+    ]
+  },
+  {
+    id: 'bags',
+    name: 'Bags',
+    templates: [
+      { id: 'bags-a', name: 'Template A', image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=800' },
+      { id: 'bags-b', name: 'Template B', image: 'https://images.unsplash.com/photo-1604176354204-9268737828e4?auto=format&fit=crop&q=80&w=800' },
+      { id: 'bags-c', name: 'Template C', image: 'https://images.unsplash.com/photo-1596149615493-f0739de31c2d?auto=format&fit=crop&q=80&w=800' },
+      { id: 'bags-d', name: 'Template D', image: 'https://images.unsplash.com/photo-1629199012539-cae769542ec1?auto=format&fit=crop&q=80&w=800' },
+    ]
+  },
+  {
+    id: 'toys',
+    name: 'Toys',
+    templates: [
+      { id: 'toys-a', name: 'Template A', image: 'https://images.unsplash.com/photo-1556012018-50c5c0da73bf?auto=format&fit=crop&q=80&w=800' },
+      { id: 'toys-b', name: 'Template B', image: 'https://images.unsplash.com/photo-1589254065878-42c9da997008?auto=format&fit=crop&q=80&w=800' },
+      { id: 'toys-c', name: 'Template C', image: 'https://images.unsplash.com/photo-1648162392092-ecc1145a33c9?auto=format&fit=crop&q=80&w=800' },
+      { id: 'toys-d', name: 'Template D', image: 'https://images.unsplash.com/photo-1658398088322-d4c3fb7e02a1?auto=format&fit=crop&q=80&w=800' },
+    ]
+  }
+];
 
 interface TemplateSelectionModalProps {
   isOpen: boolean;
@@ -65,10 +94,11 @@ interface TemplateSelectionModalProps {
 }
 
 const TemplateSelectionModal: React.FC<TemplateSelectionModalProps> = ({ isOpen, onClose }) => {
-  const [selectedCategory, setSelectedCategory] = useState('Clothes');
+  const [selectedCategory, setSelectedCategory] = useState<TemplateCategory | null>(null);
   const navigate = useNavigate();
   
-  const handleTemplateSelect = (templateId: string) => {
+  const handleSelectTemplate = (templateId: string) => {
+    // Here would be logic to prepare the template for the hardware
     navigate(`/editor/new/${templateId}`);
     onClose();
   };
@@ -77,58 +107,94 @@ const TemplateSelectionModal: React.FC<TemplateSelectionModalProps> = ({ isOpen,
   
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="relative bg-white rounded-2xl shadow-xl w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col">
+      <div className="relative bg-white rounded-xl shadow-lg max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
         <div className="flex items-center justify-between p-4 border-b">
-          <h2 className="text-xl font-semibold">Choose a Template</h2>
+          <h2 className="text-xl font-medium">
+            {selectedCategory ? `Select ${selectedCategory.name} Template` : 'Select Template Category'}
+          </h2>
           <button 
-            className="p-2 rounded-full hover:bg-gray-100"
+            className="p-1 rounded-full hover:bg-gray-100"
             onClick={onClose}
           >
-            <X size={20} />
+            <X size={24} />
           </button>
         </div>
         
-        <div className="flex h-[calc(90vh-76px)]">
-          {/* Category sidebar */}
-          <div className="w-48 border-r overflow-y-auto">
-            <ul className="p-2">
+        <div className="overflow-y-auto p-4 flex-1">
+          {!selectedCategory ? (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
               {templateCategories.map(category => (
-                <li key={category}>
-                  <button
-                    className={`w-full text-left px-4 py-2 rounded-lg ${selectedCategory === category ? 'bg-claw-blue-100 text-claw-blue-600 font-medium' : 'hover:bg-gray-100'}`}
-                    onClick={() => setSelectedCategory(category)}
-                  >
-                    {category}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-          
-          {/* Templates grid */}
-          <div className="flex-1 p-4 overflow-y-auto">
-            <h3 className="text-lg font-medium mb-4">{selectedCategory} Templates</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {templates[selectedCategory as keyof typeof templates].map(template => (
-                <div 
-                  key={template.id}
-                  className="claw-card cursor-pointer hover:-translate-y-1 transition-transform duration-200"
-                  onClick={() => handleTemplateSelect(template.id)}
+                <div
+                  key={category.id}
+                  className="claw-card p-4 cursor-pointer hover:-translate-y-1 transition-transform"
+                  onClick={() => setSelectedCategory(category)}
                 >
-                  <div className="h-48 overflow-hidden">
+                  <div className="aspect-square bg-claw-blue-50 rounded-lg mb-3 overflow-hidden">
                     <img 
-                      src={template.image} 
-                      alt={template.name} 
+                      src={category.templates[0].image} 
+                      alt={category.name} 
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <div className="p-3">
-                    <h4 className="font-medium">{template.name}</h4>
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-medium">{category.name}</h3>
+                    <ChevronRight size={18} className="text-claw-blue-500" />
                   </div>
                 </div>
               ))}
             </div>
-          </div>
+          ) : (
+            <div>
+              <button 
+                className="mb-4 flex items-center text-claw-blue-500 hover:underline"
+                onClick={() => setSelectedCategory(null)}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1">
+                  <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Back to Categories
+              </button>
+              
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                {selectedCategory.templates.map(template => (
+                  <div
+                    key={template.id}
+                    className="claw-card overflow-hidden cursor-pointer hover:-translate-y-1 transition-transform"
+                    onClick={() => handleSelectTemplate(template.id)}
+                  >
+                    <div className="aspect-square overflow-hidden">
+                      <img 
+                        src={template.image} 
+                        alt={template.name} 
+                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
+                    <div className="p-3">
+                      <h3 className="font-medium">{template.name}</h3>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+        
+        <div className="border-t p-4 flex justify-end">
+          <button 
+            className="claw-secondary-button mr-2"
+            onClick={onClose}
+          >
+            Cancel
+          </button>
+          
+          {selectedCategory && (
+            <button 
+              className="claw-button"
+              onClick={() => handleSelectTemplate(selectedCategory.templates[0].id)}
+            >
+              Start with Blank
+            </button>
+          )}
         </div>
       </div>
     </div>

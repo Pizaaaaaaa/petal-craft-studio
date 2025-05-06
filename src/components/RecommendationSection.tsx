@@ -1,8 +1,8 @@
 
 import React from 'react';
-import ProjectCard from './ProjectCard';
+import ProjectCard, { ProjectCardProps } from './ProjectCard';
 
-type Project = {
+interface Project {
   id: string;
   image: string;
   title: string;
@@ -10,30 +10,25 @@ type Project = {
   likes: number;
 }
 
-type RecommendationSectionProps = {
+interface RecommendationSectionProps {
   title: string;
   projects: Project[];
 }
 
-const RecommendationSection = ({ title, projects }: RecommendationSectionProps) => {
+const RecommendationSection: React.FC<RecommendationSectionProps> = ({ title, projects }) => {
   return (
     <div className="mt-8">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-serif font-medium">{title}</h2>
-        <button className="text-sm text-craft-pink-500 hover:text-craft-pink-400 transition-colors">
-          查看全部
-        </button>
-      </div>
-      
-      <div className="masonry-grid">
-        {projects.map((project, index) => (
+      <h2 className="text-xl font-serif font-medium mb-4">{title}</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4">
+        {projects.map((project) => (
           <ProjectCard
             key={project.id}
+            id={project.id}
             image={project.image}
             title={project.title}
             author={project.author}
             likes={project.likes}
-            height={index % 3 === 0 ? '300px' : index % 3 === 1 ? '250px' : '280px'}
+            height="240px"
           />
         ))}
       </div>

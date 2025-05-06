@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { Home, BookOpen, ShoppingCart, Settings, HelpCircle, User } from 'lucide-react';
+import { Home, BookOpen, HelpCircle, Settings, User } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
 const ClawSidebar: React.FC = () => {
@@ -32,13 +32,6 @@ const ClawSidebar: React.FC = () => {
         }>
           <BookOpen size={20} />
           <span>My Works</span>
-        </NavLink>
-        
-        <NavLink to="/membership" className={({ isActive }) => 
-          `menu-item ${isActive ? 'active' : ''}`
-        }>
-          <ShoppingCart size={20} />
-          <span>Membership & Shop</span>
         </NavLink>
         
         <NavLink to="/help" className={({ isActive }) => 

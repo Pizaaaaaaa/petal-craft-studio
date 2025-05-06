@@ -9,7 +9,6 @@ import MainLayout from './layouts/MainLayout';
 // Pages
 import HomePage from './pages/Home';
 import MyWorksPage from './pages/MyWorks';
-import MembershipPage from './pages/Membership';
 import HelpPage from './pages/Help';
 import HardwareSettingsPage from './pages/HardwareSettings';
 import ProfilePage from './pages/Profile';
@@ -30,7 +29,6 @@ function App() {
             <Route path="/" element={<MainLayout />}>
               <Route index element={<HomePage />} />
               <Route path="my-works" element={<MyWorksPage />} />
-              <Route path="membership" element={<MembershipPage />} />
               <Route path="help" element={<HelpPage />} />
               <Route path="hardware-settings" element={<HardwareSettingsPage />} />
               <Route path="profile" element={<ProfilePage />} />

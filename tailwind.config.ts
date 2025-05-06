@@ -63,35 +63,34 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				"claw": {
-					"blue": {
-						100: "#E6F2FF",
-						200: "#B3D9FF",
-						300: "#80C1FF",
-						400: "#4DA6FF",
-						500: "#1A8CFF"
-					},
-					"teal": {
-						100: "#E6F7FB",
-						200: "#B3E6F2",
-						300: "#80D6E9",
-						400: "#4DC4DF",
-						500: "#1AB4D6"
-					},
-					"gray": {
-						100: "#F7F9FA",
-						200: "#EDF0F2",
-						300: "#E1E5E9",
-						400: "#CDD3DA",
-						500: "#B1BAC5"
-					},
-					"navy": {
-						100: "#EFF1F8",
-						200: "#D5DBF0",
-						300: "#BAC5E7",
-						400: "#98A8DC",
-						500: "#7E8FCD"
-					}
+				"claw-blue": {
+					50: "#E6F2FF",
+					100: "#E6F2FF",
+					200: "#B3D9FF",
+					300: "#80C1FF",
+					400: "#4DA6FF",
+					500: "#1A8CFF"
+				},
+				"claw-teal": {
+					100: "#E6F7FB",
+					200: "#B3E6F2",
+					300: "#80D6E9",
+					400: "#4DC4DF",
+					500: "#1AB4D6"
+				},
+				"claw-gray": {
+					100: "#F7F9FA",
+					200: "#EDF0F2",
+					300: "#E1E5E9",
+					400: "#CDD3DA",
+					500: "#B1BAC5"
+				},
+				"claw-navy": {
+					100: "#EFF1F8",
+					200: "#D5DBF0",
+					300: "#BAC5E7",
+					400: "#98A8DC",
+					500: "#7E8FCD"
 				}
 			},
 			borderRadius: {
