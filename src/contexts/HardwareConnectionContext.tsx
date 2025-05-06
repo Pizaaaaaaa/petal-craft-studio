@@ -51,7 +51,7 @@ export const HardwareConnectionProvider: React.FC<HardwareConnectionProviderProp
   const [isConnected, setIsConnected] = useState<boolean>(false);
   const [isConnecting, setIsConnecting] = useState<boolean>(false);
   const [connectionError, setConnectionError] = useState<string | null>(null);
-  const [showConnectionModal, setShowConnectionModal] = useState<boolean>(false);
+  const [showConnectionModal, setShowConnectionModal] = useState<boolean>(true); // Default to show
   const [hardwareStatus, setHardwareStatus] = useState({
     batteryLevel: 75,
     temperature: 28,
@@ -67,6 +67,17 @@ export const HardwareConnectionProvider: React.FC<HardwareConnectionProviderProp
     temperature: 120,
     tension: 30
   });
+
+  // Effect to auto-close modal when connection is successful
+  useEffect(() => {
+    if (isConnected && showConnectionModal) {
+      const timer = setTimeout(() => {
+        setShowConnectionModal(false);
+      }, 800); // Close after a short delay to let the user see the success state
+      
+      return () => clearTimeout(timer);
+    }
+  }, [isConnected, showConnectionModal]);
 
   const updateHardwareParameter = (param: keyof HardwareParameters, value: number): void => {
     setHardwareParameters(prev => ({

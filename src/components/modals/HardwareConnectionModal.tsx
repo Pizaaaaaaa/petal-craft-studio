@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { X } from 'lucide-react';
+import { X, Bluetooth } from 'lucide-react';
 import { useHardwareConnection } from '../../contexts/HardwareConnectionContext';
 
 const HardwareConnectionModal: React.FC = () => {
@@ -41,7 +41,7 @@ const HardwareConnectionModal: React.FC = () => {
   };
   
   return (
-    <div className={`fixed inset-0 z-50 flex items-center justify-center ${showConnectionModal ? 'opacity-100' : 'opacity-0 pointer-events-none'} transition-opacity bg-black/50`}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
       <div className="relative w-full max-w-md p-6 bg-white rounded-2xl shadow-lg">
         <button 
           className="absolute top-4 right-4 p-1 rounded-full hover:bg-gray-100"
@@ -52,15 +52,7 @@ const HardwareConnectionModal: React.FC = () => {
         
         <div className="text-center mb-6">
           <div className="w-16 h-16 bg-claw-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-claw-blue-500">
-              <path d="M6 3v12"></path>
-              <path d="M18 3v12"></path>
-              <path d="M6 15h12"></path>
-              <path d="M3 10h3"></path>
-              <path d="M15 10h3"></path>
-              <path d="M6 8h.01"></path>
-              <path d="M18 8h.01"></path>
-            </svg>
+            <Bluetooth size={32} className="text-claw-blue-500" />
           </div>
           
           <h3 className="text-xl font-semibold text-gray-800">Connect Hardware Device</h3>

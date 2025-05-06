@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import ClawSidebar from '../components/ClawSidebar';
 import { useHardwareConnection } from '../contexts/HardwareConnectionContext';
@@ -8,17 +8,8 @@ import HardwareConnectionModal from '../components/modals/HardwareConnectionModa
 const MainLayout: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { isConnected, showConnectionModal, setShowConnectionModal } = useHardwareConnection();
+  const { isConnected, showConnectionModal } = useHardwareConnection();
   
-  // Check if this is the user's first visit
-  useEffect(() => {
-    const hasVisitedBefore = localStorage.getItem('hasVisitedBefore');
-    if (!hasVisitedBefore) {
-      setShowConnectionModal(true);
-      localStorage.setItem('hasVisitedBefore', 'true');
-    }
-  }, [setShowConnectionModal]);
-
   const handleConnectionStatusClick = () => {
     navigate('/hardware-settings');
   };
