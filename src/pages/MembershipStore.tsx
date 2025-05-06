@@ -339,7 +339,7 @@ const MembershipStore: React.FC = () => {
               </div>
               
               <div className="mt-4 md:mt-0">
-                <button className="group-hover:bg-white group-hover:text-claw-blue-600 bg-white/20 backdrop-blur-sm text-white px-6 py-2 rounded-full transition-all flex items-center">
+                <button className="membership-banner-button">
                   Explore Plans
                   <ChevronRight size={18} className="ml-1.5" />
                 </button>
