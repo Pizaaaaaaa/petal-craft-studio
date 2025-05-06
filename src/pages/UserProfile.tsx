@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { 
@@ -20,7 +19,7 @@ const mockUsers = {
     name: 'Emily Chen',
     bio: 'Knitwear designer and yarn enthusiast. Creating cozy patterns since 2015.',
     avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200',
-    coverImage: 'https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&q=80&w=1200',
+    coverImage: 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?auto=format&fit=crop&q=80&w=1200',
     location: 'Portland, OR',
     website: 'emilyknits.com',
     followers: 1245,
@@ -38,7 +37,7 @@ const mockUsers = {
     name: 'Alex Johnson',
     bio: 'Knitting teacher and pattern tester. I love colorwork and challenging projects!',
     avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=200',
-    coverImage: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&q=80&w=1200',
+    coverImage: 'https://images.unsplash.com/photo-1633589584258-5c9ca4ccbd6b?auto=format&fit=crop&q=80&w=1200',
     location: 'Seattle, WA',
     website: 'alexknits.com',
     followers: 876,
@@ -56,7 +55,7 @@ const mockUsers = {
     name: 'Sarah Miller',
     bio: 'Fiber artist specializing in sustainable and eco-friendly knitting patterns.',
     avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=200',
-    coverImage: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&q=80&w=1200',
+    coverImage: 'https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?auto=format&fit=crop&q=80&w=1200',
     location: 'Austin, TX',
     website: 'sarahknits.com',
     followers: 2345,
@@ -77,35 +76,35 @@ const mockUserProjects = {
     {
       id: '1',
       title: 'Cozy Winter Sweater',
-      image: 'https://images.unsplash.com/photo-1584736328868-fbc30f5efe78?auto=format&fit=crop&q=80&w=800',
+      image: 'https://images.unsplash.com/photo-1607344645866-009c320c5ab8?auto=format&fit=crop&q=80&w=800',
       author: 'Emily Chen',
       likes: 124
     },
     {
       id: '2',
       title: 'Summer Cotton Cardigan',
-      image: 'https://images.unsplash.com/photo-1620799139507-2a76f79a2f4d?auto=format&fit=crop&q=80&w=800',
+      image: 'https://images.unsplash.com/photo-1618153920965-2e86516dde19?auto=format&fit=crop&q=80&w=800',
       author: 'Emily Chen',
       likes: 87
     },
     {
       id: '3',
       title: 'Chunky Knit Blanket',
-      image: 'https://images.unsplash.com/photo-1581067721837-11f8b1583488?auto=format&fit=crop&q=80&w=800',
+      image: 'https://images.unsplash.com/photo-1629418886825-df1e6e08f47f?auto=format&fit=crop&q=80&w=800',
       author: 'Emily Chen',
       likes: 156
     },
     {
       id: '4',
       title: 'Lace Shawl Pattern',
-      image: 'https://images.unsplash.com/photo-1620208693288-161d48cbe2e4?auto=format&fit=crop&q=80&w=800',
+      image: 'https://images.unsplash.com/photo-1550639525-c97d455acf70?auto=format&fit=crop&q=80&w=800',
       author: 'Emily Chen',
       likes: 98
     },
     {
       id: '5',
       title: 'Colorwork Mittens',
-      image: 'https://images.unsplash.com/photo-1602079282086-3880b138a2c1?auto=format&fit=crop&q=80&w=800',
+      image: 'https://images.unsplash.com/photo-1607344645866-009c320c5ab8?auto=format&fit=crop&q=80&w=800',
       author: 'Emily Chen',
       likes: 65
     }
@@ -114,21 +113,21 @@ const mockUserProjects = {
     {
       id: '6',
       title: 'Cable Knit Hat',
-      image: 'https://images.unsplash.com/photo-1576473582313-495391868136?auto=format&fit=crop&q=80&w=800',
+      image: 'https://images.unsplash.com/photo-1599107671646-c483b128d8a9?auto=format&fit=crop&q=80&w=800',
       author: 'Alex Johnson',
       likes: 72
     },
     {
       id: '7',
       title: 'Fair Isle Pullover',
-      image: 'https://images.unsplash.com/photo-1582038439431-6019809c2241?auto=format&fit=crop&q=80&w=800',
+      image: 'https://images.unsplash.com/photo-1611915387288-fd8d2f5f928b?auto=format&fit=crop&q=80&w=800',
       author: 'Alex Johnson',
       likes: 110
     },
     {
       id: '8',
       title: 'Beginner Sock Pattern',
-      image: 'https://images.unsplash.com/photo-1544967082-d9d25d867d66?auto=format&fit=crop&q=80&w=800',
+      image: 'https://images.unsplash.com/photo-1606567595334-d39972c85dbe?auto=format&fit=crop&q=80&w=800',
       author: 'Alex Johnson',
       likes: 94
     }
@@ -137,28 +136,28 @@ const mockUserProjects = {
     {
       id: '9',
       title: 'Recycled Yarn Tote',
-      image: 'https://images.unsplash.com/photo-1584736328868-fbc30f5efe78?auto=format&fit=crop&q=80&w=800',
+      image: 'https://images.unsplash.com/photo-1591644996984-e76b77e38620?auto=format&fit=crop&q=80&w=800',
       author: 'Sarah Miller',
       likes: 147
     },
     {
       id: '10',
       title: 'Organic Cotton Baby Blanket',
-      image: 'https://images.unsplash.com/photo-1620799139507-2a76f79a2f4d?auto=format&fit=crop&q=80&w=800',
+      image: 'https://images.unsplash.com/photo-1629418886825-df1e6e08f47f?auto=format&fit=crop&q=80&w=800',
       author: 'Sarah Miller',
       likes: 201
     },
     {
       id: '11',
       title: 'Plant-Dyed Wool Scarf',
-      image: 'https://images.unsplash.com/photo-1582038439431-6019809c2241?auto=format&fit=crop&q=80&w=800',
+      image: 'https://images.unsplash.com/photo-1615743029255-a367a66c502f?auto=format&fit=crop&q=80&w=800',
       author: 'Sarah Miller',
       likes: 168
     },
     {
       id: '12',
       title: 'Zero-Waste Cowl',
-      image: 'https://images.unsplash.com/photo-1620208693288-161d48cbe2e4?auto=format&fit=crop&q=80&w=800',
+      image: 'https://images.unsplash.com/photo-1618153920965-2e86516dde19?auto=format&fit=crop&q=80&w=800',
       author: 'Sarah Miller',
       likes: 112
     }

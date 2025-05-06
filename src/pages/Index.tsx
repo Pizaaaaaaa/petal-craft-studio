@@ -25,42 +25,42 @@ const Index = () => {
   const trendingProjects = [
     {
       id: '1',
-      image: 'https://images.unsplash.com/photo-1596496181871-9681eacf9764?q=80&w=1000',
+      image: 'https://images.unsplash.com/photo-1607344645866-009c320c5ab8?auto=format&fit=crop&q=80&w=800',
       title: 'Fresh Floral Notebook Design',
       author: 'Flora Smith',
       likes: 256
     },
     {
       id: '2',
-      image: 'https://images.unsplash.com/photo-1629976002373-8c901c9d954d?q=80&w=1000',
+      image: 'https://images.unsplash.com/photo-1618153920965-2e86516dde19?auto=format&fit=crop&q=80&w=800',
       title: 'Vintage Embroidery Pendant',
       author: 'Stitch Master',
       likes: 189
     },
     {
       id: '3',
-      image: 'https://images.unsplash.com/photo-1602409339188-95d178a611a3?q=80&w=1000',
+      image: 'https://images.unsplash.com/photo-1615743029255-a367a66c502f?auto=format&fit=crop&q=80&w=800',
       title: 'Summer Shell Jewelry DIY',
       author: 'Beach Girl',
       likes: 345
     },
     {
       id: '4',
-      image: 'https://images.unsplash.com/photo-1606722590583-6951b5ea95b3?q=80&w=1000',
+      image: 'https://images.unsplash.com/photo-1582977343701-4ff3da7c2e32?auto=format&fit=crop&q=80&w=800',
       title: 'Mini Succulent Planter Ideas',
       author: 'Plant Lover',
       likes: 217
     },
     {
       id: '5',
-      image: 'https://images.unsplash.com/photo-1464699908537-0954e50791ee?q=80&w=1000',
+      image: 'https://images.unsplash.com/photo-1602734846297-9299fc2d4703?auto=format&fit=crop&q=80&w=800',
       title: 'Cozy Paper Lampshade',
       author: 'Light Master',
       likes: 129
     },
     {
       id: '6',
-      image: 'https://images.unsplash.com/photo-1490312278390-ab64016e0aa9?q=80&w=1000',
+      image: 'https://images.unsplash.com/photo-1591289009723-faf5732f4218?auto=format&fit=crop&q=80&w=800',
       title: 'Spring Wreath Decoration',
       author: 'Flower Artist',
       likes: 156
@@ -70,42 +70,42 @@ const Index = () => {
   const personalizedProjects = [
     {
       id: '7',
-      image: 'https://images.unsplash.com/photo-1613338761627-82828a8024c1?q=80&w=1000',
+      image: 'https://images.unsplash.com/photo-1588850655215-70f3e650aaed?auto=format&fit=crop&q=80&w=800',
       title: 'Creative Fabric Storage Box',
       author: 'Home Expert',
       likes: 178
     },
     {
       id: '8',
-      image: 'https://images.unsplash.com/photo-1558959806-42daff5aa0b4?q=80&w=1000',
+      image: 'https://images.unsplash.com/photo-1550639525-c97d455acf70?auto=format&fit=crop&q=80&w=800',
       title: 'Crystal Resin Jewelry Tutorial',
       author: 'Jewelry Artisan',
       likes: 203
     },
     {
       id: '9',
-      image: 'https://images.unsplash.com/photo-1528826007177-f38517ce0a76?q=80&w=1000',
+      image: 'https://images.unsplash.com/photo-1632159394933-b1846a398844?auto=format&fit=crop&q=80&w=800',
       title: 'Therapeutic Embroidery Patterns',
       author: 'Stitch Artist',
       likes: 143
     },
     {
       id: '10',
-      image: 'https://images.unsplash.com/photo-1579275530126-af715aa21c6c?q=80&w=1000',
+      image: 'https://images.unsplash.com/photo-1591644996984-e76b77e38620?auto=format&fit=crop&q=80&w=800',
       title: 'Clay Animal Figurines',
       author: 'Clay Crafter',
       likes: 289
     },
     {
       id: '11',
-      image: 'https://images.unsplash.com/photo-1505262933600-27c2b248607c?q=80&w=1000',
+      image: 'https://images.unsplash.com/photo-1605733513597-a8f8341084e6?auto=format&fit=crop&q=80&w=800',
       title: 'Kraft Paper Gift Boxes',
       author: 'Gift Wrapper',
       likes: 165
     },
     {
       id: '12',
-      image: 'https://images.unsplash.com/photo-1501436513145-30f24e19fcc8?q=80&w=1000',
+      image: 'https://images.unsplash.com/photo-1599107671646-c483b128d8a9?auto=format&fit=crop&q=80&w=800',
       title: 'Cotton String Decorations',
       author: 'Weaving Artist',
       likes: 132
