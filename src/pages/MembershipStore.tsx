@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { ChevronRight, Star, Check } from 'lucide-react';
@@ -18,7 +19,7 @@ const MembershipStore: React.FC = () => {
         </p>
       </div>
       
-      {/* Featured Banner - Adding membership-banner class */}
+      {/* Featured Banner with membership-banner class */}
       <div className="membership-banner bg-gradient-to-r from-claw-blue-400 to-claw-blue-500 rounded-xl p-6 sm:p-8 text-white relative overflow-hidden">
         <div className="absolute right-0 top-0 h-full w-1/2 bg-[url('/placeholder.svg')] bg-no-repeat bg-right opacity-10"></div>
         
