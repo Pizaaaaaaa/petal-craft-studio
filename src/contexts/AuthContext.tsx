@@ -64,12 +64,18 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       if (email && password) {
+        // Set all users as Basic members by default
+        const expiryDate = new Date();
+        expiryDate.setFullYear(expiryDate.getFullYear() + 100); // Set a very long expiry date
+        
         const newUser: User = {
           id: '123456',
           name: 'John Doe',
           email: email,
           avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-          isMember: false
+          isMember: true,
+          membershipTier: 'basic',
+          membershipExpiryDate: expiryDate
         };
         setUser(newUser);
         localStorage.setItem('user', JSON.stringify(newUser));
@@ -95,11 +101,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       await new Promise(resolve => setTimeout(resolve, 1500));
       
       if (name && email && password) {
+        // Set all new users as Basic members by default
+        const expiryDate = new Date();
+        expiryDate.setFullYear(expiryDate.getFullYear() + 100); // Set a very long expiry date
+        
         const newUser: User = {
           id: '123456',
           name: name,
           email: email,
-          isMember: false
+          isMember: true,
+          membershipTier: 'basic',
+          membershipExpiryDate: expiryDate
         };
         setUser(newUser);
         localStorage.setItem('user', JSON.stringify(newUser));
