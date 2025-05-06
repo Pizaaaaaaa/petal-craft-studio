@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { useHardwareConnection } from '../contexts/HardwareConnectionContext';
-import { RefreshCw, Battery, Thermometer, FileCode, Info, Settings, WifiIcon, Sliders } from 'lucide-react';
+import { RefreshCw, Battery, Thermometer, FileCode, Info, Settings, WifiIcon, Sliders, Bluetooth, Usb, Cable } from 'lucide-react';
 import { Slider } from "../components/ui/slider";
 import { 
   Select,
@@ -10,6 +10,8 @@ import {
   SelectTrigger,
   SelectValue 
 } from "../components/ui/select";
+import { RadioGroup, RadioGroupItem } from "../components/ui/radio-group";
+import { Label } from "../components/ui/label";
 import {
   Form,
   FormControl,
@@ -20,6 +22,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import { ConnectionMethod } from '../contexts/HardwareConnectionContext';
 
 const formSchema = z.object({
   speed: z.number().min(0).max(100),
@@ -42,6 +45,7 @@ const HardwareSettingsPage: React.FC = () => {
   } = useHardwareConnection();
   
   const [selectedTab, setSelectedTab] = useState<'connection' | 'status' | 'parameters'>('connection');
+  const [connectionMethod, setConnectionMethod] = useState<ConnectionMethod>('bluetooth');
   
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -54,6 +58,10 @@ const HardwareSettingsPage: React.FC = () => {
   
   const handleParameterChange = (param: keyof typeof hardwareParameters, value: number) => {
     updateHardwareParameter(param, value);
+  };
+
+  const handleConnect = () => {
+    connectToHardware(connectionMethod);
   };
   
   return (
@@ -130,7 +138,7 @@ const HardwareSettingsPage: React.FC = () => {
             ) : (
               <button
                 className="claw-button w-full"
-                onClick={connectToHardware}
+                onClick={handleConnect}
                 disabled={isConnecting || !selectedModel}
               >
                 {isConnecting ? 'Connecting...' : 'Connect to Device'}
@@ -143,17 +151,41 @@ const HardwareSettingsPage: React.FC = () => {
             
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Connection Method</label>
-                <Select defaultValue="bluetooth">
-                  <SelectTrigger className="w-full">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="bluetooth">Bluetooth</SelectItem>
-                    <SelectItem value="usb">USB</SelectItem>
-                    <SelectItem value="wifi">Wi-Fi</SelectItem>
-                  </SelectContent>
-                </Select>
+                <h4 className="text-sm font-medium text-gray-700 mb-3">Connection Method</h4>
+                <RadioGroup 
+                  value={connectionMethod} 
+                  onValueChange={(value) => setConnectionMethod(value as ConnectionMethod)}
+                  className="grid grid-cols-2 gap-3"
+                >
+                  <div className="flex items-center space-x-2 border rounded-lg p-3 hover:bg-gray-50">
+                    <RadioGroupItem value="bluetooth" id="settings-bluetooth" />
+                    <Label htmlFor="settings-bluetooth" className="flex items-center cursor-pointer">
+                      <Bluetooth size={18} className="mr-2" />
+                      <span>Bluetooth</span>
+                    </Label>
+                  </div>
+                  <div className="flex items-center space-x-2 border rounded-lg p-3 hover:bg-gray-50">
+                    <RadioGroupItem value="wifi" id="settings-wifi" />
+                    <Label htmlFor="settings-wifi" className="flex items-center cursor-pointer">
+                      <WifiIcon size={18} className="mr-2" />
+                      <span>Wi-Fi</span>
+                    </Label>
+                  </div>
+                  <div className="flex items-center space-x-2 border rounded-lg p-3 hover:bg-gray-50">
+                    <RadioGroupItem value="usb" id="settings-usb" />
+                    <Label htmlFor="settings-usb" className="flex items-center cursor-pointer">
+                      <Usb size={18} className="mr-2" />
+                      <span>USB</span>
+                    </Label>
+                  </div>
+                  <div className="flex items-center space-x-2 border rounded-lg p-3 hover:bg-gray-50">
+                    <RadioGroupItem value="cable" id="settings-cable" />
+                    <Label htmlFor="settings-cable" className="flex items-center cursor-pointer">
+                      <Cable size={18} className="mr-2" />
+                      <span>Cable</span>
+                    </Label>
+                  </div>
+                </RadioGroup>
               </div>
               
               <div>
@@ -334,7 +366,7 @@ const HardwareSettingsPage: React.FC = () => {
               <p className="text-gray-600">Connect to your device to view status information</p>
               <button
                 className="claw-button mt-4"
-                onClick={connectToHardware}
+                onClick={handleConnect}
               >
                 Connect to Device
               </button>
