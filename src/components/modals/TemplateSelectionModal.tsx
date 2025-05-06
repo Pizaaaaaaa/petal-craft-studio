@@ -1,7 +1,9 @@
 
 import React, { useState } from 'react';
-import { X, ChevronRight } from 'lucide-react';
+import { X, ChevronRight, Edit, Download } from 'lucide-react';
 import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 
 interface TemplateCategory {
   id: string;
@@ -96,8 +98,16 @@ interface TemplateSelectionModalProps {
 const TemplateSelectionModal: React.FC<TemplateSelectionModalProps> = ({ isOpen, onClose }) => {
   const [selectedCategory, setSelectedCategory] = useState<TemplateCategory | null>(null);
   const [isTransferring, setIsTransferring] = useState(false);
+  const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
+  const navigate = useNavigate();
   
   const handleSelectTemplate = (templateId: string) => {
+    setSelectedTemplate(templateId);
+  };
+  
+  const handleSendToHardware = () => {
+    if (!selectedTemplate) return;
+    
     // Simulate sending template to hardware
     setIsTransferring(true);
     
@@ -108,6 +118,17 @@ const TemplateSelectionModal: React.FC<TemplateSelectionModalProps> = ({ isOpen,
       });
       onClose();
     }, 1500);
+  };
+  
+  const handleEdit = () => {
+    if (!selectedTemplate) return;
+    
+    // Extract the category ID and template ID
+    const categoryId = selectedTemplate.split('-')[0];
+    
+    // Navigate to editor with the template ID
+    navigate(`/editor/new/${categoryId}`);
+    onClose();
   };
   
   if (!isOpen) return null;
@@ -154,7 +175,10 @@ const TemplateSelectionModal: React.FC<TemplateSelectionModalProps> = ({ isOpen,
             <div>
               <button 
                 className="mb-4 flex items-center text-claw-blue-500 hover:underline"
-                onClick={() => setSelectedCategory(null)}
+                onClick={() => {
+                  setSelectedCategory(null);
+                  setSelectedTemplate(null);
+                }}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1">
                   <path d="M19 12H5M12 19l-7-7 7-7"/>
@@ -166,7 +190,9 @@ const TemplateSelectionModal: React.FC<TemplateSelectionModalProps> = ({ isOpen,
                 {selectedCategory.templates.map(template => (
                   <div
                     key={template.id}
-                    className="claw-card overflow-hidden cursor-pointer hover:-translate-y-1 transition-transform"
+                    className={`claw-card overflow-hidden cursor-pointer hover:-translate-y-1 transition-transform ${
+                      selectedTemplate === template.id ? 'ring-2 ring-claw-blue-500' : ''
+                    }`}
                     onClick={() => handleSelectTemplate(template.id)}
                   >
                     <div className="aspect-square overflow-hidden">
@@ -186,13 +212,35 @@ const TemplateSelectionModal: React.FC<TemplateSelectionModalProps> = ({ isOpen,
           )}
         </div>
         
-        <div className="border-t p-4 flex justify-end">
+        <div className="border-t p-4 flex justify-end gap-2">
           <button 
-            className="claw-secondary-button mr-2"
+            className="claw-secondary-button"
             onClick={onClose}
           >
             Cancel
           </button>
+          
+          {selectedTemplate && !isTransferring && (
+            <>
+              <Button
+                variant="outline"
+                className="flex items-center gap-2"
+                onClick={handleEdit}
+              >
+                <Edit size={18} />
+                Edit
+              </Button>
+              
+              <Button
+                variant="default"
+                className="flex items-center gap-2"
+                onClick={handleSendToHardware}
+              >
+                <Download size={18} />
+                Send to Hardware
+              </Button>
+            </>
+          )}
           
           {isTransferring && (
             <button 
