@@ -21,6 +21,7 @@ import CheckoutPage from './pages/Checkout';
 import OrderConfirmation from './pages/OrderConfirmation';
 import NotFound from './pages/NotFound';
 import TagsPage from './pages/Tags';
+import SearchResults from './pages/SearchResults';
 
 // Providers
 import { HardwareConnectionProvider } from './contexts/HardwareConnectionContext';
@@ -47,6 +48,7 @@ function App() {
                 <Route path="project/:id" element={<ProjectDetailsPage />} />
                 <Route path="user/:userId" element={<UserProfile />} />
                 <Route path="tags/:tagName" element={<TagsPage />} />
+                <Route path="search" element={<SearchResults />} />
               </Route>
               <Route path="/editor/:id" element={<EditorPage />} />
               <Route path="/editor/new/:templateId" element={<EditorPage />} />

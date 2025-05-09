@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Search, Plus } from 'lucide-react';
 import { toast } from 'sonner';
 import TemplateSelectionModal from './modals/TemplateSelectionModal';
+import { useNavigate } from 'react-router-dom';
 
 type SearchBarProps = {
   onSearch: (query: string) => void;
@@ -12,14 +13,21 @@ type SearchBarProps = {
 const SearchBar = ({ onSearch, onCreateProject }: SearchBarProps) => {
   const [query, setQuery] = useState('');
   const [showTemplateModal, setShowTemplateModal] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (query.trim()) {
+      // Call the onSearch prop for any component-specific logic
       onSearch(query);
+      
+      // Show toast notification
       toast(`Searching for "${query}"`, {
         duration: 2000,
       });
+      
+      // Navigate to search results page with the query as a URL parameter
+      navigate(`/search?q=${encodeURIComponent(query)}`);
     }
   };
 
