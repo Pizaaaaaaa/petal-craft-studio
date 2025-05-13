@@ -44,10 +44,10 @@ const templateCategories: TemplateCategory[] = [
     id: 'hats',
     name: 'Hats',
     templates: [
-      { id: 'hats-a', name: 'Template A', image: 'public/lovable-uploads/fdc865ad-53b7-417e-954a-cc1346859871.png' },
-      { id: 'hats-b', name: 'Template B', image: 'public/lovable-uploads/02e88367-10a3-4e94-84a2-7a1d283b5ef6.png' },
-      { id: 'hats-c', name: 'Template C', image: 'public/lovable-uploads/8bbe4e37-ec53-4864-912b-b6aa876ec454.png' },
-      { id: 'hats-d', name: 'Template D', image: 'public/lovable-uploads/d706e434-0567-48e6-b131-cc1e60d6f212.png' },
+      { id: 'hats-a', name: 'Template A', image: 'public/lovable-uploads/4e66bbe0-c363-4f80-8b52-ab367b87d6df.png' },
+      { id: 'hats-b', name: 'Template B', image: 'public/lovable-uploads/4e66bbe0-c363-4f80-8b52-ab367b87d6df.png' },
+      { id: 'hats-c', name: 'Template C', image: 'public/lovable-uploads/4e66bbe0-c363-4f80-8b52-ab367b87d6df.png' },
+      { id: 'hats-d', name: 'Template D', image: 'public/lovable-uploads/4e66bbe0-c363-4f80-8b52-ab367b87d6df.png' },
     ]
   },
   {
