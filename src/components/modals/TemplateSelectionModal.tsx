@@ -84,10 +84,10 @@ const templateCategories: TemplateCategory[] = [
     id: 'toys',
     name: 'Dolls',
     templates: [
-      { id: 'toys-a', name: 'Template A', image: 'https://images.unsplash.com/photo-1556012018-50c5c0da73bf?auto=format&fit=crop&q=80&w=800' },
-      { id: 'toys-b', name: 'Template B', image: 'https://images.unsplash.com/photo-1589254065878-42c9da997008?auto=format&fit=crop&q=80&w=800' },
-      { id: 'toys-c', name: 'Template C', image: 'https://images.unsplash.com/photo-1648162392092-ecc1145a33c9?auto=format&fit=crop&q=80&w=800' },
-      { id: 'toys-d', name: 'Template D', image: 'https://images.unsplash.com/photo-1658398088322-d4c3fb7e02a1?auto=format&fit=crop&q=80&w=800' },
+      { id: 'toys-a', name: 'Template A', image: 'public/lovable-uploads/9e2bf774-12fa-40a6-a844-a7d2c308ddb5.png' },
+      { id: 'toys-b', name: 'Template B', image: 'public/lovable-uploads/9e2bf774-12fa-40a6-a844-a7d2c308ddb5.png' },
+      { id: 'toys-c', name: 'Template C', image: 'public/lovable-uploads/9e2bf774-12fa-40a6-a844-a7d2c308ddb5.png' },
+      { id: 'toys-d', name: 'Template D', image: 'public/lovable-uploads/9e2bf774-12fa-40a6-a844-a7d2c308ddb5.png' },
     ]
   }
 ];
