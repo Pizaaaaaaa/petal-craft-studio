@@ -43,10 +43,10 @@ const templateCategories: TemplateCategory[] = [
     id: 'hats',
     name: 'Hats',
     templates: [
-      { id: 'hats-a', name: 'Template A', image: 'https://images.unsplash.com/photo-1576871337622-98d48d1cf531?auto=format&fit=crop&q=80&w=800' },
-      { id: 'hats-b', name: 'Template B', image: 'https://images.unsplash.com/photo-1576871337632-b9aef4c17ab9?auto=format&fit=crop&q=80&w=800' },
-      { id: 'hats-c', name: 'Template C', image: 'https://images.unsplash.com/photo-1618354691792-d1d42acfd860?auto=format&fit=crop&q=80&w=800' },
-      { id: 'hats-d', name: 'Template D', image: 'https://images.unsplash.com/photo-1521369909029-2afed882baee?auto=format&fit=crop&q=80&w=800' },
+      { id: 'hats-a', name: 'Template A', image: 'public/lovable-uploads/ec8b26c7-ef21-4c0a-8162-ee0e2b2b27c6.png' },
+      { id: 'hats-b', name: 'Template B', image: 'public/lovable-uploads/db3f841b-d434-4e36-bf23-81adab6856a7.png' },
+      { id: 'hats-c', name: 'Template C', image: 'public/lovable-uploads/025c302c-7897-4136-8496-91f10f7e7efb.png' },
+      { id: 'hats-d', name: 'Template D', image: 'public/lovable-uploads/6a36e5d9-e898-4ae3-bd42-b97252dca3da.png' },
     ]
   },
   {
