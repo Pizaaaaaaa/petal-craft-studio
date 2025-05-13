@@ -33,10 +33,10 @@ const templateCategories: TemplateCategory[] = [
     id: 'scarves',
     name: 'Scarves',
     templates: [
-      { id: 'scarves-a', name: 'Template A', image: 'https://images.unsplash.com/photo-1611676279444-5577698aa13c?auto=format&fit=crop&q=80&w=800' },
-      { id: 'scarves-b', name: 'Template B', image: 'https://images.unsplash.com/photo-1512089425728-b12f1321ca5c?auto=format&fit=crop&q=80&w=800' },
-      { id: 'scarves-c', name: 'Template C', image: 'https://images.unsplash.com/photo-1566839670464-2b448e80667b?auto=format&fit=crop&q=80&w=800' },
-      { id: 'scarves-d', name: 'Template D', image: 'https://images.unsplash.com/photo-1584722155177-75ec0c2626f4?auto=format&fit=crop&q=80&w=800' },
+      { id: 'scarves-a', name: 'Template A', image: 'public/lovable-uploads/17adc731-1692-4ec1-8987-edb17ba59739.png' },
+      { id: 'scarves-b', name: 'Template B', image: 'public/lovable-uploads/14e74b0b-d052-4d01-bd14-8ed882290663.png' },
+      { id: 'scarves-c', name: 'Template C', image: 'public/lovable-uploads/9bae2afc-6de5-40e3-b7a5-8c2a0589ba3b.png' },
+      { id: 'scarves-d', name: 'Template D', image: 'public/lovable-uploads/3ef51248-a77a-46ba-801e-9f22f8234738.png' },
     ]
   },
   {
