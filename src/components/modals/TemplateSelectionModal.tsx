@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { X, ChevronRight, Edit, Download } from 'lucide-react';
 import { toast } from 'sonner';
@@ -44,10 +43,10 @@ const templateCategories: TemplateCategory[] = [
     id: 'hats',
     name: 'Hats',
     templates: [
-      { id: 'hats-a', name: 'Template A', image: 'public/lovable-uploads/4e66bbe0-c363-4f80-8b52-ab367b87d6df.png' },
-      { id: 'hats-b', name: 'Template B', image: 'public/lovable-uploads/4e66bbe0-c363-4f80-8b52-ab367b87d6df.png' },
-      { id: 'hats-c', name: 'Template C', image: 'public/lovable-uploads/4e66bbe0-c363-4f80-8b52-ab367b87d6df.png' },
-      { id: 'hats-d', name: 'Template D', image: 'public/lovable-uploads/4e66bbe0-c363-4f80-8b52-ab367b87d6df.png' },
+      { id: 'hats-a', name: 'Template A', image: 'public/lovable-uploads/3c33bc51-2937-49ab-9954-d817fb782231.png' },
+      { id: 'hats-b', name: 'Template B', image: 'public/lovable-uploads/340c2625-cda5-46de-ad69-c9a1cfac2ccc.png' },
+      { id: 'hats-c', name: 'Template C', image: 'public/lovable-uploads/b4e73852-1b3a-4f17-8980-d9db5c67ffbb.png' },
+      { id: 'hats-d', name: 'Template D', image: 'public/lovable-uploads/2b7becf0-a65c-4506-afdc-58f708496df8.png' },
     ]
   },
   {
