@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { X, ChevronRight, Edit, Download } from 'lucide-react';
 import { toast } from 'sonner';
@@ -24,10 +23,10 @@ const templateCategories: TemplateCategory[] = [
     id: 'clothes',
     name: 'Clothes',
     templates: [
-      { id: 'clothes-a', name: 'Template A', image: 'public/lovable-uploads/e2d708f2-0041-4591-9afc-7deb2936145d.png' },
-      { id: 'clothes-b', name: 'Template B', image: 'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&q=80&w=800' },
-      { id: 'clothes-c', name: 'Template C', image: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=800' },
-      { id: 'clothes-d', name: 'Template D', image: 'https://images.unsplash.com/photo-1583744946564-b52ac1c389c8?auto=format&fit=crop&q=80&w=800' },
+      { id: 'clothes-a', name: 'Template A', image: 'public/lovable-uploads/2cea61ef-645a-4b72-91cb-0d402b9d431a.png' },
+      { id: 'clothes-b', name: 'Template B', image: 'public/lovable-uploads/005820bb-f3b1-4537-b84d-98b771e922be.png' },
+      { id: 'clothes-c', name: 'Template C', image: 'public/lovable-uploads/996efb21-4ce3-4701-8184-d653eed5cab9.png' },
+      { id: 'clothes-d', name: 'Template D', image: 'public/lovable-uploads/3c0d4d0a-1df5-4656-bbb7-f1bf432a9e61.png' },
     ]
   },
   {
