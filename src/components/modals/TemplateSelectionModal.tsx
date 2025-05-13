@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { X, ChevronRight, Edit, Download } from 'lucide-react';
 import { toast } from 'sonner';
@@ -23,7 +24,7 @@ const templateCategories: TemplateCategory[] = [
     id: 'clothes',
     name: 'Clothes',
     templates: [
-      { id: 'clothes-a', name: 'Template A', image: 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&q=80&w=800' },
+      { id: 'clothes-a', name: 'Template A', image: 'public/lovable-uploads/e2d708f2-0041-4591-9afc-7deb2936145d.png' },
       { id: 'clothes-b', name: 'Template B', image: 'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&q=80&w=800' },
       { id: 'clothes-c', name: 'Template C', image: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=800' },
       { id: 'clothes-d', name: 'Template D', image: 'https://images.unsplash.com/photo-1583744946564-b52ac1c389c8?auto=format&fit=crop&q=80&w=800' },
