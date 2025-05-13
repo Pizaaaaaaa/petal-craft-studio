@@ -64,10 +64,10 @@ const templateCategories: TemplateCategory[] = [
     id: 'gloves',
     name: 'Gloves',
     templates: [
-      { id: 'gloves-a', name: 'Template A', image: 'https://images.unsplash.com/photo-1512604151067-557a4eba21c9?auto=format&fit=crop&q=80&w=800' },
-      { id: 'gloves-b', name: 'Template B', image: 'https://images.unsplash.com/photo-1565677913671-ce5c0e9b7f?auto=format&fit=crop&q=80&w=800' },
-      { id: 'gloves-c', name: 'Template C', image: 'https://images.unsplash.com/photo-1499952748986-01abb469a8d5?auto=format&fit=crop&q=80&w=800' },
-      { id: 'gloves-d', name: 'Template D', image: 'https://images.unsplash.com/photo-1574314810775-a27e5ee6d178?auto=format&fit=crop&q=80&w=800' },
+      { id: 'gloves-a', name: 'Template A', image: 'public/lovable-uploads/d5ad8c98-8048-43aa-b884-9f36180a4407.png' },
+      { id: 'gloves-b', name: 'Template B', image: 'public/lovable-uploads/d5ad8c98-8048-43aa-b884-9f36180a4407.png' },
+      { id: 'gloves-c', name: 'Template C', image: 'public/lovable-uploads/d5ad8c98-8048-43aa-b884-9f36180a4407.png' },
+      { id: 'gloves-d', name: 'Template D', image: 'public/lovable-uploads/d5ad8c98-8048-43aa-b884-9f36180a4407.png' },
     ]
   },
   {
