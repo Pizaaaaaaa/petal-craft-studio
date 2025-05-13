@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { X, ChevronRight, Edit, Download } from 'lucide-react';
 import { toast } from 'sonner';
@@ -53,10 +54,10 @@ const templateCategories: TemplateCategory[] = [
     id: 'socks',
     name: 'Socks',
     templates: [
-      { id: 'socks-a', name: 'Template A', image: 'https://images.unsplash.com/photo-1586350977771-2dbe4fae8d39?auto=format&fit=crop&q=80&w=800' },
-      { id: 'socks-b', name: 'Template B', image: 'https://images.unsplash.com/photo-1582966772680-860e372bb558?auto=format&fit=crop&q=80&w=800' },
-      { id: 'socks-c', name: 'Template C', image: 'https://images.unsplash.com/photo-1589903308904-1010c2294adc?auto=format&fit=crop&q=80&w=800' },
-      { id: 'socks-d', name: 'Template D', image: 'https://images.unsplash.com/photo-1580910951866-76f8db99acce?auto=format&fit=crop&q=80&w=800' },
+      { id: 'socks-a', name: 'Template A', image: 'public/lovable-uploads/dd0d4f4d-6c53-406c-a248-47d6a8cb3bc8.png' },
+      { id: 'socks-b', name: 'Template B', image: 'public/lovable-uploads/07b87f0e-09cb-4469-9651-d9e7bd9f4416.png' },
+      { id: 'socks-c', name: 'Template C', image: 'public/lovable-uploads/0d06caab-4d27-4e84-b501-d008e2d277ba.png' },
+      { id: 'socks-d', name: 'Template D', image: 'public/lovable-uploads/44517033-5aa0-465a-904c-b48bf3fea84d.png' },
     ]
   },
   {
