@@ -73,10 +73,10 @@ const templateCategories: TemplateCategory[] = [
     id: 'bags',
     name: 'Bags',
     templates: [
-      { id: 'bags-a', name: 'Template A', image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=800' },
-      { id: 'bags-b', name: 'Template B', image: 'https://images.unsplash.com/photo-1604176354204-9268737828e4?auto=format&fit=crop&q=80&w=800' },
-      { id: 'bags-c', name: 'Template C', image: 'https://images.unsplash.com/photo-1596149615493-f0739de31c2d?auto=format&fit=crop&q=80&w=800' },
-      { id: 'bags-d', name: 'Template D', image: 'https://images.unsplash.com/photo-1629199012539-cae769542ec1?auto=format&fit=crop&q=80&w=800' },
+      { id: 'bags-a', name: 'Template A', image: 'public/lovable-uploads/861d422f-57ff-4c74-8fa7-1b5be8424971.png' },
+      { id: 'bags-b', name: 'Template B', image: 'public/lovable-uploads/c5ef5e14-bc51-4a30-b486-9b983f2f926e.png' },
+      { id: 'bags-c', name: 'Template C', image: 'public/lovable-uploads/3ce0ab8f-a843-4e45-94d2-05b81ceffd9b.png' },
+      { id: 'bags-d', name: 'Template D', image: 'public/lovable-uploads/12b19a45-f9ed-425d-b8e7-67b2aceead8c.png' },
     ]
   },
   {
