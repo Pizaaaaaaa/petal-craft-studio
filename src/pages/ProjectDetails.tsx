@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Heart, Share, Download, Edit, ChevronLeft, MessageSquare } from 'lucide-react';
@@ -335,7 +334,7 @@ const ProjectDetailsPage: React.FC = () => {
               </div>
               
               <div>
-                <h3 className="text-sm text-gray-500">织物类型</h3>
+                <h3 className="text-sm text-gray-500">Textile Type</h3>
                 <p className="font-medium">
                   {project.fabricType.category1} - {project.fabricType.category2} - {project.fabricType.category3}
                 </p>
