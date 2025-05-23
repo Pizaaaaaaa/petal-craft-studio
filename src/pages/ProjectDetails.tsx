@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Heart, Share, Download, Edit, ChevronLeft, MessageSquare } from 'lucide-react';
@@ -45,7 +46,11 @@ const mockProject = {
   difficulty: 'Intermediate',
   difficultyRating: 3.5, // Star rating out of 5
   timeToMake: '20 hours',
-  patternType: 'Sweater',
+  fabricType: {
+    category1: '衣服',
+    category2: '毛衣', 
+    category3: '开衫毛衣'
+  },
   tags: ['winter', 'wool', 'sweater', 'cozy'],
   comments: [
     {
@@ -330,8 +335,10 @@ const ProjectDetailsPage: React.FC = () => {
               </div>
               
               <div>
-                <h3 className="text-sm text-gray-500">Pattern Type</h3>
-                <p className="font-medium">{project.patternType}</p>
+                <h3 className="text-sm text-gray-500">织物类型</h3>
+                <p className="font-medium">
+                  {project.fabricType.category1} - {project.fabricType.category2} - {project.fabricType.category3}
+                </p>
               </div>
               
               <div>
