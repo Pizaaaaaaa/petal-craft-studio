@@ -1,10 +1,12 @@
+
 import React, { useState } from 'react';
-import { X, ChevronRight, Edit, Download } from 'lucide-react';
+import { X, ChevronRight, Edit, Download, ArrowUp } from 'lucide-react';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import DownloadConfirmDialog from '../DownloadConfirmDialog';
 import { useHardwareConnection } from '../../contexts/HardwareConnectionContext';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface TemplateCategory {
   id: string;
@@ -16,6 +18,7 @@ interface Template {
   id: string;
   name: string;
   image: string;
+  isNew?: boolean;
 }
 
 const templateCategories: TemplateCategory[] = [
@@ -23,7 +26,7 @@ const templateCategories: TemplateCategory[] = [
     id: 'clothes',
     name: 'Clothes',
     templates: [
-      { id: 'clothes-a', name: 'Template A', image: 'public/lovable-uploads/2cea61ef-645a-4b72-91cb-0d402b9d431a.png' },
+      { id: 'clothes-a', name: 'Template A', image: 'public/lovable-uploads/2cea61ef-645a-4b72-91cb-0d402b9d431a.png', isNew: true },
       { id: 'clothes-b', name: 'Template B', image: 'public/lovable-uploads/005820bb-f3b1-4537-b84d-98b771e922be.png' },
       { id: 'clothes-c', name: 'Template C', image: 'public/lovable-uploads/996efb21-4ce3-4701-8184-d653eed5cab9.png' },
       { id: 'clothes-d', name: 'Template D', image: 'public/lovable-uploads/3c0d4d0a-1df5-4656-bbb7-f1bf432a9e61.png' },
@@ -33,7 +36,7 @@ const templateCategories: TemplateCategory[] = [
     id: 'scarves',
     name: 'Scarves',
     templates: [
-      { id: 'scarves-a', name: 'Template A', image: 'public/lovable-uploads/17adc731-1692-4ec1-8987-edb17ba59739.png' },
+      { id: 'scarves-a', name: 'Template A', image: 'public/lovable-uploads/17adc731-1692-4ec1-8987-edb17ba59739.png', isNew: true },
       { id: 'scarves-b', name: 'Template B', image: 'public/lovable-uploads/14e74b0b-d052-4d01-bd14-8ed882290663.png' },
       { id: 'scarves-c', name: 'Template C', image: 'public/lovable-uploads/9bae2afc-6de5-40e3-b7a5-8c2a0589ba3b.png' },
       { id: 'scarves-d', name: 'Template D', image: 'public/lovable-uploads/3ef51248-a77a-46ba-801e-9f22f8234738.png' },
@@ -44,7 +47,7 @@ const templateCategories: TemplateCategory[] = [
     name: 'Hats',
     templates: [
       { id: 'hats-a', name: 'Template A', image: 'public/lovable-uploads/3c33bc51-2937-49ab-9954-d817fb782231.png' },
-      { id: 'hats-b', name: 'Template B', image: 'public/lovable-uploads/340c2625-cda5-46de-ad69-c9a1cfac2ccc.png' },
+      { id: 'hats-b', name: 'Template B', image: 'public/lovable-uploads/340c2625-cda5-46de-ad69-c9a1cfac2ccc.png', isNew: true },
       { id: 'hats-c', name: 'Template C', image: 'public/lovable-uploads/b4e73852-1b3a-4f17-8980-d9db5c67ffbb.png' },
       { id: 'hats-d', name: 'Template D', image: 'public/lovable-uploads/2b7becf0-a65c-4506-afdc-58f708496df8.png' },
     ]
@@ -200,12 +203,29 @@ const TemplateSelectionModal: React.FC<TemplateSelectionModalProps> = ({ isOpen,
                   className="claw-card p-4 cursor-pointer hover:-translate-y-1 transition-transform"
                   onClick={() => setSelectedCategory(category)}
                 >
-                  <div className="aspect-square bg-claw-blue-50 rounded-lg mb-3 overflow-hidden">
+                  <div className="aspect-square bg-claw-blue-50 rounded-lg mb-3 overflow-hidden relative">
                     <img 
                       src={category.templates[0].image} 
                       alt={category.name} 
                       className="w-full h-full object-cover"
                     />
+                    {category.templates.some(template => template.isNew) && (
+                      <div className="absolute top-2 right-2">
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <div className="flex items-center space-x-1 px-2 py-0.5 bg-green-500 text-white text-xs font-medium rounded-md">
+                                <ArrowUp size={12} />
+                                <span>新版本</span>
+                              </div>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>New version available!</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      </div>
+                    )}
                   </div>
                   <div className="flex items-center justify-between">
                     <h3 className="font-medium">{category.name}</h3>
@@ -238,12 +258,29 @@ const TemplateSelectionModal: React.FC<TemplateSelectionModalProps> = ({ isOpen,
                     }`}
                     onClick={() => handleSelectTemplate(template.id)}
                   >
-                    <div className="aspect-square overflow-hidden">
+                    <div className="aspect-square overflow-hidden relative">
                       <img 
                         src={template.image} 
                         alt={template.name} 
                         className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                       />
+                      {template.isNew && (
+                        <div className="absolute top-2 right-2">
+                          <TooltipProvider>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <div className="flex items-center space-x-1 px-2 py-0.5 bg-green-500 text-white text-xs font-medium rounded-md">
+                                  <ArrowUp size={12} />
+                                  <span>新版本</span>
+                                </div>
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                <p>New version available!</p>
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
+                        </div>
+                      )}
                     </div>
                     <div className="p-3">
                       <h3 className="font-medium">{template.name}</h3>
