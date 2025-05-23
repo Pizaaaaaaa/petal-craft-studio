@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { TabsList, TabsTrigger, Tabs, TabsContent } from '@/components/ui/tabs';
@@ -175,10 +174,7 @@ const ProfilePage: React.FC = () => {
                 )}
               </div>
               
-              <h2 className="font-semibold text-lg flex items-center gap-2">
-                {user?.name}
-                <NewVersionBadge className="ml-1" />
-              </h2>
+              <h2 className="font-semibold text-lg">{user?.name}</h2>
               <p className="text-gray-500 text-sm">{user?.email}</p>
               
               {user?.isMember && (

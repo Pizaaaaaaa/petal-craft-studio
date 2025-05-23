@@ -3,6 +3,7 @@ import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { Home, BookOpen, HelpCircle, Settings, User, ShoppingBag } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
+import NewVersionBadge from './NewVersionBadge';
 
 const ClawSidebar: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
@@ -69,8 +70,11 @@ const ClawSidebar: React.FC = () => {
                 <User size={20} className="text-claw-blue-500" />
               )}
             </div>
-            <div>
-              <h3 className="font-medium text-sm">{user?.name || 'User'}</h3>
+            <div className="flex flex-col">
+              <div className="flex items-center">
+                <h3 className="font-medium text-sm">{user?.name || 'User'}</h3>
+                <NewVersionBadge className="ml-1" />
+              </div>
               <p className="text-xs text-gray-500">{user?.email || 'user@example.com'}</p>
             </div>
           </div>
