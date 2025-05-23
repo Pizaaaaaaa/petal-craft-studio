@@ -4,7 +4,6 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import ClawSidebar from '../components/ClawSidebar';
 import { useHardwareConnection } from '../contexts/HardwareConnectionContext';
 import HardwareConnectionModal from '../components/modals/HardwareConnectionModal';
-import NewVersionBadge from '../components/NewVersionBadge';
 
 const MainLayout: React.FC = () => {
   const location = useLocation();
@@ -39,11 +38,6 @@ const MainLayout: React.FC = () => {
           <Outlet />
         </div>
       </main>
-      
-      {/* New version badge placed with lower z-index */}
-      <div className="absolute bottom-0 left-0">
-        <NewVersionBadge />
-      </div>
       
       {showConnectionModal && <HardwareConnectionModal />}
     </div>
