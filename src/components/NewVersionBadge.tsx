@@ -7,6 +7,11 @@ import {
   TooltipProvider,
   TooltipTrigger 
 } from "@/components/ui/tooltip";
+import { 
+  Avatar,
+  AvatarImage,
+  AvatarFallback 
+} from "@/components/ui/avatar";
 
 const NewVersionBadge: React.FC = () => {
   const [isVisible, setIsVisible] = useState(true);
@@ -14,7 +19,7 @@ const NewVersionBadge: React.FC = () => {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-4 left-4 z-50">
+    <div className="fixed bottom-4 left-4 z-40">
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>

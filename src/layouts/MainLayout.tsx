@@ -16,7 +16,7 @@ const MainLayout: React.FC = () => {
   };
 
   return (
-    <div className="flex h-screen bg-background overflow-hidden">
+    <div className="flex h-screen bg-background overflow-hidden relative">
       <ClawSidebar />
       
       <main className="flex-1 overflow-auto">
@@ -40,7 +40,10 @@ const MainLayout: React.FC = () => {
         </div>
       </main>
       
-      <NewVersionBadge />
+      {/* New version badge placed with lower z-index */}
+      <div className="absolute bottom-0 left-0">
+        <NewVersionBadge />
+      </div>
       
       {showConnectionModal && <HardwareConnectionModal />}
     </div>
