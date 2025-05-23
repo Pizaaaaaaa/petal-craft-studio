@@ -4,6 +4,7 @@ import { Heart, Share, Download, Edit, ChevronLeft, MessageSquare } from 'lucide
 import CommentSection from '../components/CommentSection';
 import ShareDialog from '../components/ShareDialog';
 import DownloadConfirmDialog from '../components/DownloadConfirmDialog';
+import StarRating from '../components/StarRating';
 import { useHardwareConnection } from '../contexts/HardwareConnectionContext';
 import { toast } from 'sonner';
 
@@ -42,6 +43,7 @@ const mockProject = {
   isLiked: false,
   createdAt: '2023-10-15T12:30:00Z',
   difficulty: 'Intermediate',
+  difficultyRating: 3.5, // Star rating out of 5
   timeToMake: '20 hours',
   patternType: 'Sweater',
   tags: ['winter', 'wool', 'sweater', 'cozy'],
@@ -314,7 +316,12 @@ const ProjectDetailsPage: React.FC = () => {
             <div className="space-y-4">
               <div>
                 <h3 className="text-sm text-gray-500">Difficulty</h3>
-                <p className="font-medium">{project.difficulty}</p>
+                <div className="flex items-center gap-2 mt-1">
+                  <StarRating rating={project.difficultyRating} size={18} />
+                  <span className="font-medium text-sm text-gray-600">
+                    ({project.difficultyRating}/5)
+                  </span>
+                </div>
               </div>
               
               <div>
