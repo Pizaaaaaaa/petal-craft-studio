@@ -4,6 +4,7 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import ClawSidebar from '../components/ClawSidebar';
 import { useHardwareConnection } from '../contexts/HardwareConnectionContext';
 import HardwareConnectionModal from '../components/modals/HardwareConnectionModal';
+import NewVersionBadge from '../components/NewVersionBadge';
 
 const MainLayout: React.FC = () => {
   const location = useLocation();
@@ -38,6 +39,8 @@ const MainLayout: React.FC = () => {
           <Outlet />
         </div>
       </main>
+      
+      <NewVersionBadge />
       
       {showConnectionModal && <HardwareConnectionModal />}
     </div>
